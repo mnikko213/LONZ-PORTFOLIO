@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Nikko Lonzaga - Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header" id="main-header">
+        <a href="#home" class="header-left">
+            <span class="logo-text"><strong>LONZ</strong> <span class="fw-light">PORTFOLIO</span></span> 
+        </a>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <nav class="header-right" id="nav-links">
+            <a href="#work">WORK</a>
+            <a href="#about">ABOUT</a>
+            <a href="#certifications">CERTIFICATIONS</a>
+            <a href="#services-section">SERVICES</a>
+            <a href="#contact">CONTACT</a>
+        </nav>
+    </header>
+
+    <div class="scroller">
+
+        <section class="page-home" id="home">
+            <div class="film-light-leak"></div>
+            <div class="portfolio-container">
+                <div class="col-left">
+                    <div class="header-group anim-element delay-1">
+                        <h1 class="main-title">ARTS<br>PORTFOLIO</h1>
+                        <span class="catchphrase">Character in every stroke.</span>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="img-box-left anim-element delay-4">
+                        <a href="#"><img class="hero-img" src="pictures/pic1.jpg" alt="Left Art"></a>
+                    </div>
+                </div>
+                <div class="col-center">
+                    <div class="img-box-center anim-element delay-2">
+                        <a href="#"><img class="hero-img" src="pictures/pic4.jpg" alt="Center Art"></a>
+                    </div>
+                </div>
+                <div class="col-right">
+                    <div class="img-box-right anim-element delay-3">
+                        <a href="#"><img class="hero-img" src="pictures/pic5.jpg" alt="Right Art"></a>
+                    </div>
+                    <div class="artist-info anim-element delay-5">
+                        <div class="name-line"></div>
+                        <h2>MARK NIKKO LONZAGA</h2>
+                        <span>Creative Engineer</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-about" id="about">
+            <div class="about-layout">
+                <div class="about-text">
+                    <div class="number-tag anim-element delay-1">01</div>
+                    <h2 class="about-title anim-element delay-2" id="about-text-target">A LITTLE<br>ABOUT ME</h2>
+                    <p class="about-desc anim-element delay-3">
+                        I am a dedicated Computer Engineering student with strong skills in Networks, Python, HTML, and design. 
+                        <br><br>
+                        My passion for technology and creativity drives me to continuously learn and apply my knowledge to real-world projects. I combine logical systems with visual storytelling.
+                    </p>
+                </div>
+                <div class="about-images">
+                    <img class="about-img-1 anim-element delay-4" src="pictures/my2.jpg" alt="Workspace">
+                    <img class="about-img-2 anim-element delay-5" src="pictures/my1.png" alt="Portrait">
+                </div>
+            </div>
+        </section>
+
+        <section class="carousel-section" id="work">
+            
+            <button class="nav-btn nav-prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="nav-btn nav-next" onclick="moveSlide(1)">&#10095;</button>
+
+            <div class="carousel-track" id="track">
+                
+                <div class="carousel-slide slide-skills">
+                    <div class="skills-text-area anim-element">
+                        <h2 class="skills-title-large">
+                            <div class="letter-box"><span class="letter-face letter-front">S</span><span class="letter-face letter-back">S</span></div>
+                            <div class="letter-box"><span class="letter-face letter-front">k</span><span class="letter-face letter-back">K</span></div>
+                            <div class="letter-box"><span class="letter-face letter-front">i</span><span class="letter-face letter-back">I</span></div>
+                            <div class="letter-box"><span class="letter-face letter-front">l</span><span class="letter-face letter-back">L</span></div>
+                            <div class="letter-box"><span class="letter-face letter-front">l</span><span class="letter-face letter-back">L</span></div>
+                            <div style="width: 25px;"></div> 
+                            <div class="letter-box"><span class="letter-face letter-front">S</span><span class="letter-face letter-back">S</span></div>
+                            <div class="letter-box"><span class="letter-face letter-front">e</span><span class="letter-face letter-back">E</span></div>
+                            <div class="letter-box"><span class="letter-face letter-front">t</span><span class="letter-face letter-back">T</span></div>
+                        </h2>
+                        <p class="skills-desc-p">
+                            My technical toolkit is built on versatility. As a Computer Engineering student, I have honed a strong command of C++ and Python for core logic, while creating interactive web platforms using PHP, MySQL, and JavaScript. Beyond code, I bridge the physical and digital worlds through Arduino hardware integration and Cisco enterprise networking. Whether it’s scripting in Lua or analyzing data with R, I approach every language as a new medium to create functional, efficient systems.
+                        </p>
+                    </div>
+
+                    <div class="skills-icons-area">
+                        <div class="desktop-icon" style="top: 10%; left: 8%;" data-desc="Web Structure">
+                            <div class="icon-img-box"><img src="pictures/s1.png" alt="HTML"></div>
+                            <div class="icon-label">Web.html</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 15%; left: 32%;" data-desc="Game Scripting">
+                            <div class="icon-img-box"><img src="pictures/s11.png" alt="Lua"></div>
+                            <div class="icon-label">Game.lua</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 25%; left: 18%;" data-desc="Interactivity">
+                            <div class="icon-img-box"><img src="pictures/s3.png" alt="JS"></div>
+                            <div class="icon-label">Script.js</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 28%; left: 42%;" data-desc="Core Logic">
+                            <div class="icon-img-box"><img src="pictures/s8.png" alt="C++"></div>
+                            <div class="icon-label">Source.cpp</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 45%; left: 5%;" data-desc="Styling">
+                            <div class="icon-img-box"><img src="pictures/s2.png" alt="CSS"></div>
+                            <div class="icon-label">Style.css</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 55%; left: 60%;" data-desc="Hardware">
+                            <div class="icon-img-box"><img src="pictures/s7.png" alt="Arduino"></div>
+                            <div class="icon-label">Sketch.ino</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 52%; left: 28%;" data-desc="Database">
+                            <div class="icon-img-box"><img src="pictures/s6.png" alt="SQL"></div>
+                            <div class="icon-label">Data.sql</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 65%; left: 10%;" data-desc="Automation">
+                            <div class="icon-img-box"><img src="pictures/s4.png" alt="Python"></div>
+                            <div class="icon-label">Main.py</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 80%; left: 18%;" data-desc="Server Side">
+                            <div class="icon-img-box"><img src="pictures/s5.png" alt="PHP"></div>
+                            <div class="icon-label">Server.php</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 78%; left: 40%;" data-desc="Networking">
+                            <div class="icon-img-box"><img src="pictures/s12.png" alt="Packet"></div>
+                            <div class="icon-label">Packet.pkt</div>
+                        </div>
+                        <div class="desktop-icon" style="top: 72%; left: 52%;" data-desc="Stats">
+                            <div class="icon-img-box"><img src="pictures/s10.png" alt="R"></div>
+                            <div class="icon-label">Stats.R</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-slide slide-graphics">
+                    <div class="graphics-layout">
+                        <div class="graphics-header">
+                            <div class="gh-left">
+                                <h1 class="graphics-title">VISUAL ARCHIVE</h1>
+                                <div class="graphics-tags">GRAPHIC DESIGN | VIDEO EDITING | DIGITAL ILLUSTRATION</div>
+                            </div>
+                            <div class="gh-right">
+                                <p class="graphics-desc">
+                                    Showcasing four years of freelance design and digital artistry. From dynamic video edits to intricate digital illustrations, this vault represents the intersection of technical precision and creative vision. Scroll horizontally to explore.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="marquee-wrapper" id="marquee-wrapper">
+                        <div class="marquee-track" id="marquee-track">
+                            <div class="vid-item">
+                                <span class="vid-decor-text">Artistry</span>
+                                <div class="vid-decor-box"></div>
+                                <video src="pictures/GRAP.mp4" autoplay loop muted></video>
+                                <h3 class="vid-title">GRAPHICS</h3>
+                            </div>
+                            <div class="vid-item">
+                                <span class="vid-decor-text">Narrative</span>
+                                <div class="vid-decor-box"></div>
+                                <video src="pictures/EDIT.mp4" autoplay loop muted></video>
+                                <h3 class="vid-title">VIDEO EDIT</h3>
+                            </div>
+                            <div class="vid-item">
+                                <span class="vid-decor-text">Brands</span>
+                                <div class="vid-decor-box" style="transform: rotate(45deg);"></div>
+                                <video src="pictures/ADS2.mp4" autoplay loop muted></video>
+                                <h3 class="vid-title">ADS</h3>
+                            </div>
+                            <div class="vid-item">
+                                <span class="vid-decor-text">Architecture</span>
+                                <div class="vid-decor-box"></div>
+                                <video src="pictures/WEBS.mp4" autoplay loop muted></video>
+                                <h3 class="vid-title">WEB DEV</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="indicators-bar" id="indicators-bar">
+                <span class="indicator active" onclick="goToSlide(0)"></span>
+                <span class="indicator" onclick="goToSlide(1)"></span>
+            </div>
+
+        </section>
+
+        <section class="page-certifications" id="certifications">
+            <div class="cert-main-header">
+                <h2>CERTIFICATIONS</h2>
+            </div>
+            
+            <div class="cert-list">
+                
+                <div class="cert-item" data-img="pictures/C.png">
+                    <div class="cert-title">Enterprise Networking, Security, & Automation</div>
+                    <div class="cert-desc">Cisco Networking Academy / July 2025</div>
+                    <div class="cert-arrow">&#x2197;</div>
+                </div>
+
+                <div class="cert-item" data-img="pictures/C1.png">
+                    <div class="cert-title">Switching, Routing, & Wireless Essentials</div>
+                    <div class="cert-desc">Cisco Networking Academy / July 2025</div>
+                    <div class="cert-arrow">&#x2197;</div>
+                </div>
+
+                <div class="cert-item" data-img="pictures/C3.png">
+                    <div class="cert-title">CCNA: Introduction to Networks</div>
+                    <div class="cert-desc">Cisco Networking Academy / Feb 2025</div>
+                    <div class="cert-arrow">&#x2197;</div>
+                </div>
+
+                <div class="cert-item" data-img="pictures/C2.jpg">
+                    <div class="cert-title">IgniteX Entrepreneurship Program</div>
+                    <div class="cert-desc">Wadhwani Foundation / 2025</div>
+                    <div class="cert-arrow">&#x2197;</div>
+                </div>
+
+                <div class="cert-item" data-img="pictures/C4.jpg">
+                    <div class="cert-title">Amazon Web Services (AWS) Training</div>
+                    <div class="cert-desc">Nexus Cloud IT Solution / 2024</div>
+                    <div class="cert-arrow">&#x2197;</div>
+                </div>
+
+            </div>
+
+            <div id="hover-img-container" class="hover-img-container">
+                <img id="hover-img" src="" alt="Certificate Preview">
+            </div>
+        </section>
+
+        <section class="page-services" id="services-section">
+            <div class="srv-clean-container">
+                
+                <div class="srv-clean-left">
+                    <h4 class="srv-clean-label">SERVICES</h4>
+                    <h1 class="srv-clean-title" id="srv-title-display">Advertisement</h1>
+                    <p class="srv-clean-desc srv-fade-text" id="srv-desc-display">Designed high-converting video and image ads for social media campaigns.</p>
+                    
+                    <div class="srv-clean-controls">
+                        <button class="srv-clean-btn" onclick="changeService(1)">NEXT SERVICE</button>
+                        
+                        <div class="srv-dots-container">
+                            <span class="srv-dot active" onclick="goToService(0)"></span>
+                            <span class="srv-dot" onclick="goToService(1)"></span>
+                            <span class="srv-dot" onclick="goToService(2)"></span>
+                            <span class="srv-dot" onclick="goToService(3)"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="srv-clean-right">
+                    <img id="srv-img-display" class="srv-clean-img" src="pictures/R3.png" alt="Service Showcase">
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="site-contact-footer" id="contact">
+            <div class="footer-top">
+                <div class="footer-col">
+                    <h2 class="footer-title">CONTACT</h2>
+                    <div class="footer-details">
+                        <a href="mailto:marknikkolonzaga@gmail.com">marknikkolonzaga@gmail.com</a>
+                        <a href="tel:+639512329712">09512329712</a>
+                    </div>
+                    <a href="Resume/Copy of DP_Curriculum Vitae Format.docx (1).pdf" download class="resume-dl-btn">DOWNLOAD RESUME (PDF)</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h2 class="footer-title">SOCIAL</h2>
+                    <div class="footer-details social-links">
+                        <a href="https://www.instagram.com/mnlb204/" target="_blank">Instagram</a>
+                        <a href="https://www.facebook.com/mark.nikko.borja.lonzaga" target="_blank">Facebook</a>
+                        <a href="https://www.linkedin.com/in/lonzaga-marknikko-borja-01728131a/" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+
+                <div class="footer-col right-align">
+                    <ul class="footer-nav">
+                        <li><a href="#home">PORTFOLIO</a></li>
+                        <li><a href="#about">ABOUT ME</a></li>
+                        <li><a href="#work" class="highlight-link">WORK ARCHIVE</a></li>
+                        <li><a href="#certifications">CERTIFICATIONS</a></li>
+                        <li><a href="#services-section">SERVICES & BIO</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-left">
+                    <a href="#">PRIVACY POLICY</a>
+                    <a href="#">ACCESSIBILITY STATEMENT</a>
+                </div>
+                <div class="footer-bottom-right">
+                    &copy; 2026 by Mark Nikko Lonzaga.
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <div id="drive-modal" class="modal-overlay">
+        <div class="minimal-modal-container">
+            <button class="minimal-close" onclick="closeModal()">&#10005;</button>
+            
+            <div class="minimal-header">
+                <h2 id="modal-title-left">NAME:</h2>
+                <h2 id="modal-title-center">SUBNAME</h2>
+                <div class="vertical-date">20<br>19<br>|<br>20<br>25</div>
+            </div>
+
+            <div class="drive-btn-container">
+                <a href="#" target="_blank" id="drive-link-btn" class="minimal-drive-btn">OPEN GOOGLE DRIVE FOLDER</a>
+            </div>
+
+            <div class="minimal-grid-wrapper">
+                <div class="minimal-grid" id="drive-grid">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox-modal" class="lightbox-overlay">
+        <button class="lightbox-close" onclick="closeLightbox()">&#10005;</button>
+        <div class="lightbox-content" id="lightbox-content">
+            </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
