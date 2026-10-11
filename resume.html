@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Engr. Mark Nikko Lonzaga</title>
+    <meta name="description" content="Resume of Engr. Mark Nikko Borja Lonzaga, Computer Engineering graduate of the Polytechnic University of the Philippines: networking, cloud, and full-stack web and mobile development.">
+    <link rel="canonical" href="https://mnikko213.github.io/LONZ-PORTFOLIO/resume.html">
+    <meta name="theme-color" content="#16123a">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Resume | Engr. Mark Nikko Lonzaga">
+    <meta property="og:description" content="Computer Engineering graduate. Networking, cloud, and full-stack web and mobile development.">
+    <meta property="og:image" content="https://mnikko213.github.io/LONZ-PORTFOLIO/assets/img/og-card.png">
+    <meta property="og:url" content="https://mnikko213.github.io/LONZ-PORTFOLIO/resume.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icons/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Resume page: a paper sheet in a window on the night grid. Prints as a plain resume. */
+        .rs {
+            background-color: var(--night);
+            background-image:
+                linear-gradient(rgba(155, 140, 255, 0.07) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(155, 140, 255, 0.07) 2px, transparent 2px);
+            background-size: 40px 40px;
+            color: var(--cream);
+        }
+        .rs-bar {
+            --line: var(--night-line);
+            --shadow: var(--night-line);
+            --focus: var(--yellow);
+            --ghost-bg: var(--night-raise);
+            --ghost-fg: var(--cream);
+            background: var(--night);
+            border-bottom: var(--u) solid var(--night-line);
+        }
+        .rs-bar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: var(--hud-h);
+        }
+        .rs-bar-inner, .rs-main { max-width: 880px; }
+        .rs-actions { display: flex; align-items: center; gap: 4px; }
+        .rs-actions .btn-hud { margin-left: 0; }
+
+        .rs-main { padding-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 72px); }
+        .rs-sheet {
+            --line: var(--night-line);
+            --shadow: var(--night-line);
+            --focus: var(--purple);
+            --s: 8px;
+            margin: var(--u);
+            background: var(--paper-hi);
+            color: var(--ink);
+        }
+        .rs-sheet .win-bar :focus-visible { outline-color: var(--yellow); }
+        .rs-body { padding: clamp(22px, 5vw, 52px); }
+
+        .rs-head { padding-bottom: 20px; border-bottom: var(--u) solid var(--ink); }
+        .rs-name {
+            margin: 0 0 10px;
+            font: 400 clamp(2.75rem, 1.6rem + 4.4vw, 4.5rem)/0.85 var(--f-pixel);
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            text-shadow: 0.05em 0.05em 0 var(--orange);
+            text-wrap: balance;
+        }
+        .rs-rank {
+            display: inline-block;
+            margin-right: 0.2em;
+            padding: 0.06em 0.18em 0;
+            background: var(--yellow);
+            color: var(--ink);
+            text-shadow: none;
+            box-shadow: 0.05em 0.05em 0 var(--ink);
+        }
+        .rs-tag { margin: 0 0 14px; color: var(--ink-soft); font-weight: 600; font-size: 1.0625rem; }
+        .rs-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 22px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-size: 0.9375rem;
+        }
+        .rs-contact li { display: inline-flex; align-items: center; gap: 7px; min-width: 0; overflow-wrap: anywhere; }
+        .rs-contact .i { --i-size: 16px; color: var(--purple); }
+        .rs-body a { color: var(--ink); text-decoration-color: var(--purple); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+        .rs-body a:hover { color: var(--purple); }
+
+        .rs-sec { margin-top: 30px; }
+        .rs-sec h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 14px;
+            font: 700 0.9375rem/1.2 var(--f-hud);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .rs-sec h2::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            flex: none;
+            background: var(--orange);
+            box-shadow: 2px 2px 0 var(--ink);
+        }
+        .rs-sec h2::after { content: ""; flex: 1; height: var(--u); background: var(--paper-lo); }
+
+        .rs-entry + .rs-entry { margin-top: 20px; }
+        .rs-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0 16px;
+        }
+        .rs-row h3,
+        .rs-row h4 { margin: 0; font-size: 1.0625rem; font-weight: 750; line-height: 1.35; }
+        .rs-row p { margin: 0; }
+        .rs-where, .rs-when { color: var(--ink-soft); font-size: 0.9375rem; }
+        .rs-when { font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .rs-role { font-style: italic; }
+        .rs-issuer { margin: 22px 0 6px; color: var(--purple); font: 700 0.8125rem/1.2 var(--f-hud); letter-spacing: 0.04em; text-transform: uppercase; }
+        .rs-issuer:first-of-type { margin-top: 0; }
+
+        .rs-entry ul { margin: 8px 0 0; padding-left: 1.25em; }
+        .rs-entry li { margin-top: 4px; }
+        .rs-entry li::marker { color: var(--orange-deep); }
+        :where(.rs-body) p { margin: 0; }
+        .rs-note { margin-top: 6px; }
+        .rs-skills { display: grid; gap: 6px; margin: 0; }
+        .rs-skills div { display: grid; grid-template-columns: 13.5em minmax(0, 1fr); gap: 4px 14px; }
+        .rs-skills dt { font-weight: 750; }
+        .rs-skills dd { margin: 0; }
+
+        .rs-foot {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 16px;
+            margin-top: 36px;
+        }
+        .rs-foot .btn-ghost { --ghost-bg: var(--night-raise); --ghost-fg: var(--cream); }
+
+        @media (max-width: 640px) {
+            .rs-skills div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+            .rs-foot .btn { flex: 1 1 auto; }
+        }
+        @media (max-width: 380px) {
+            .rs-bar .brand-word { display: none; }
+        }
+
+        @media print {
+            @page { margin: 12mm 14mm; }
+            body.rs { background: #fff !important; color: #000; font-size: 10.5pt; line-height: 1.4; }
+            .rs-bar, .skip-link, .win-bar, .rs-foot { display: none !important; }
+            .rs-main { width: auto; max-width: none; padding: 0; }
+            .rs-sheet { margin: 0; border: 0 !important; box-shadow: none !important; background: #fff; color: #000; }
+            .rs-body { padding: 0; }
+            .rs-name { font-size: 30pt; text-shadow: none; }
+            .rs-rank { box-shadow: none; background: none; padding: 0; }
+            .rs-sec { margin-top: 14pt; }
+            .rs-sec h2::before { display: none; }
+            .rs-sec h2::after { background: #000; height: 1.5pt; }
+            .rs-body a { color: #000; text-decoration: none; }
+            .rs-entry, .rs-skills div { break-inside: avoid; }
+            .rs-sec h2, .rs-issuer { break-after: avoid; page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body class="rs">
+
+<a class="skip-link" href="#resume">Skip to resume</a>
+
+<header class="rs-bar">
+    <div class="wrap rs-bar-inner">
+        <a href="./" class="brand" aria-label="Mark Nikko Lonzaga, back to the portfolio">
+            <img class="px-art brand-logo" src="assets/img/logo.png" width="64" height="64" alt="">
+            <span class="brand-word">LONZ</span>
+        </a>
+        <nav class="rs-actions" aria-label="Resume">
+            <a class="btn btn-sm btn-ghost btn-hud" href="./">
+                <span class="i i-arrow-left" aria-hidden="true"></span><span class="btn-label">Portfolio</span>
+            </a>
+            <a class="btn btn-sm btn-primary" href="Resume/Mark-Nikko-Lonzaga-Resume.pdf" download>
+                <span class="i i-download" aria-hidden="true"></span><span>Download PDF</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<main class="wrap rs-main" id="resume">
+    <article class="win rs-sheet" aria-labelledby="rs-name">
+        <div class="win-bar">
+            <span class="win-file"><span class="i i-script-text" aria-hidden="true"></span>resume.txt</span>
+            <span class="win-status">Updated Oct 2026</span>
+        </div>
+
+        <div class="rs-body">
+            <header class="rs-head">
+                <h1 class="rs-name" id="rs-name"><span class="rs-rank">Engr.</span> Mark Nikko Borja Lonzaga</h1>
+                <p class="rs-tag">Computer Engineer · B.S. CpE, Polytechnic University of the Philippines, 2026</p>
+                <ul class="rs-contact">
+                    <li><span class="i i-map" aria-hidden="true"></span>Quezon City, Metro Manila</li>
+                    <li><span class="i i-mail" aria-hidden="true"></span><a href="mailto:mnikkolonzaga@gmail.com">mnikkolonzaga@gmail.com</a></li>
+                    <li><span class="i i-device-phone" aria-hidden="true"></span><a href="tel:+639512329712">0951 232 9712</a></li>
+                    <li><span class="i i-briefcase" aria-hidden="true"></span><a href="https://www.linkedin.com/in/lonzaga-marknikko-borja-01728131a/" rel="noopener">linkedin.com/in/lonzaga-marknikko-borja-01728131a</a></li>
+                    <li><span class="i i-home" aria-hidden="true"></span><a href="https://mnikko213.github.io/LONZ-PORTFOLIO/">mnikko213.github.io/LONZ-PORTFOLIO</a></li>
+                </ul>
+            </header>
+
+            <section class="rs-sec" aria-labelledby="rs-summary">
+                <h2 id="rs-summary">Summary</h2>
+                <p>Computer Engineering graduate of the Polytechnic University of the Philippines (B.S. CpE, 2026) with hands-on work across networking, cloud, and full-stack web and mobile development. Completed all three Cisco CCNA courses and the AWS Academy Cloud Foundations program, supported live technical operations as an IT intern, and currently builds production web and mobile apps for clients using Next.js, React Native, and Supabase. Seeking an entry-level role in network and cloud infrastructure or software engineering.</p>
+            </section>
+
+            <section class="rs-sec" aria-labelledby="rs-education">
+                <h2 id="rs-education">Education</h2>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Polytechnic University of the Philippines</h3><p class="rs-where">Manila, Metro Manila</p></div>
+                    <div class="rs-row"><p class="rs-role">Bachelor of Science in Computer Engineering (B.S. CpE)</p><p class="rs-when">September 2022 – 2026</p></div>
+                    <p class="rs-note"><strong>Thesis:</strong> Gamified Sensor-Based Approach to Monitoring Workout Progress and Performance</p>
+                    <p class="rs-note"><strong>Honors:</strong> President's Lister (1st Year 1st Sem, 2nd Year 1st Sem, 3rd Year 1st Sem); Dean's Lister (1st Year 2nd Sem, 2nd Year 2nd Sem, 3rd Year 2nd Sem, 4th Year 1st Sem).</p>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Our Lady of Fatima University</h3><p class="rs-where">Quezon City, Metro Manila</p></div>
+                    <div class="rs-row"><p class="rs-role">Senior High School: STEM Strand</p><p class="rs-when">July 2022</p></div>
+                    <p class="rs-note"><strong>Honors:</strong> High Honor Student (July 2022).</p>
+                </div>
+            </section>
+
+            <section class="rs-sec" aria-labelledby="rs-experience">
+                <h2 id="rs-experience">Experience</h2>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Freelance Web and App Developer</h3><p class="rs-where">Quezon City, Metro Manila (Remote)</p></div>
+                    <div class="rs-row"><p class="rs-role">Client Projects</p><p class="rs-when">2026 – Present</p></div>
+                    <ul>
+                        <li>The Coffee Realm (live café ordering system): Built the customer ordering website, QR loyalty program, and role-based back office using Next.js, React, TypeScript, and Supabase (PostgreSQL, Row Level Security, Realtime), delivering 40 page routes, 38 API routes, and 132 SQL migrations.</li>
+                        <li>Developed a kitchen display tablet app (React Native, Expo) and integrated a partner's Android point-of-sale till with the website through Supabase Realtime, with offline queues for network outages, validated by 1,538 passing automated checks.</li>
+                        <li>ONE UP (Android fitness app in closed testing on Google Play): Took over an existing React Native (Expo) and Supabase codebase as main developer, building a server-side XP, streak, and achievement system (51 badges, 12 challenges, weekly leaderboard) and an AI coach powered by the Claude API.</li>
+                        <li>Added a muscle recovery heatmap, offline workout logging, and a licensed 1,859-exercise video library, and built the app's marketing website.</li>
+                        <li>JMI2 Waterproofing: Designed and developed a four-page marketing website in HTML, CSS, and JavaScript with an EmailJS proposal form protected by reCAPTCHA, phone number validation, and resubmission limits.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Polytechnic University of the Philippines</h3><p class="rs-where">Santa Mesa, Manila</p></div>
+                    <div class="rs-row"><p class="rs-role">Researcher and Developer</p><p class="rs-when">2025 – 2026</p></div>
+                    <ul>
+                        <li>Spearheaded the development of a gamified gym equipment monitoring system, delivering an automated tracking solution that precisely measures workout progress and performance.</li>
+                        <li>Architected the hardware system by integrating load cells and physical sensors with ESP32 and Raspberry Pi 5 microcontrollers, enabling real-time biomechanical analysis with high data accuracy.</li>
+                        <li>Engineered a full-stack web application using HTML, CSS, and PHP integrated with OpenCV and MediaPipe algorithms, providing users with dynamic, AI-driven exercise form correction.</li>
+                        <li>Administered a centralized MySQL database architecture for comprehensive data logging, facilitating efficient system validation and secure user data retrieval.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Nexus Cloud IT Solutions</h3><p class="rs-where">Ortigas Center, Pasig City</p></div>
+                    <div class="rs-row"><p class="rs-role">Technical Intern</p><p class="rs-when">July – September 2025</p></div>
+                    <ul>
+                        <li>Resolved real-time connectivity, audio, and visual issues during professional training webinars, resulting in a seamless and uninterrupted technical experience for paying customers.</li>
+                        <li>Delivered direct technical assistance to users navigating online platforms, minimizing technical disruptions and maintaining high satisfaction rates for live training modules.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Nexus Cloud IT Solutions</h3><p class="rs-where">Ortigas Center, Pasig City</p></div>
+                    <div class="rs-row"><p class="rs-role">Technical Intern</p><p class="rs-when">July – September 2024</p></div>
+                    <ul>
+                        <li>Coordinated workstation assignments and operational workflows with the internal team, ensuring zero downtime and optimized hardware allocation for all webinar participants.</li>
+                        <li>Monitored back-end webinar setups and equipment functionality prior to live sessions, proactively identifying and mitigating potential technical bottlenecks before deployment.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h3>Freelance Art and Design Services</h3><p class="rs-where">Quezon City, Metro Manila</p></div>
+                    <div class="rs-row"><p class="rs-role">Freelance Artist &amp; Designer</p><p class="rs-when">2018 – 2022</p></div>
+                    <ul>
+                        <li>Executed custom creative commissions including digital illustrations, bespoke branding, and clothing design, enhancing the visual identity and marketing reach of diverse clients.</li>
+                        <li>Managed end-to-end client communications to translate conceptual requirements into digital visual outputs, achieving prompt delivery for all commissioned design projects.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="rs-sec" aria-labelledby="rs-certs">
+                <h2 id="rs-certs">Certifications &amp; Training</h2>
+                <h3 class="rs-issuer">AWS Academy</h3>
+                <div class="rs-entry">
+                    <div class="rs-row"><h4>AWS Academy Graduate – Cloud Foundations</h4><p class="rs-when">Issued: May 27, 2026</p></div>
+                    <ul>
+                        <li>Completed 20 hours of comprehensive cloud training, developing core competencies in AWS cloud infrastructure, security fundamentals, and architectural best practices to support scalable cloud deployments.</li>
+                    </ul>
+                </div>
+                <h3 class="rs-issuer">Cisco Networking Academy</h3>
+                <div class="rs-entry">
+                    <div class="rs-row"><h4>Junior Cybersecurity Analyst Career Path</h4><p class="rs-when">Issued: Feb 26, 2026</p></div>
+                    <ul>
+                        <li>Evaluated organizational security postures using vulnerability and risk assessment tools, identifying critical gaps to enhance overall network and information security.</li>
+                        <li>Formulated incident management activities and cybersecurity controls, establishing robust protocols to effectively mitigate network and system security threats.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h4>CCNA: Enterprise Networking, Security, and Automation</h4><p class="rs-when">Issued: Jul 21, 2025</p></div>
+                    <ul>
+                        <li>Configured single-area OSPFv2 and NAT services on edge routers, ensuring robust IPv4 address scalability across point-to-point and multiaccess networks.</li>
+                        <li>Implemented standard IPv4 access control lists (ACLs) and applied security best practices, successfully mitigating network threats and securing administrative access.</li>
+                        <li>Evaluated evolving network technologies including virtualization, software-defined networking, and Quality of Service (QoS) protocols, optimizing the management and troubleshooting of scalable network architectures.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h4>CCNA: Switching, Routing, and Wireless Essentials</h4><p class="rs-when">Issued: Jul 21, 2025</p></div>
+                    <ul>
+                        <li>Configured fundamental Layer 2 technologies including VLANs, Spanning Tree Protocol (STP), and wireless LANs (WLANs), improving network segmentation and ensuring reliable switching capabilities.</li>
+                        <li>Implemented inter-VLAN routing and device security features, resolving broadcast domain bottlenecks and safeguarding local area networks against internal vulnerabilities.</li>
+                    </ul>
+                </div>
+                <div class="rs-entry">
+                    <div class="rs-row"><h4>CCNA: Introduction to Networks</h4><p class="rs-when">Issued: Feb 05, 2025</p></div>
+                    <ul>
+                        <li>Programmed initial configurations on Cisco routers and switches, establishing baseline network connectivity and verifying operational status for end devices.</li>
+                        <li>Designed IPv4 and IPv6 subnetting schemes, allocating network addresses efficiently to accommodate organizational growth and streamline data routing.</li>
+                    </ul>
+                </div>
+                <h3 class="rs-issuer">Nexus Cloud IT Solutions</h3>
+                <div class="rs-entry">
+                    <div class="rs-row"><h4>Amazon Web Services (AWS) Training</h4><p class="rs-when">September 2024</p></div>
+                    <ul>
+                        <li>Participated in an intensive Amazon Web Services training program, analyzing core cloud services and deployment models to build a foundational understanding of enterprise IT infrastructure.</li>
+                        <li>Explored cloud computational and storage capabilities, evaluating practical virtualization use cases to facilitate the transition from on-premise servers to agile cloud environments.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="rs-sec" aria-labelledby="rs-skills">
+                <h2 id="rs-skills">Skills &amp; Interests</h2>
+                <dl class="rs-skills">
+                    <div><dt>Technical &amp; Web</dt><dd>HTML, CSS, JavaScript, TypeScript, React, Next.js, PHP, MySQL, PostgreSQL, Supabase, NoSQL, Firebase, Vercel, Full-Stack Architecture.</dd></div>
+                    <div><dt>Mobile</dt><dd>React Native, Expo, Android app builds (EAS Build), offline-first data sync.</dd></div>
+                    <div><dt>Hardware &amp; IoT</dt><dd>ESP32, ESP8266, Raspberry Pi 5, Arduino Uno, Sensor Integration (Load Cells, RFID).</dd></div>
+                    <div><dt>Machine Learning &amp; AI</dt><dd>MediaPipe, OpenCV, Chatbot Development, LLM Integration (Claude API).</dd></div>
+                    <div><dt>Networking &amp; Security</dt><dd>OSPFv2, VLANs, STP, Inter-VLAN Routing, NAT, IPv4 ACLs, Threat Mitigation, Vulnerability Assessment.</dd></div>
+                    <div><dt>Design &amp; Multimedia</dt><dd>Digital Illustration, Logo Design, Branding, Character Design, Layout Composition, Video Editing.</dd></div>
+                    <div><dt>Interests</dt><dd>Visual Arts, Embedded Systems, Problem Solving, Cybersecurity Vulnerability Research.</dd></div>
+                </dl>
+            </section>
+
+            <section class="rs-sec" aria-labelledby="rs-refs">
+                <h2 id="rs-refs">Character References</h2>
+                <p>Available on request.</p>
+            </section>
+        </div>
+    </article>
+
+    <div class="rs-foot">
+        <a class="btn btn-primary btn-lg" href="Resume/Mark-Nikko-Lonzaga-Resume.pdf" download>
+            <span class="i i-download" aria-hidden="true"></span><span>Download PDF</span>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="./#contact">
+            <span class="i i-mail" aria-hidden="true"></span><span>Contact me</span>
+        </a>
+    </div>
+</main>
+
+</body>
+</html>

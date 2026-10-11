@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mnikko213.github.io/LONZ-PORTFOLIO/sitemap.xml

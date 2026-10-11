@@ -1,0 +1,13 @@
+Fonts in this folder are licensed under the SIL Open Font License, Version 1.1.
+Full licence text: https://openfontlicense.org/open-font-license-official-text/
+
+jersey10.woff2
+  Jersey 10. Copyright 2023 The Soft Type Project Authors (https://github.com/scfried/soft-type-jersey)
+
+archivo-var.woff2
+  Archivo. Copyright 2019 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
+
+silkscreen-400.woff2, silkscreen-700.woff2
+  Silkscreen. Copyright 2001 The Silkscreen Project Authors (https://github.com/googlefonts/silkscreen)
+
+Files were downloaded from Google Fonts (latin subset, woff2) and are unmodified.

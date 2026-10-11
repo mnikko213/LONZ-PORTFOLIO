@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game over | Engr. Mark Nikko Lonzaga</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#16123a">
+    <!-- GitHub Pages serves this page for any missing path, at any depth, so every
+         link and asset below is resolved from the site root by the script. -->
+    <style>
+        :root { color-scheme: dark; }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background-color: #16123a;
+            background-image:
+                linear-gradient(rgba(155, 140, 255, 0.07) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(155, 140, 255, 0.07) 2px, transparent 2px);
+            background-size: 40px 40px;
+            color: #f6ecd6;
+            font-family: "Archivo", "Segoe UI", system-ui, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin: 0 0 12px;
+            font-family: "Jersey 10", "Courier New", monospace;
+            font-weight: 400;
+            font-size: clamp(4rem, 3rem + 8vw, 9rem);
+            line-height: 0.8;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #ff7a2f;
+            text-shadow: 0.04em 0.04em 0 #c2410c, 0.08em 0.08em 0 #0a0820;
+        }
+        p { margin: 0 0 28px; color: #c9c2e8; font-size: 1.125rem; }
+        a {
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            padding: 14px 20px 13px;
+            background: #ff7a2f;
+            color: #1a1530;
+            font: 700 14px/1 "Silkscreen", "Courier New", monospace;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 -4px 0 #0a0820, 0 4px 0 #0a0820, -4px 0 0 #0a0820, 4px 0 0 #0a0820, 8px 8px 0 #0a0820;
+        }
+        a:hover { background: #ff8c4a; }
+        a:focus-visible { outline: 3px solid #ffd23f; outline-offset: 9px; }
+        img { image-rendering: pixelated; width: 96px; height: 96px; margin-bottom: 28px; }
+    </style>
+</head>
+<body>
+    <main>
+        <img id="logo" src="" width="96" height="96" alt="">
+        <h1>Game over</h1>
+        <p>This level doesn't exist. Head back to the title screen.</p>
+        <a id="home" href="https://mnikko213.github.io/LONZ-PORTFOLIO/">&#9654; Title screen</a>
+    </main>
+    <script>
+        (function () {
+            // Project sites live under /<repo>/ on github.io; custom domains live at "/".
+            var base = '/';
+            if (/\.github\.io$/.test(location.hostname)) {
+                var first = location.pathname.split('/')[1];
+                if (first) base = '/' + first + '/';
+            }
+            document.getElementById('home').href = base;
+            document.getElementById('logo').src = base + 'assets/img/icons/icon-192.png';
+            var icon = document.createElement('link');
+            icon.rel = 'icon';
+            icon.href = base + 'favicon.ico';
+            document.head.appendChild(icon);
+            var css = document.createElement('style');
+            css.textContent = '@font-face{font-family:"Jersey 10";src:url(' + base + 'assets/fonts/jersey10.woff2) format("woff2");font-display:swap}' +
+                '@font-face{font-family:"Silkscreen";src:url(' + base + 'assets/fonts/silkscreen-700.woff2) format("woff2");font-weight:700;font-display:swap}' +
+                '@font-face{font-family:"Archivo";src:url(' + base + 'assets/fonts/archivo-var.woff2) format("woff2");font-weight:100 900;font-display:swap}';
+            document.head.appendChild(css);
+        })();
+    </script>
+</body>
+</html>
