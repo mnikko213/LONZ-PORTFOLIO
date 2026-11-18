@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="day">
+<html lang="en" data-theme="night">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engr. Mark Nikko Lonzaga | Computer Engineer &amp; Designer</title>
-    <meta name="description" content="Portfolio of Engr. Mark Nikko Lonzaga, a Quezon City-based Computer Engineering graduate of PUP who builds networks, apps, and the art that goes on them. Featured: ONE UP, The Coffee Realm, JMI2 Waterproofing.">
+    <title>Engr. Mark Nikko Lonzaga | Websites, apps, graphics and video ads in Quezon City</title>
+    <meta name="description" content="Freelance developer and designer in Quezon City. See a live caf&eacute; ordering system, a contractor's website, a fitness app, graphics and video ads, all inside a retro game. Portfolio of Engr. Mark Nikko Lonzaga, Computer Engineering graduate of PUP.">
     <link rel="canonical" href="https://mnikko213.github.io/LONZ-PORTFOLIO/">
     <meta name="theme-color" content="#16123a">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Engr. Mark Nikko Lonzaga | Computer Engineer &amp; Designer">
-    <meta property="og:description" content="Networks, apps, and the art that goes on them. Press start.">
+    <meta property="og:title" content="Engr. Mark Nikko Lonzaga | Websites, apps, graphics and video ads">
+    <meta property="og:description" content="Freelance developer and designer in Quezon City. A live caf&eacute; ordering system, a contractor's website, a fitness app, graphics and video ads. Press start.">
     <meta property="og:image" content="https://mnikko213.github.io/LONZ-PORTFOLIO/assets/img/og-card.png">
     <meta property="og:url" content="https://mnikko213.github.io/LONZ-PORTFOLIO/">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Engr. Mark Nikko Lonzaga in pixel letters beside a retro computer showing the ONE UP app">
+    <meta property="og:image:alt" content="Engr. Mark Nikko Lonzaga in pixel letters beside a retro computer showing The Coffee Realm website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="favicon.ico" sizes="48x48">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icons/favicon-32.png">
@@ -26,13 +26,30 @@
     <link rel="preload" href="assets/fonts/silkscreen-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/style.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mark Nikko Lonzaga",
+        "honorificPrefix": "Engr.",
+        "jobTitle": "Web and app developer, designer and video editor",
+        "url": "https://mnikko213.github.io/LONZ-PORTFOLIO/",
+        "image": "https://mnikko213.github.io/LONZ-PORTFOLIO/assets/img/me-photo.webp",
+        "email": "mailto:mnikkolonzaga@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Quezon City", "addressCountry": "PH" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Polytechnic University of the Philippines" },
+        "sameAs": [
+            "https://www.linkedin.com/in/lonzaga-marknikko-borja-01728131a/",
+            "https://www.instagram.com/mnlb204/",
+            "https://www.facebook.com/mark.nikko.borja.lonzaga"
+        ]
+    }
+    </script>
     <script>
         (function () {
             var t = null;
             try { t = localStorage.getItem('lonz-theme'); } catch (e) {}
-            if (t !== 'day' && t !== 'night') {
-                t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
-            }
+            if (t !== 'day' && t !== 'night') t = 'night';
             document.documentElement.setAttribute('data-theme', t);
             document.documentElement.classList.add('js');
             try {
@@ -52,45 +69,39 @@
             <span class="brand-word">LONZ</span>
         </a>
 
+        <p class="hud-stage" id="hud-stage" aria-hidden="true"><span id="hud-stage-n">1/9</span> <span id="hud-stage-name">Home</span></p>
+
         <nav class="nav" id="site-nav" aria-label="Primary">
             <ul class="nav-list">
                 <li><a href="#work">Work</a></li>
+                <li><a href="#archive">Videos</a></li>
+                <li><a href="#services-section">Services</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#certifications">Certs</a></li>
-                <li><a href="#services-section">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
 
         <div class="hud-tools">
-            <button class="tool-btn" id="theme-toggle" type="button" aria-pressed="false">
-                <span class="i i-moon" aria-hidden="true"></span>
-                <span class="sr-only">Night mode</span>
+            <button class="hud-coins" id="quest-btn" type="button" aria-haspopup="dialog">
+                <span class="coin coin-sm" aria-hidden="true"></span>
+                <span class="hud-coins-n" id="coin-count" aria-hidden="true">0</span>
+                <span class="sr-only" id="coin-label">0 coins. Open the side quests</span>
             </button>
-            <button class="tool-btn" id="sfx-toggle" type="button" aria-pressed="false">
-                <span class="i i-volume-x" aria-hidden="true"></span>
-                <span class="sr-only">Sound effects</span>
-            </button>
-            <button class="tool-btn" id="motion-toggle" type="button" aria-pressed="false">
-                <span class="i i-pause" aria-hidden="true"></span>
-                <span class="sr-only">Pause animations</span>
-            </button>
-            <a class="btn btn-sm btn-hud" href="resume.html">
-                <span class="i i-script-text" aria-hidden="true"></span><span class="btn-label">Resume</span>
+            <a class="btn btn-sm btn-primary btn-hud" href="#contact">
+                <span class="btn-label">Hire me</span>
             </a>
-            <button class="tool-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+            <button class="tool-btn menu-btn" id="menu-btn" type="button" aria-haspopup="dialog">
                 <span class="i i-menu" aria-hidden="true"></span>
-                <span class="sr-only">Menu</span>
+                <span class="sr-only">Menu: stages, side quests and options</span>
             </button>
         </div>
     </div>
-    <div class="xp-bar" aria-hidden="true"><span></span></div>
+    <div class="xp-bar" aria-hidden="true"><span class="xp-fill"></span><span class="xp-runner"></span><span class="xp-flag"></span></div>
 </header>
 
 <main id="main">
-
     <!-- ============ TITLE SCREEN ============ -->
     <section class="band band-night hero" id="home" aria-labelledby="hero-title">
         <div class="hero-sky" aria-hidden="true">
@@ -109,31 +120,28 @@
                     <span class="ht-line ht-1">Mark Nikko</span>
                     <span class="ht-line ht-2">Lonzaga</span>
                 </h1>
-                <p class="hero-sub">Computer engineer and designer from Quezon City. I build networks, apps, and the art that goes on them.</p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="#work" data-sfx="start">
-                        <span class="i i-play" aria-hidden="true"></span><span>Press start</span>
-                    </a>
-                    <a class="btn btn-ghost" href="resume.html">
-                        <span class="i i-script-text" aria-hidden="true"></span><span>Resume</span>
-                    </a>
-                </div>
+                <p class="hero-sub">Websites, apps, graphics and video ads, made in Quezon City by a computer engineer who started as an illustrator.</p>
+                <ul class="title-menu" id="title-menu" role="list">
+                    <li><a href="#services-section" data-sfx="start" data-quest="start"><span class="i i-play" aria-hidden="true"></span>I need something made</a></li>
+                    <li><a href="#about" data-sfx="start" data-quest="start"><span class="i i-play" aria-hidden="true"></span>I'm hiring for a role</a></li>
+                    <li><button type="button" id="title-sound" aria-pressed="false"><span class="i i-play" aria-hidden="true"></span>Sound: <span id="title-sound-v">off</span></button></li>
+                </ul>
             </div>
 
             <div class="hero-rig">
                 <div class="rig" id="rig">
                     <img class="px-art rig-burst" src="assets/img/sprites/burst.png" width="96" height="96" alt="">
                     <div class="rig-screen" id="reel" role="region" aria-roledescription="carousel" aria-label="Work playing on the monitor">
-                        <a class="reel-slide is-on" href="#level-oneup" data-title="ONE UP">
-                            <img src="assets/img/reel/oneup.webp" width="720" height="450" alt="ONE UP landing page with the app's workout screen" fetchpriority="high">
-                        </a>
-                        <a class="reel-slide" href="#level-coffee" data-title="The Coffee Realm" tabindex="-1">
-                            <img data-src="assets/img/reel/coffee.webp" width="720" height="450" alt="The Coffee Realm home page: Homemade. Freshly baked. Brewed daily.">
+                        <a class="reel-slide is-on" href="#level-coffee" data-title="The Coffee Realm">
+                            <img src="assets/img/reel/coffee.webp" width="720" height="450" alt="The Coffee Realm home page: Homemade. Freshly baked. Brewed daily." fetchpriority="high">
                         </a>
                         <a class="reel-slide" href="#level-jmi2" data-title="JMI2 Waterproofing" tabindex="-1">
                             <img data-src="assets/img/reel/jmi2.webp" width="720" height="450" alt="JMI2 Waterproofing website hero with a drone shot of a roof deck">
                         </a>
-                        <a class="reel-slide" href="#archive" data-title="Illustration" tabindex="-1">
+                        <a class="reel-slide" href="#level-oneup" data-title="ONE UP" tabindex="-1">
+                            <img data-src="assets/img/reel/oneup.webp" width="720" height="450" alt="ONE UP landing page with the app's workout screen">
+                        </a>
+                        <a class="reel-slide" href="#characters" data-title="Illustration" tabindex="-1">
                             <img data-src="assets/img/reel/art.webp" width="720" height="434" alt="Digital illustration of a red-haired character">
                         </a>
                         <span class="reel-static" aria-hidden="true"></span>
@@ -141,7 +149,7 @@
                     <img class="px-art rig-crt" src="assets/img/sprites/crt.png" width="128" height="112" alt="">
                 </div>
                 <div class="reel-bar">
-                    <p class="reel-now"><span class="reel-label">Now playing</span> <span class="reel-title" id="reel-title">ONE UP</span></p>
+                    <p class="reel-now"><span class="reel-label">Now playing</span> <span class="reel-title" id="reel-title">The Coffee Realm</span></p>
                     <button class="tool-btn tool-btn-sm" id="reel-toggle" type="button">
                         <span class="i i-pause" aria-hidden="true"></span>
                         <span class="sr-only">Pause the monitor slideshow</span>
@@ -151,36 +159,46 @@
         </div>
     </section>
 
-    <!-- ============ HELLO STRIP ============ -->
-    <section class="band band-orange hello" aria-labelledby="hello-title">
-        <div class="wrap hello-grid">
-            <div class="hello-intro">
-                <img class="px-art hello-smiley" src="assets/img/sprites/smiley.png" width="16" height="16" alt="">
-                <h2 class="hello-title" id="hello-title">Hello!</h2>
-                <p class="hello-text">I'm a Computer Engineering graduate from PUP who spent four years freelancing as an illustrator before falling for networks and code.</p>
+    <!-- ============ INTRO DIALOG ============ -->
+    <section class="band band-night intro" id="intro" aria-labelledby="intro-title">
+        <div class="wrap intro-grid">
+            <div class="talk" data-reveal>
+                <div class="talk-face">
+                    <img class="px-art" src="assets/img/me-pixel.png" width="72" height="79" alt="">
+                </div>
+                <div class="talk-box">
+                    <h2 class="talk-name" id="intro-title">Hello!</h2>
+                    <p class="talk-text" id="talk-text">I'm Mark. I design it and I build it: four years of freelance illustration and design, then a Computer Engineering degree from PUP. Scroll on to play through my work.</p>
+                </div>
             </div>
-            <ul class="hello-badges" role="list">
-                <li class="badge">
-                    <span class="badge-icon"><span class="i i-radio-tower" aria-hidden="true"></span></span>
-                    <span class="badge-top">CCNA courses 3/3</span>
-                    <span class="badge-sub">Cisco Networking Academy</span>
-                </li>
-                <li class="badge">
-                    <span class="badge-icon"><span class="i i-cloud" aria-hidden="true"></span></span>
-                    <span class="badge-top">AWS Academy</span>
-                    <span class="badge-sub">Cloud Foundations graduate</span>
-                </li>
-                <li class="badge">
-                    <span class="badge-icon"><span class="i i-trophy" aria-hidden="true"></span></span>
-                    <span class="badge-top">President's Lister</span>
-                    <span class="badge-sub">Three semesters at PUP</span>
-                </li>
-                <li class="badge">
-                    <span class="badge-icon"><span class="i i-paint-bucket" aria-hidden="true"></span></span>
-                    <span class="badge-top">Since 2018</span>
-                    <span class="badge-sub">Freelance art and design</span>
-                </li>
-            </ul>
+
+            <div class="status win" data-reveal>
+                <div class="win-bar">
+                    <span class="win-file"><span class="i i-user" aria-hidden="true"></span>Status</span>
+                </div>
+                <dl class="status-rows">
+                    <div>
+                        <dt>Freelance</dt>
+                        <dd><span class="status-lamp is-live" aria-hidden="true"></span>Taking projects</dd>
+                    </div>
+                    <div>
+                        <dt>Full-time</dt>
+                        <dd><span class="status-lamp is-live" aria-hidden="true"></span>Open to entry-level roles in software, network or cloud</dd>
+                    </div>
+                    <div>
+                        <dt>Live now</dt>
+                        <dd><a href="#level-coffee">The Coffee Realm, taking real orders</a></dd>
+                    </div>
+                    <div>
+                        <dt>Courses</dt>
+                        <dd><a href="#certifications">CCNA 3 of 3 and AWS Cloud Foundations</a></dd>
+                    </div>
+                    <div>
+                        <dt>Honors</dt>
+                        <dd><a href="#about">President's Lister, three semesters at PUP</a></dd>
+                    </div>
+                </dl>
+            </div>
         </div>
     </section>
 
@@ -189,77 +207,68 @@
         <div class="wrap">
             <header class="sec-head">
                 <h2 class="sec-title" id="work-title">Level select</h2>
-                <p class="sec-lede">Three recent builds: a fitness app, a caf&eacute;'s ordering system, and a contractor's website.</p>
+                <p class="sec-lede">Client work: a caf&eacute;'s ordering system, a contractor's website and a fitness app. Pick a level or scroll through all three.</p>
             </header>
 
-            <!-- ONE UP -->
-            <article class="level win" id="level-oneup" aria-labelledby="oneup-name" data-reveal>
-                <div class="win-bar">
-                    <span class="win-file"><span class="i i-device-phone" aria-hidden="true"></span>one-up.apk</span>
-                    <span class="win-status"><span class="status-lamp is-live" aria-hidden="true"></span>In testing on Google Play</span>
-                </div>
-                <div class="level-body level-split">
-                    <div class="level-media">
-                        <button class="phones" type="button" data-gallery="oneup" data-index="0" aria-label="Open ONE UP screenshots">
-                            <span class="phone phone-l"><img src="assets/img/work/oneup/workout.webp" width="540" height="1169" alt="" loading="lazy"></span>
-                            <span class="phone phone-c"><img src="assets/img/work/oneup/home.webp" width="540" height="1169" alt="" loading="lazy"></span>
-                            <span class="phone phone-r"><img src="assets/img/work/oneup/recovery.webp" width="540" height="1169" alt="" loading="lazy"></span>
-                            <span class="sticker sticker-xp" aria-hidden="true">+40 XP</span>
-                        </button>
-                    </div>
-                    <div class="level-text">
-                        <h3 class="level-name" id="oneup-name">ONE UP</h3>
-                        <p class="level-line">A fitness app that turns training into a game.</p>
-                        <p class="level-tags"><span>Client project</span><span>Android app</span><span>2026</span></p>
-                        <p>ONE UP logs workouts and meals, then pays you back in XP, weekly streaks and badges, with an AI coach on call. I took over an existing Expo and Supabase codebase in September 2026 and built the game layer, the AI coach and the landing page. The app is in closed testing.</p>
-                        <ul class="loot">
-                            <li>Server-side reward engine: XP, levels, weekly streaks, 51 badges, 12 challenges and a weekly leaderboard</li>
-                            <li>AI coach on the Claude API that plans workouts from real library exercises and remembers injuries</li>
-                            <li>Recovery map: a front and back muscle heatmap built from finished workouts</li>
-                            <li>Integrated a licensed 1,859-exercise video library, plus offline logging and a 13-step onboarding</li>
-                        </ul>
-                        <ul class="chips" aria-label="Tech stack">
-                            <li>Expo SDK 57</li><li>React Native</li><li>TypeScript</li><li>Supabase</li><li>Claude API</li><li>RevenueCat</li>
-                        </ul>
-                        <div class="level-actions">
-                            <button class="btn btn-primary" type="button" data-gallery="oneup" data-index="0">
-                                <span class="i i-image" aria-hidden="true"></span><span>View screens</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </article>
+            <ol class="stages" aria-label="Levels in this section">
+                <li>
+                    <a class="stage" href="#level-coffee">
+                        <span class="stage-no" aria-hidden="true">1-1</span>
+                        <span class="stage-shot"><img src="assets/img/reel/coffee.webp" width="720" height="450" alt=""></span>
+                        <span class="stage-name">The Coffee Realm</span>
+                        <span class="stage-meta">Caf&eacute; ordering system, live</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="stage" href="#level-jmi2">
+                        <span class="stage-no" aria-hidden="true">1-2</span>
+                        <span class="stage-shot"><img src="assets/img/reel/jmi2.webp" width="720" height="450" alt="" loading="lazy"></span>
+                        <span class="stage-name">JMI2 Water&shy;proofing</span>
+                        <span class="stage-meta">Contractor website, built</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="stage" href="#level-oneup">
+                        <span class="stage-no" aria-hidden="true">1-3</span>
+                        <span class="stage-shot"><img src="assets/img/reel/oneup.webp" width="720" height="450" alt="" loading="lazy"></span>
+                        <span class="stage-name">ONE UP</span>
+                        <span class="stage-meta">Fitness app, in testing</span>
+                    </a>
+                </li>
+            </ol>
 
             <!-- THE COFFEE REALM -->
-            <article class="level win win-teal" id="level-coffee" aria-labelledby="coffee-name" data-reveal>
+            <article class="level win" id="level-coffee" aria-labelledby="coffee-name" data-reveal>
                 <div class="win-bar">
-                    <span class="win-file"><span class="i i-coffee" aria-hidden="true"></span>coffee-realm.pos</span>
+                    <span class="win-file"><span class="i i-flag" aria-hidden="true"></span>Level 1-1</span>
                     <span class="win-status"><span class="status-lamp is-live" aria-hidden="true"></span>Live, taking real orders</span>
                 </div>
                 <div class="level-body level-split level-split-rev">
                     <div class="level-text">
                         <h3 class="level-name" id="coffee-name">The Coffee Realm</h3>
                         <p class="level-line">Ordering, loyalty and a back office for a homemade caf&eacute; and bakery in Quezon City.</p>
-                        <p class="level-tags"><span>Client project</span><span>Web + integrations</span><span>2026</span></p>
-                        <p>I built the customer website, the role-based back office, the Supabase backend and a kitchen tablet app, then connected a partner's Android till to all of it in real time, with an offline queue for when the wifi drops.</p>
-                        <ul class="chips" aria-label="Tech stack">
-                            <li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Supabase</li><li>Realtime</li><li>Vercel</li><li>Expo</li>
-                        </ul>
+                        <p class="level-tags"><span>Client project</span><span>Website + ordering system</span><span>2026</span></p>
+                        <p>Customers order on the website, track their order and collect stamps on a QR loyalty card. Staff run the shop from a back office with three roles, the kitchen sees every order on a tablet, and a partner's Android till stays in sync in real time, with an offline queue for when the wifi drops.</p>
+                        <p>I built the website, the back office, the database and the kitchen app, then connected the partner's till to all of it.</p>
                         <div class="level-actions">
                             <a class="btn btn-primary" href="https://www.thecoffeerealm.online" target="_blank" rel="noopener">
-                                <span class="i i-external-link" aria-hidden="true"></span><span>Visit site</span>
+                                <span class="i i-external-link" aria-hidden="true"></span><span>Visit the live site</span>
                             </a>
-                            <button class="btn btn-ghost" type="button" data-gallery="coffee" data-index="0">
+                            <a class="btn btn-ghost" href="assets/img/work/coffee/site-home.webp" data-gallery="coffee" data-index="0">
                                 <span class="i i-image" aria-hidden="true"></span><span>View pages</span>
-                            </button>
+                            </a>
                         </div>
+                        <p class="chips-k" id="coffee-stack">Built with</p>
+                        <ul class="chips" aria-labelledby="coffee-stack">
+                            <li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Supabase</li><li>Realtime</li><li>Vercel</li><li>Expo</li>
+                        </ul>
                     </div>
                     <div class="level-media coffee-media">
-                        <button class="photo-stack" type="button" data-gallery="coffee" data-index="0" aria-label="Open The Coffee Realm screenshots and photos">
+                        <a class="photo-stack" href="assets/img/work/coffee/site-home.webp" data-gallery="coffee" data-index="0" aria-label="Open The Coffee Realm screenshots and photos">
                             <span class="photo photo-a"><img src="assets/img/work/coffee/site-home-sm.webp" width="760" height="475" alt="" loading="lazy"></span>
                             <span class="photo photo-b"><img src="assets/img/work/coffee/shopfront-night.webp" width="1100" height="1100" alt="" loading="lazy"></span>
                             <img class="coffee-mark" src="assets/img/work/coffee/mark.png" width="240" height="240" alt="" loading="lazy">
-                        </button>
+                        </a>
                         <div class="receipt" role="group" aria-labelledby="receipt-title">
                             <p class="receipt-head" id="receipt-title">Build receipt</p>
                             <dl class="receipt-rows">
@@ -282,13 +291,13 @@
             </article>
 
             <!-- JMI2 -->
-            <article class="level win win-orange" id="level-jmi2" aria-labelledby="jmi2-name" data-reveal>
+            <article class="level win" id="level-jmi2" aria-labelledby="jmi2-name" data-reveal>
                 <div class="win-bar">
-                    <span class="win-file"><span class="i i-monitor" aria-hidden="true"></span>jmi2.html</span>
+                    <span class="win-file"><span class="i i-flag" aria-hidden="true"></span>Level 1-2</span>
                     <span class="win-status"><span class="status-lamp" aria-hidden="true"></span>Built, four pages</span>
                 </div>
                 <div class="level-body level-stack">
-                    <button class="browser" type="button" data-gallery="jmi2" data-index="0" aria-label="Open JMI2 Waterproofing screenshots">
+                    <a class="browser" href="assets/img/work/jmi2/home.webp" data-gallery="jmi2" data-index="0" aria-label="Open JMI2 Waterproofing screenshots">
                         <span class="browser-bar" aria-hidden="true">
                             <span class="browser-dots"><i></i><i></i><i></i></span>
                             <span class="browser-url">jmi2-waterproofing / home</span>
@@ -296,62 +305,294 @@
                         <span class="browser-view">
                             <img src="assets/img/work/jmi2/home.webp" width="1440" height="900" alt="" loading="lazy">
                         </span>
-                    </button>
+                    </a>
                     <div class="jmi2-cols">
                         <div class="jmi2-head">
                             <h3 class="level-name" id="jmi2-name">JMI2 Waterproofing</h3>
                             <p class="level-line">A four-page marketing site for a Metro Manila waterproofing contractor.</p>
-                            <p class="level-tags"><span>Client website</span><span>Static site</span><span>2026</span></p>
+                            <p class="level-tags"><span>Client website</span><span>4-page website</span><span>2026</span></p>
                         </div>
-                        <p class="jmi2-desc">I designed and built the whole site: a drone-video hero, an editorial services page and a gallery of finished jobs. The proposal form sends through EmailJS with reCAPTCHA, Philippine mobile-number checks and a resubmit cooldown.</p>
+                        <p class="jmi2-desc">I designed and built the whole site: a drone-video hero, a services page and a gallery of finished jobs. The Request a Proposal form sends each request by email, blocks spam and checks that the mobile number is a valid Philippine number.</p>
                         <div class="jmi2-side">
-                            <ul class="chips" aria-label="Tech stack">
+                            <div class="level-actions">
+                                <a class="btn btn-primary" href="assets/img/work/jmi2/home.webp" data-gallery="jmi2" data-index="0">
+                                    <span class="i i-image" aria-hidden="true"></span><span>View pages</span>
+                                </a>
+                            </div>
+                            <p class="chips-k" id="jmi2-stack">Built with</p>
+                            <ul class="chips" aria-labelledby="jmi2-stack">
                                 <li>HTML</li><li>CSS</li><li>JavaScript</li><li>EmailJS</li><li>reCAPTCHA</li>
                             </ul>
-                            <div class="level-actions">
-                                <button class="btn btn-primary" type="button" data-gallery="jmi2" data-index="0">
-                                    <span class="i i-image" aria-hidden="true"></span><span>View pages</span>
-                                </button>
-                            </div>
                         </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ONE UP -->
+            <article class="level win" id="level-oneup" aria-labelledby="oneup-name" data-reveal>
+                <div class="win-bar">
+                    <span class="win-file"><span class="i i-flag" aria-hidden="true"></span>Level 1-3</span>
+                    <span class="win-status"><span class="status-lamp is-live" aria-hidden="true"></span>In testing on Google Play</span>
+                </div>
+                <div class="level-body level-split">
+                    <div class="level-media">
+                        <a class="phones" href="assets/img/work/oneup/home.webp" data-gallery="oneup" data-index="0" aria-label="Open ONE UP screenshots">
+                            <span class="phone phone-l"><img src="assets/img/work/oneup/workout.webp" width="540" height="1169" alt="" loading="lazy"></span>
+                            <span class="phone phone-c"><img src="assets/img/work/oneup/home.webp" width="540" height="1169" alt="" loading="lazy"></span>
+                            <span class="phone phone-r"><img src="assets/img/work/oneup/recovery.webp" width="540" height="1169" alt="" loading="lazy"></span>
+                            <span class="sticker sticker-xp" aria-hidden="true">+40 XP</span>
+                        </a>
+                    </div>
+                    <div class="level-text">
+                        <h3 class="level-name" id="oneup-name">ONE UP</h3>
+                        <p class="level-line">A fitness app that turns training into a game.</p>
+                        <p class="level-tags"><span>Client project</span><span>Android app</span><span>2026</span></p>
+                        <p>ONE UP logs workouts and meals, then pays you back in XP, weekly streaks and badges, with an AI coach on call. I joined in September 2026 as the main developer and built the rewards, the AI coach and the landing page. The app is in closed testing.</p>
+                        <ul class="loot">
+                            <li>Rewards that run on the server: XP, levels, weekly streaks, 51 badges, 12 challenges and a weekly leaderboard</li>
+                            <li>An AI coach that plans workouts from real library exercises and remembers injuries</li>
+                            <li>A recovery map: a front and back muscle heatmap built from finished workouts</li>
+                            <li>A licensed 1,859-exercise video library, plus offline logging and a 13-step onboarding</li>
+                        </ul>
+                        <div class="level-actions">
+                            <a class="btn btn-primary" href="assets/img/work/oneup/home.webp" data-gallery="oneup" data-index="0">
+                                <span class="i i-image" aria-hidden="true"></span><span>View screens</span>
+                            </a>
+                        </div>
+                        <p class="chips-k" id="oneup-stack">Built with</p>
+                        <ul class="chips" aria-labelledby="oneup-stack">
+                            <li>Expo SDK 57</li><li>React Native</li><li>TypeScript</li><li>Supabase</li><li>Claude API</li><li>RevenueCat</li>
+                        </ul>
                     </div>
                 </div>
             </article>
         </div>
     </section>
 
-    <!-- ============ BONUS STAGES (ARCHIVE) ============ -->
-    <section class="band band-teal archive" id="archive" aria-labelledby="archive-title">
+    <!-- ============ ARCADE (VIDEO, DESIGN, ILLUSTRATION) ============ -->
+    <section class="band band-arcade archive" id="archive" aria-labelledby="archive-title">
         <div class="wrap">
             <header class="sec-head">
-                <h2 class="sec-title" id="archive-title">Bonus stages</h2>
-                <p class="sec-lede">Illustration, branding, video edits and ads from my freelance work.</p>
+                <h2 class="sec-title" id="archive-title">Arcade</h2>
+                <p class="sec-lede">Videos and design: ads, edits, posters and illustration from my freelance work. Pick a cartridge to load it into the console.</p>
             </header>
 
-            <div class="charsel" data-tabs>
-                <div class="charsel-stage win" data-reveal>
-                    <div class="win-bar">
-                        <span class="win-file"><span class="i i-paint-bucket" aria-hidden="true"></span>character-select</span>
-                        <span class="win-status">Original illustrations</span>
+            <!-- Video console: every video is a cartridge -->
+            <div class="arcade" id="videos">
+                <div class="arcade-console">
+                    <div class="gb" id="gb" role="group" aria-label="LONZ BOY video console">
+                        <div class="gb-slot" aria-hidden="true">
+                            <div class="gb-cart pak-shell" id="gb-cart" hidden>
+                                <span class="pak-label"><img alt=""><span class="pak-title"></span></span>
+                            </div>
+                        </div>
+                        <div class="gb-body">
+                            <div class="gb-bezel">
+                                <p class="gb-strap" aria-hidden="true"><span class="gb-led" id="gb-led"></span><span class="gb-strap-text">Video pak system</span></p>
+                                <div class="gb-lcd" id="gb-lcd">
+                                    <div class="gb-screen gb-idle" id="gb-idle">
+                                        <img class="px-art" src="assets/img/logo.png" width="64" height="64" alt="">
+                                        <p>Insert cartridge</p>
+                                    </div>
+                                    <video class="gb-screen gb-video" id="gb-video" playsinline preload="none" hidden></video>
+                                    <div class="gb-screen gb-embed" id="gb-embed" hidden></div>
+                                    <canvas class="gb-screen gb-game px-art" id="gb-game" width="152" height="164" role="img" aria-label="LONZ RUN, a small running game" hidden></canvas>
+                                    <div class="gb-screen gb-boot" id="gb-boot" hidden><span>LONZ</span></div>
+                                    <p class="gb-osd" id="gb-osd" hidden></p>
+                                </div>
+                                <div class="gb-readout">
+                                    <span class="gb-now" id="gb-now">No cartridge</span>
+                                    <span class="gb-time" id="gb-time">--:--</span>
+                                    <input class="gb-seek" id="gb-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek through the video" disabled>
+                                </div>
+                            </div>
+                            <p class="gb-brand" aria-hidden="true">LONZ BOY</p>
+                            <div class="gb-pad">
+                                <div class="gb-dpad">
+                                    <button class="gb-btn gb-arm gb-up" type="button" data-gb="up" aria-label="Up: volume up"><span class="i i-chevron-down" aria-hidden="true"></span></button>
+                                    <button class="gb-btn gb-arm gb-left" type="button" data-gb="left" aria-label="Left: previous cartridge"><span class="i i-chevron-left" aria-hidden="true"></span></button>
+                                    <button class="gb-btn gb-arm gb-right" type="button" data-gb="right" aria-label="Right: next cartridge"><span class="i i-chevron-right" aria-hidden="true"></span></button>
+                                    <button class="gb-btn gb-arm gb-down" type="button" data-gb="down" aria-label="Down: volume down"><span class="i i-chevron-down" aria-hidden="true"></span></button>
+                                    <span class="gb-hub" aria-hidden="true"></span>
+                                </div>
+                                <div class="gb-ab">
+                                    <button class="gb-btn gb-round gb-b" type="button" data-gb="b" aria-label="B: eject the cartridge"><span class="gb-cap" aria-hidden="true"><span>B</span></span></button>
+                                    <button class="gb-btn gb-round gb-a" type="button" data-gb="a" aria-label="A: play or pause"><span class="gb-cap" aria-hidden="true"><span>A</span></span></button>
+                                </div>
+                                <div class="gb-ss">
+                                    <button class="gb-btn gb-pill" type="button" data-gb="select" aria-label="Select: sound on or off"><span class="gb-pill-cap" aria-hidden="true"></span><span class="gb-pill-text" aria-hidden="true">Select</span></button>
+                                    <button class="gb-btn gb-pill" type="button" data-gb="start" aria-label="Start: full screen"><span class="gb-pill-cap" aria-hidden="true"></span><span class="gb-pill-text" aria-hidden="true">Start</span></button>
+                                </div>
+                                <span class="gb-speaker" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="charsel-view">
-                        <div class="charsel-panel" role="tabpanel" id="art-p1" aria-labelledby="art-t1" tabindex="0">
-                            <img src="assets/img/art/pic4.webp" width="762" height="843" alt="Digital illustration: a red-haired character in a black choker, with MICHEAL lettered across the piece" loading="lazy">
+                    <p class="sr-only" id="gb-status" role="status" aria-live="polite"></p>
+                </div>
+
+                <div class="arcade-side">
+                    <div class="now" id="now">
+                        <h3 class="now-title" id="now-title">Pick a cartridge</h3>
+                        <p class="now-text" id="now-text">Each video is a cartridge. Choose one from the shelf and it slides into the console and plays.</p>
+                        <p class="now-cta" id="now-cta" hidden>
+                            <a class="btn btn-sm btn-primary" href="#contact" id="want-one"><span class="i i-flag" aria-hidden="true"></span><span>Want one like this?</span></a>
+                        </p>
+                        <dl class="keys" id="keys">
+                            <div><dt>A</dt><dd>Play or pause</dd></div>
+                            <div><dt>B</dt><dd>Eject</dd></div>
+                            <div><dt>Start</dt><dd>Full screen</dd></div>
+                            <div><dt>Select</dt><dd>Sound on or off</dd></div>
+                            <div><dt>Left Right</dt><dd>Change cartridge</dd></div>
+                            <div><dt>Up Down</dt><dd>Volume</dd></div>
+                        </dl>
+                    </div>
+
+                    <div class="lib">
+                        <div class="lib-head">
+                            <h3 class="shelf-title">Cartridge shelf</h3>
+                            <p class="shelf-hint" aria-hidden="true">Swipe<span class="i i-arrow-right"></span></p>
+                            <div class="filter" id="shelf-filter" role="group" aria-label="Filter the cartridges" hidden></div>
+                            <noscript><p class="wall-text">Select a cartridge to open its video.</p></noscript>
                         </div>
-                        <div class="charsel-panel" role="tabpanel" id="art-p2" aria-labelledby="art-t2" tabindex="0" hidden>
-                            <img src="assets/img/art/pic5.webp" width="843" height="843" alt="Digital illustration: a silver-haired character in a black coat, with DEMON lettered across the piece" loading="lazy">
-                        </div>
-                        <div class="charsel-panel" role="tabpanel" id="art-p3" aria-labelledby="art-t3" tabindex="0" hidden>
-                            <img src="assets/img/art/pic1.webp" width="1000" height="1071" alt="Digital illustration: a dark-haired character in a crop top with a loose jacket" loading="lazy">
-                        </div>
-                        <div class="charsel-panel" role="tabpanel" id="art-p4" aria-labelledby="art-t4" tabindex="0" hidden>
-                            <img src="assets/img/art/pic2.webp" width="1000" height="1250" alt="Digital illustration: a blond character in an embroidered black jacket" loading="lazy">
-                        </div>
-                        <div class="charsel-panel" role="tabpanel" id="art-p5" aria-labelledby="art-t5" tabindex="0" hidden>
-                            <img src="assets/img/art/pic3.webp" width="843" height="1053" alt="Digital illustration: a red-haired character in a grey hoodie" loading="lazy">
-                        </div>
+                        <ul class="shelf" id="shelf" role="list">
+                            <li>
+                                <a class="pak" href="assets/video/full/ads-reel.mp4" data-pak="ads-reel" data-group="Ads" data-tone="yellow" data-poster="assets/video/full/ads-reel.webp" data-duration="62.6" data-bytes="4003209">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/ads-reel.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Pet care ad</span></span></span>
+                                    <span class="pak-meta"><span>Ads</span><span>1:03</span></span>
+                                    <span class="pak-caption sr-only">Pet care video ad.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/ads-reel-2.mp4" data-pak="ads-reel-2" data-group="Ads" data-tone="yellow" data-poster="assets/video/full/ads-reel-2.webp" data-duration="94.3" data-bytes="5696804">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/ads-reel-2.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Pet food ad</span></span></span>
+                                    <span class="pak-meta"><span>Ads</span><span>1:34</span></span>
+                                    <span class="pak-caption sr-only">Pet food video ad.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/brighteyes-1.mp4" data-pak="brighteyes-1" data-group="Ads" data-tone="yellow" data-poster="assets/video/full/brighteyes-1.webp" data-duration="60.9" data-bytes="3715565">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/brighteyes-1.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">BrightEyes+ ad 1</span></span></span>
+                                    <span class="pak-meta"><span>Ads</span><span>1:01</span></span>
+                                    <span class="pak-caption sr-only">BrightEyes+ video ad, version 1.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/brighteyes-2.mp4" data-pak="brighteyes-2" data-group="Ads" data-tone="yellow" data-poster="assets/video/full/brighteyes-2.webp" data-duration="77.1" data-bytes="4977742">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/brighteyes-2.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">BrightEyes+ ad 2</span></span></span>
+                                    <span class="pak-meta"><span>Ads</span><span>1:17</span></span>
+                                    <span class="pak-caption sr-only">BrightEyes+ video ad, version 2.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/brighteyes-3.mp4" data-pak="brighteyes-3" data-group="Ads" data-tone="yellow" data-poster="assets/video/full/brighteyes-3.webp" data-duration="84.0" data-bytes="4882741">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/brighteyes-3.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">BrightEyes+ ad 3</span></span></span>
+                                    <span class="pak-meta"><span>Ads</span><span>1:24</span></span>
+                                    <span class="pak-caption sr-only">BrightEyes+ video ad, version 3.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/brighteyes-4.mp4" data-pak="brighteyes-4" data-group="Ads" data-tone="yellow" data-poster="assets/video/full/brighteyes-4.webp" data-duration="60.7" data-bytes="3414635">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/brighteyes-4.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">BrightEyes+ ad 4</span></span></span>
+                                    <span class="pak-meta"><span>Ads</span><span>1:01</span></span>
+                                    <span class="pak-caption sr-only">BrightEyes+ video ad, version 4.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/edit-reel.mp4" data-pak="edit-reel" data-group="Edits" data-tone="purple" data-poster="assets/video/full/edit-reel.webp" data-duration="43.8" data-bytes="3077695">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/edit-reel.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Motion captions</span></span></span>
+                                    <span class="pak-meta"><span>Edits</span><span>0:44</span></span>
+                                    <span class="pak-caption sr-only">Short-form edit with motion graphics and captions.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/edit-reel-2.mp4" data-pak="edit-reel-2" data-group="Edits" data-tone="purple" data-poster="assets/video/full/edit-reel-2.webp" data-duration="42.9" data-bytes="4295587">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/edit-reel-2.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Illustrated explainer</span></span></span>
+                                    <span class="pak-meta"><span>Edits</span><span>0:43</span></span>
+                                    <span class="pak-caption sr-only">Short-form edit, illustrated explainer style.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/animated.mp4" data-pak="animated" data-group="Edits" data-tone="purple" data-poster="assets/video/full/animated.webp" data-duration="42.3" data-bytes="4346154">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/animated.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Cartoon short</span></span></span>
+                                    <span class="pak-meta"><span>Edits</span><span>0:42</span></span>
+                                    <span class="pak-caption sr-only">Animated short with a cartoon character.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/mshati-ad.mp4" data-pak="mshati-ad" data-group="Edits" data-tone="purple" data-poster="assets/video/full/mshati-ad.webp" data-duration="19.2" data-bytes="1415669">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/mshati-ad.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Talking-head ad</span></span></span>
+                                    <span class="pak-meta"><span>Edits</span><span>0:19</span></span>
+                                    <span class="pak-caption sr-only">Talking-head ad edit.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/sample-2025.mp4" data-pak="sample-2025" data-group="Edits" data-tone="purple" data-poster="assets/video/full/sample-2025.webp" data-duration="55.2" data-bytes="1866748">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/sample-2025.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Before and after</span></span></span>
+                                    <span class="pak-meta"><span>Edits</span><span>0:55</span></span>
+                                    <span class="pak-caption sr-only">Before and after edit sample, 2025.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/minecraft-longform.mp4" data-pak="minecraft-longform" data-group="Edits" data-tone="purple" data-poster="assets/video/full/minecraft-longform.webp" data-duration="483.0" data-bytes="10669851">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/minecraft-longform.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Minecraft long-form</span></span></span>
+                                    <span class="pak-meta"><span>Edits</span><span>8:03</span></span>
+                                    <span class="pak-caption sr-only">Long-form YouTube edit: 23 Minecraft 1.20 build hacks.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/web-reel.mp4" data-pak="web-reel" data-group="Web" data-tone="pink" data-poster="assets/video/full/web-reel.webp" data-duration="51.1" data-bytes="1774783">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/web-reel.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Web build reel</span></span></span>
+                                    <span class="pak-meta"><span>Web</span><span>0:51</span></span>
+                                    <span class="pak-caption sr-only">Web build reel.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pak" href="assets/video/full/graphics-reel.mp4" data-pak="graphics-reel" data-group="Art" data-tone="orange" data-poster="assets/video/full/graphics-reel.webp" data-duration="11.1" data-bytes="319144">
+                                    <span class="pak-shell"><span class="pak-label"><img src="assets/video/label/graphics-reel.webp" width="220" height="140" alt="" loading="lazy"><span class="pak-title">Art and design reel</span></span></span>
+                                    <span class="pak-meta"><span>Art</span><span>0:11</span></span>
+                                    <span class="pak-caption sr-only">A quick reel of illustrations and brand posts.</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+
+            <!-- Poster wall: graphic design and web design -->
+            <div class="wall-area" id="gallery">
+                <div class="lib-head">
+                    <div>
+                        <h3 class="shelf-title">Poster wall</h3>
+                        <p class="wall-text">Brand posts, posters and web designs. Select one to see it full size.</p>
+                    </div>
+                    <div class="filter" id="wall-filter" role="group" aria-label="Filter the posters" hidden></div>
+                </div>
+                <ul class="wall" id="wall" role="list">
+                    <li style="--r: 0.8333"><a class="poster" href="assets/img/gallery/comeback-kings.webp" data-group="Posters"><img src="assets/img/gallery/comeback-kings-sm.webp" width="560" height="672" alt="Comeback Kings esports poster" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-cash-for-kicks.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-cash-for-kicks-sm.webp" width="560" height="560" alt="Pong Soles post: Cash for Kicks, with a red and black sneaker" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/ano-toys-sale.webp" data-group="Posters"><img src="assets/img/gallery/ano-toys-sale-sm.webp" width="560" height="560" alt="Ano Toys 4.4 mega sale poster" loading="lazy"></a></li>
+                    <li style="--r: 0.8000"><a class="poster" href="assets/img/gallery/apparel-one-of-us.webp" data-group="Posters"><img src="assets/img/gallery/apparel-one-of-us-sm.webp" width="560" height="700" alt="Apparel graphic: Be one of us" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-sell-your-heat.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-sell-your-heat-sm.webp" width="560" height="560" alt="Pong Soles post: Sell your heat, on yellow" loading="lazy"></a></li>
+                    <li style="--r: 1.9377"><a class="poster" href="assets/img/gallery/8box-1.webp" data-group="Web designs"><img src="assets/img/gallery/8box-1-sm.webp" width="560" height="289" alt="8Box Solutions website, sign-in and dashboard screens" loading="lazy"></a></li>
+                    <li style="--r: 0.7500"><a class="poster" href="assets/img/gallery/gaia-garden.webp" data-group="Posters"><img src="assets/img/gallery/gaia-garden-sm.webp" width="525" height="700" alt="Gaia Garden school event poster with vegetables" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-got-heat.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-got-heat-sm.webp" width="560" height="560" alt="Pong Soles post: Got heat? We buy" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/social-keyboards.webp" data-group="Posters"><img src="assets/img/gallery/social-keyboards-sm.webp" width="560" height="560" alt="Social media grid for gaming keyboards and headsets" loading="lazy"></a></li>
+                    <li style="--r: 0.7529"><a class="poster" href="assets/img/gallery/last-crows.webp" data-group="Posters"><img src="assets/img/gallery/last-crows-sm.webp" width="527" height="700" alt="Last Crows story-format poster" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-kicks-to-cash.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-kicks-to-cash-sm.webp" width="560" height="560" alt="Pong Soles post: Kicks to cash, on orange" loading="lazy"></a></li>
+                    <li style="--r: 0.8000"><a class="poster" href="assets/img/gallery/apparel-haddie.webp" data-group="Posters"><img src="assets/img/gallery/apparel-haddie-sm.webp" width="560" height="700" alt="Apparel promo with two models in streetwear" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-buying-pairs.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-buying-pairs-sm.webp" width="560" height="560" alt="Pong Soles post: Buying Pairs, with a brown high-top sneaker" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-we-buy.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-we-buy-sm.webp" width="560" height="560" alt="Pong Soles post: Sell your sneakers, we buy" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-sell-us.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-sell-us-sm.webp" width="560" height="560" alt="Pong Soles post: Sell us your soles, pink sneaker" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/pong-sapatos.webp" data-group="Pong Soles"><img src="assets/img/gallery/pong-sapatos-sm.webp" width="560" height="560" alt="Pong Soles post: Sapatos mo, bilhin ko" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/social-audio.webp" data-group="Posters"><img src="assets/img/gallery/social-audio-sm.webp" width="560" height="560" alt="Social media grid for audio gear" loading="lazy"></a></li>
+                    <li style="--r: 1.0000"><a class="poster" href="assets/img/gallery/social-glowup.webp" data-group="Posters"><img src="assets/img/gallery/social-glowup-sm.webp" width="560" height="560" alt="Social media grid for a skincare glow-up challenge" loading="lazy"></a></li>
+                    <li style="--r: 1.7834"><a class="poster" href="assets/img/gallery/8box-2.webp" data-group="Web designs"><img src="assets/img/gallery/8box-2-sm.webp" width="560" height="314" alt="8Box Solutions website, product and service pages" loading="lazy"></a></li>
+                    <li style="--r: 1.7778"><a class="poster" href="assets/img/gallery/8box-3.webp" data-group="Web designs"><img src="assets/img/gallery/8box-3-sm.webp" width="560" height="315" alt="8Box Solutions website, booking screens" loading="lazy"></a></li>
+                </ul>
+                <p class="wall-more"><button class="btn btn-ghost" id="wall-more" type="button" hidden><span class="i i-image" aria-hidden="true"></span><span id="wall-more-label">Show all</span></button></p>
+            </div>
+
+            <div class="charsel" id="characters" data-tabs>
                 <div class="charsel-side">
                     <h3 class="shelf-title">Character select</h3>
                     <p class="charsel-text">Original characters from my illustration years, drawn digitally from sketch to final colour. Pick one to load it on the screen.</p>
@@ -373,55 +614,138 @@
                             <img src="assets/img/art/pic3.webp" alt="" style="object-position: 50% 10%" loading="lazy"><span>Hoodie</span>
                         </button>
                     </div>
-                    <button class="btn btn-ghost" type="button" data-gallery="art" data-index="0">
+                    <a class="btn btn-ghost" href="assets/img/art/pic4.webp" data-gallery="art" data-index="0">
                         <span class="i i-zoom-in" aria-hidden="true"></span><span>View full size</span>
+                    </a>
+                </div>
+                <div class="charsel-stage win" data-reveal>
+                    <div class="win-bar">
+                        <span class="win-file"><span class="i i-paint-bucket" aria-hidden="true"></span>Bonus stage</span>
+                        <span class="win-status">Original illustrations</span>
+                    </div>
+                    <div class="charsel-view">
+                        <div class="charsel-panel" role="tabpanel" id="art-p1" aria-labelledby="art-t1" tabindex="0">
+                            <img src="assets/img/art/pic4.webp" width="762" height="843" alt="Digital illustration: a red-haired character in a black choker, with MICHEAL lettered across the piece" loading="lazy">
+                        </div>
+                        <div class="charsel-panel" role="tabpanel" id="art-p2" aria-labelledby="art-t2" tabindex="0" data-panel-hidden>
+                            <img src="assets/img/art/pic5.webp" width="843" height="843" alt="Digital illustration: a silver-haired character in a black coat, with DEMON lettered across the piece" loading="lazy">
+                        </div>
+                        <div class="charsel-panel" role="tabpanel" id="art-p3" aria-labelledby="art-t3" tabindex="0" data-panel-hidden>
+                            <img src="assets/img/art/pic1.webp" width="1000" height="1071" alt="Digital illustration: a dark-haired character in a crop top with a loose jacket" loading="lazy">
+                        </div>
+                        <div class="charsel-panel" role="tabpanel" id="art-p4" aria-labelledby="art-t4" tabindex="0" data-panel-hidden>
+                            <img src="assets/img/art/pic2.webp" width="1000" height="1250" alt="Digital illustration: a blond character in an embroidered black jacket" loading="lazy">
+                        </div>
+                        <div class="charsel-panel" role="tabpanel" id="art-p5" aria-labelledby="art-t5" tabindex="0" data-panel-hidden>
+                            <img src="assets/img/art/pic3.webp" width="843" height="1053" alt="Digital illustration: a red-haired character in a grey hoodie" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SELECT A SERVICE ============ -->
+    <section class="band band-purple shop" id="services-section" aria-labelledby="shop-title">
+        <div class="wrap">
+            <header class="sec-head">
+                <h2 class="sec-title" id="shop-title">Select a service</h2>
+                <p class="sec-lede">Services: pick what you need, look at the examples, then send a short brief.</p>
+            </header>
+            <div class="shop-grid" data-tabs>
+                <div class="shop-list" role="tablist" aria-label="Services" aria-orientation="vertical">
+                    <button class="shop-opt" role="tab" id="srv-t1" aria-controls="srv-p1" aria-selected="true" type="button">
+                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-code shop-ico" aria-hidden="true"></span><span>Web development</span>
                     </button>
+                    <button class="shop-opt" role="tab" id="srv-t2" aria-controls="srv-p2" aria-selected="false" tabindex="-1" type="button">
+                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-colors-swatch shop-ico" aria-hidden="true"></span><span>Graphic design</span>
+                    </button>
+                    <button class="shop-opt" role="tab" id="srv-t3" aria-controls="srv-p3" aria-selected="false" tabindex="-1" type="button">
+                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-movie shop-ico" aria-hidden="true"></span><span>Video editing</span>
+                    </button>
+                    <button class="shop-opt" role="tab" id="srv-t4" aria-controls="srv-p4" aria-selected="false" tabindex="-1" type="button">
+                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-speed-fast shop-ico" aria-hidden="true"></span><span>Social media ads</span>
+                    </button>
+                </div>
+
+                <div class="shop-panels win">
+                    <div class="shop-panel" role="tabpanel" id="srv-p1" aria-labelledby="srv-t1">
+                        <span class="photo shop-shot"><img src="assets/img/services/web.webp" width="900" height="675" alt="Screenshots of The Coffee Realm and JMI2 Waterproofing websites" loading="lazy"></span>
+                        <div class="shop-info">
+                            <h3 class="shop-name">Web development</h3>
+                            <p>Responsive websites and web apps, from a four-page business site to an ordering system with a back office.</p>
+                            <p class="shop-recent"><span>Examples</span> The Coffee Realm, JMI2 Waterproofing, 8Box Solutions</p>
+                            <div class="shop-actions">
+                                <a class="btn btn-primary" href="#contact" data-need="Website"><span class="i i-flag" aria-hidden="true"></span><span>Start a project</span></a>
+                                <a class="btn btn-ghost" href="#work"><span class="i i-image" aria-hidden="true"></span><span>See examples</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-panel" role="tabpanel" id="srv-p2" aria-labelledby="srv-t2" data-panel-hidden>
+                        <span class="photo shop-shot"><img src="assets/img/services/design.webp" width="900" height="675" alt="Four posters: Cash for Kicks, a 4.4 mega sale, Comeback Kings and Be one of us" loading="lazy"></span>
+                        <div class="shop-info">
+                            <h3 class="shop-name">Graphic design</h3>
+                            <p>Logos, brand kits, social posts, posters and apparel graphics, plus original character illustration.</p>
+                            <p class="shop-recent"><span>Examples</span> Pong Soles, Ano Toys, apparel drops</p>
+                            <div class="shop-actions">
+                                <a class="btn btn-primary" href="#contact" data-need="Graphic design"><span class="i i-flag" aria-hidden="true"></span><span>Start a project</span></a>
+                                <a class="btn btn-ghost" href="#gallery"><span class="i i-image" aria-hidden="true"></span><span>See examples</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-panel" role="tabpanel" id="srv-p3" aria-labelledby="srv-t3" data-panel-hidden>
+                        <span class="photo shop-shot"><img src="assets/img/services/video.webp" width="900" height="675" alt="Three frames from short-form video edits" loading="lazy"></span>
+                        <div class="shop-info">
+                            <h3 class="shop-name">Video editing</h3>
+                            <p>Short-form edits, YouTube videos and animated pieces, cut for pace and sound.</p>
+                            <p class="shop-recent"><span>Examples</span> Short-form reels, a long-form Minecraft video, animated shorts</p>
+                            <div class="shop-actions">
+                                <a class="btn btn-primary" href="#contact" data-need="Video editing"><span class="i i-flag" aria-hidden="true"></span><span>Start a project</span></a>
+                                <a class="btn btn-ghost" href="#videos" data-shelf="Edits"><span class="i i-movie" aria-hidden="true"></span><span>See examples</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-panel" role="tabpanel" id="srv-p4" aria-labelledby="srv-t4" data-panel-hidden>
+                        <span class="photo shop-shot"><img src="assets/img/services/ads.webp" width="900" height="675" alt="Three frames from pet care video ads" loading="lazy"></span>
+                        <div class="shop-info">
+                            <h3 class="shop-name">Social media ads</h3>
+                            <p>Video and image ads for social campaigns, each built around one clear offer.</p>
+                            <p class="shop-recent"><span>Examples</span> BrightEyes+ video ads, Pong Soles buy-and-sell posts</p>
+                            <div class="shop-actions">
+                                <a class="btn btn-primary" href="#contact" data-need="Social media ads"><span class="i i-flag" aria-hidden="true"></span><span>Start a project</span></a>
+                                <a class="btn btn-ghost" href="#videos" data-shelf="Ads"><span class="i i-movie" aria-hidden="true"></span><span>See examples</span></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <h3 class="shelf-title">Cartridge shelf</h3>
-            <ul class="shelf" role="list">
-                <li>
-                    <button class="cart" type="button" data-gallery="graphics" data-index="0">
-                        <span class="cart-body">
-                            <video class="cart-video" src="assets/video/grap.mp4" data-poster="assets/video/grap.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
-                            <img class="px-art cart-shell" src="assets/img/sprites/cart-orange.png" width="56" height="64" alt="">
-                        </span>
-                        <span class="cart-name">Graphics</span>
-                        <span class="cart-meta">17 pieces: brands, posters, apparel</span>
-                    </button>
-                </li>
-                <li>
-                    <button class="cart" type="button" data-gallery="video" data-index="0">
-                        <span class="cart-body">
-                            <video class="cart-video" src="assets/video/edit.mp4" data-poster="assets/video/edit.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
-                            <img class="px-art cart-shell" src="assets/img/sprites/cart-purple.png" width="56" height="64" alt="">
-                        </span>
-                        <span class="cart-name">Video edits</span>
-                        <span class="cart-meta">6 cuts: shorts, animation, long-form</span>
-                    </button>
-                </li>
-                <li>
-                    <button class="cart" type="button" data-gallery="ads" data-index="0">
-                        <span class="cart-body">
-                            <video class="cart-video" src="assets/video/ads.mp4" data-poster="assets/video/ads.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
-                            <img class="px-art cart-shell" src="assets/img/sprites/cart-yellow.png" width="56" height="64" alt="">
-                        </span>
-                        <span class="cart-name">Ads</span>
-                        <span class="cart-meta">6 social video ads</span>
-                    </button>
-                </li>
-                <li>
-                    <button class="cart" type="button" data-gallery="web" data-index="0">
-                        <span class="cart-body">
-                            <video class="cart-video" src="assets/video/web.mp4" data-poster="assets/video/web.webp" muted loop playsinline preload="none" aria-hidden="true"></video>
-                            <img class="px-art cart-shell" src="assets/img/sprites/cart-pink.png" width="56" height="64" alt="">
-                        </span>
-                        <span class="cart-name">Web builds</span>
-                        <span class="cart-meta">Site reel and 8Box Solutions</span>
-                    </button>
-                </li>
-            </ul>
+            <div class="howto">
+                <h3 class="shelf-title">How to start</h3>
+                <ol class="steps" role="list">
+                    <li class="step">
+                        <span class="step-ico" aria-hidden="true"><span class="i i-cart"></span></span>
+                        <h4 class="step-name">Pick what you need</h4>
+                        <p>Choose a service above, or tick more than one in the brief.</p>
+                    </li>
+                    <li class="step">
+                        <span class="step-ico" aria-hidden="true"><span class="i i-script-text"></span></span>
+                        <h4 class="step-name">Fill in the short brief</h4>
+                        <p>What you need, when you need it, your budget if you have one, and a few words about it.</p>
+                    </li>
+                    <li class="step">
+                        <span class="step-ico" aria-hidden="true"><span class="i i-mail"></span></span>
+                        <h4 class="step-name">Send it your way</h4>
+                        <p>By email or text, from your own phone or computer. It goes straight to me.</p>
+                    </li>
+                    <li class="step">
+                        <span class="step-ico" aria-hidden="true"><span class="i i-user"></span></span>
+                        <h4 class="step-name">One person, start to finish</h4>
+                        <p>I handle every brief myself, from the first message to the final file.</p>
+                    </li>
+                </ol>
+                <p class="howto-price">There is no price list because every job is different. Put your budget and deadline in the brief.</p>
+            </div>
         </div>
     </section>
 
@@ -430,26 +754,28 @@
         <div class="wrap">
             <header class="sec-head">
                 <h2 class="sec-title" id="about-title">Player profile</h2>
+                <p class="sec-lede">About me: who I am, where I studied and what I'm looking for.</p>
             </header>
         </div>
         <div class="wrap about-grid">
             <div class="profile win" role="group" aria-label="Player card" data-reveal>
                 <div class="win-bar">
-                    <span class="win-file"><span class="i i-user" aria-hidden="true"></span>player-1</span>
+                    <span class="win-file"><span class="i i-user" aria-hidden="true"></span>Player 1</span>
                 </div>
                 <div class="profile-body">
                     <div class="portrait" id="portrait">
                         <img class="portrait-px px-art" src="assets/img/me-pixel.png" width="72" height="79" alt="Pixel-art portrait of Engr. Mark Nikko Lonzaga in a graduation toga" loading="lazy" decoding="async">
-                        <img class="portrait-photo" src="assets/img/me-photo.webp" width="646" height="710" alt="Photo of Engr. Mark Nikko Lonzaga in a graduation toga, smiling" loading="lazy">
+                        <img class="portrait-photo" src="assets/img/me-photo.webp" width="646" height="710" alt="Photo of Engr. Mark Nikko Lonzaga in a graduation toga, smiling" loading="lazy" aria-hidden="true">
                     </div>
-                    <button class="btn btn-sm btn-ghost portrait-toggle" id="portrait-toggle" type="button" aria-controls="portrait">
+                    <button class="btn btn-sm btn-ghost portrait-toggle" id="portrait-toggle" type="button" aria-controls="portrait" aria-pressed="false">
                         <span class="i i-camera-face" aria-hidden="true"></span><span class="btn-label">Show photo</span>
                     </button>
                     <dl class="stats">
                         <div><dt>Name</dt><dd>Engr. Mark Nikko B. Lonzaga</dd></div>
                         <div><dt>Class</dt><dd>Computer engineer</dd></div>
                         <div><dt>Base</dt><dd>Quezon City, PH</dd></div>
-                        <div><dt>Status</dt><dd><span class="status-lamp is-live" aria-hidden="true"></span>Open to entry-level roles</dd></div>
+                        <div><dt>Freelance</dt><dd><span class="status-lamp is-live" aria-hidden="true"></span>Taking projects</dd></div>
+                        <div><dt>Full-time</dt><dd><span class="status-lamp is-live" aria-hidden="true"></span>Open to entry-level roles</dd></div>
                     </dl>
                 </div>
             </div>
@@ -459,6 +785,14 @@
                     <p class="about-lead">I'm a Computer Engineering graduate of the Polytechnic University of the Philippines, working across networking, cloud and full-stack development.</p>
                     <p>I've completed all three Cisco CCNA courses through Cisco Networking Academy, graduated from AWS Academy Cloud Foundations, and supported live technical operations as an intern at Nexus Cloud IT Solutions. For my thesis, our team built a gamified, sensor-based system that tracks gym workouts.</p>
                     <p>Before engineering, I spent four years as a freelance illustrator and designer, so I still care how things look. I'm looking for an entry-level role in network and cloud infrastructure or software engineering.</p>
+                    <div class="about-actions">
+                        <a class="btn btn-primary" href="resume.html">
+                            <span class="i i-script-text" aria-hidden="true"></span><span>View resume</span>
+                        </a>
+                        <a class="btn btn-ghost" href="Resume/Mark-Nikko-Lonzaga-Resume.pdf" download>
+                            <span class="i i-download" aria-hidden="true"></span><span>Download PDF</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="about-cols">
@@ -486,9 +820,9 @@
                                 <tr><th scope="col">School</th><th scope="col">Honor</th><th scope="col">Times</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>PUP</td><th scope="row">President's Lister</th><td>&times;3</td></tr>
-                                <tr><td>PUP</td><th scope="row">Dean's Lister</th><td>&times;4</td></tr>
-                                <tr><td>OLFU</td><th scope="row">High Honor, SHS</th><td>&times;1</td></tr>
+                                <tr><td>PUP</td><th scope="row">President's Lister</th><td>x3</td></tr>
+                                <tr><td>PUP</td><th scope="row">Dean's Lister</th><td>x4</td></tr>
+                                <tr><td>OLFU</td><th scope="row">High Honor, SHS</th><td>x1</td></tr>
                             </tbody>
                         </table>
                         <p class="hiscore-note">President's List: 1st sem of years 1, 2 and 3. Dean's List: 2nd sem of years 1, 2 and 3, and 1st sem of year 4.</p>
@@ -503,7 +837,7 @@
         <div class="wrap">
             <header class="sec-head">
                 <h2 class="sec-title" id="exp-title">Quest log</h2>
-                <p class="sec-lede">Where I've worked and what I shipped there.</p>
+                <p class="sec-lede">Experience: where I've worked and what I shipped there.</p>
             </header>
             <ol class="quests" role="list">
                 <li class="quest" data-reveal>
@@ -519,7 +853,7 @@
                         </ul>
                     </article>
                 </li>
-                <li class="quest" data-reveal>
+                <li class="quest" id="quest-thesis" data-reveal>
                     <span class="quest-pin" aria-hidden="true"><span class="i i-flag"></span></span>
                     <article class="quest-card">
                         <h3 class="quest-role">Researcher and Developer</h3>
@@ -531,6 +865,10 @@
                             <li>Built the web app in HTML, CSS and PHP, with OpenCV and MediaPipe for exercise form correction</li>
                             <li>Ran the MySQL database that logged each session for validation</li>
                         </ul>
+                        <p class="chips-k" id="thesis-stack">Built with</p>
+                        <ul class="chips" aria-labelledby="thesis-stack">
+                            <li>ESP32</li><li>Raspberry Pi 5</li><li>Load cells</li><li>OpenCV</li><li>MediaPipe</li><li>PHP</li><li>MySQL</li>
+                        </ul>
                     </article>
                 </li>
                 <li class="quest" data-reveal>
@@ -538,7 +876,7 @@
                     <article class="quest-card">
                         <h3 class="quest-role">Technical Intern</h3>
                         <p class="quest-org">Nexus Cloud IT Solutions</p>
-                        <p class="quest-meta"><span class="stamp">Complete &times;2</span><span>Jul to Sep 2024, Jul to Sep 2025</span><span>Ortigas Center, Pasig</span></p>
+                        <p class="quest-meta"><span class="stamp">Complete x2</span><span>Jul to Sep 2024, Jul to Sep 2025</span><span>Ortigas Center, Pasig</span></p>
                         <ul class="loot">
                             <li>2025: fixed live connectivity, audio and video issues during paid training webinars and helped attendees through the platforms</li>
                             <li>2024: coordinated workstation assignments so every webinar participant had working hardware</li>
@@ -567,103 +905,115 @@
         <div class="wrap">
             <header class="sec-head">
                 <h2 class="sec-title" id="skills-title">Inventory</h2>
-                <p class="sec-lede">Tools from coursework, the thesis and client work.</p>
+                <p class="sec-lede">Skills: tools from coursework, the thesis and client work. A tag shows the project a tool was used in.</p>
             </header>
 
-            <div class="inv win" data-tabs data-reveal>
-                <div class="inv-tabs" role="tablist" aria-label="Skill categories">
-                    <button class="inv-tab" role="tab" id="inv-t-net" aria-controls="inv-p-net" aria-selected="true" type="button"><span class="i i-radio-tower" aria-hidden="true"></span>Network</button>
-                    <button class="inv-tab" role="tab" id="inv-t-cloud" aria-controls="inv-p-cloud" aria-selected="false" tabindex="-1" type="button"><span class="i i-cloud" aria-hidden="true"></span>Cloud</button>
-                    <button class="inv-tab" role="tab" id="inv-t-code" aria-controls="inv-p-code" aria-selected="false" tabindex="-1" type="button"><span class="i i-code" aria-hidden="true"></span>Code</button>
-                    <button class="inv-tab" role="tab" id="inv-t-web" aria-controls="inv-p-web" aria-selected="false" tabindex="-1" type="button"><span class="i i-device-laptop" aria-hidden="true"></span>Web &amp; apps</button>
-                    <button class="inv-tab" role="tab" id="inv-t-hw" aria-controls="inv-p-hw" aria-selected="false" tabindex="-1" type="button"><span class="i i-zap" aria-hidden="true"></span>Hardware</button>
-                    <button class="inv-tab" role="tab" id="inv-t-ai" aria-controls="inv-p-ai" aria-selected="false" tabindex="-1" type="button"><span class="i i-lightbulb" aria-hidden="true"></span>AI</button>
-                    <button class="inv-tab" role="tab" id="inv-t-art" aria-controls="inv-p-art" aria-selected="false" tabindex="-1" type="button"><span class="i i-paint-bucket" aria-hidden="true"></span>Design</button>
+            <div class="inv win" data-reveal>
+                <div class="win-bar">
+                    <span class="win-file"><span class="i i-briefcase" aria-hidden="true"></span>Items</span>
+                    <span class="win-status">49 in 7 bags</span>
                 </div>
-
-                <div class="inv-panel" role="tabpanel" id="inv-p-net" aria-labelledby="inv-t-net" tabindex="0">
-                    <p class="inv-note">Three CCNA courses, the Junior Cybersecurity Analyst path, and a lot of Packet Tracer.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s12.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>Packet Tracer</span></li>
-                        <li class="slot"><span class="i i-git-branch" aria-hidden="true"></span><span>OSPFv2</span></li>
-                        <li class="slot"><span class="i i-shield" aria-hidden="true"></span><span>IPv4 ACLs</span></li>
-                        <li class="slot"><span class="i i-server" aria-hidden="true"></span><span>VLANs + inter-VLAN routing</span></li>
-                        <li class="slot"><span class="i i-sync" aria-hidden="true"></span><span>Spanning Tree</span></li>
-                        <li class="slot"><span class="i i-arrows-horizontal" aria-hidden="true"></span><span>NAT</span></li>
-                        <li class="slot"><span class="i i-cellular-signal-3" aria-hidden="true"></span><span>Wireless LANs</span></li>
-                        <li class="slot"><span class="i i-bug" aria-hidden="true"></span><span>Threat mitigation</span></li>
-                        <li class="slot"><span class="i i-search" aria-hidden="true"></span><span>Vulnerability assessment</span></li>
-                    </ul>
-                </div>
-                <div class="inv-panel" role="tabpanel" id="inv-p-cloud" aria-labelledby="inv-t-cloud" tabindex="0" hidden>
-                    <p class="inv-note">AWS Academy Cloud Foundations, plus the backends behind The Coffee Realm and ONE UP.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><span class="i i-cloud" aria-hidden="true"></span><span>AWS Cloud Foundations</span></li>
-                        <li class="slot"><span class="i i-cloud-upload" aria-hidden="true"></span><span>Cloud deployment models</span></li>
-                        <li class="slot"><span class="i i-layout-columns" aria-hidden="true"></span><span>Virtualization</span></li>
-                        <li class="slot"><span class="i i-server" aria-hidden="true"></span><span>Cloud storage + compute</span></li>
-                        <li class="slot"><span class="i i-monitor" aria-hidden="true"></span><span>Windows Server 2019</span></li>
-                        <li class="slot"><span class="i i-zap" aria-hidden="true"></span><span>Supabase</span></li>
-                        <li class="slot"><span class="i i-upload" aria-hidden="true"></span><span>Vercel</span></li>
-                    </ul>
-                </div>
-                <div class="inv-panel" role="tabpanel" id="inv-p-code" aria-labelledby="inv-t-code" tabindex="0" hidden>
-                    <p class="inv-note">Languages from coursework, the thesis and client builds.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s4.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>Python</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s3.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>JavaScript</span></li>
-                        <li class="slot"><span class="i i-code" aria-hidden="true"></span><span>TypeScript</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s5.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>PHP</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s8.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>C++</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s6.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>SQL</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s11.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>Lua</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s10.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>R</span></li>
-                    </ul>
-                </div>
-                <div class="inv-panel" role="tabpanel" id="inv-p-web" aria-labelledby="inv-t-web" tabindex="0" hidden>
-                    <p class="inv-note">From four-page sites to an ordering system with a back office.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s1.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>HTML</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s2.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>CSS</span></li>
-                        <li class="slot"><span class="i i-layout" aria-hidden="true"></span><span>Next.js + React</span></li>
-                        <li class="slot"><span class="i i-device-phone" aria-hidden="true"></span><span>React Native + Expo</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s6.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>MySQL</span></li>
-                        <li class="slot"><span class="i i-table" aria-hidden="true"></span><span>Postgres</span></li>
-                        <li class="slot"><span class="i i-file-flash" aria-hidden="true"></span><span>Firebase</span></li>
-                        <li class="slot"><span class="i i-list-box" aria-hidden="true"></span><span>NoSQL</span></li>
-                        <li class="slot"><span class="i i-sliders" aria-hidden="true"></span><span>Full-stack architecture</span></li>
-                    </ul>
-                </div>
-                <div class="inv-panel" role="tabpanel" id="inv-p-hw" aria-labelledby="inv-t-hw" tabindex="0" hidden>
-                    <p class="inv-note">Boards and sensors I've wired up, including the thesis rig.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><span class="i i-modem" aria-hidden="true"></span><span>ESP32</span></li>
-                        <li class="slot"><span class="i i-modem" aria-hidden="true"></span><span>ESP8266</span></li>
-                        <li class="slot"><span class="i i-server" aria-hidden="true"></span><span>Raspberry Pi 5</span></li>
-                        <li class="slot"><img class="px-art" src="assets/img/skills/s7.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span>Arduino Uno</span></li>
-                        <li class="slot"><span class="i i-scale" aria-hidden="true"></span><span>Load cells</span></li>
-                        <li class="slot"><span class="i i-card-id" aria-hidden="true"></span><span>RFID</span></li>
-                    </ul>
-                </div>
-                <div class="inv-panel" role="tabpanel" id="inv-p-ai" aria-labelledby="inv-t-ai" tabindex="0" hidden>
-                    <p class="inv-note">Computer vision for the thesis, an AI coach for ONE UP.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><span class="i i-human-handsup" aria-hidden="true"></span><span>MediaPipe</span></li>
-                        <li class="slot"><span class="i i-eye" aria-hidden="true"></span><span>OpenCV</span></li>
-                        <li class="slot"><span class="i i-message-text" aria-hidden="true"></span><span>Chatbot development</span></li>
-                        <li class="slot"><span class="i i-lightbulb" aria-hidden="true"></span><span>Claude API</span></li>
-                    </ul>
-                </div>
-                <div class="inv-panel" role="tabpanel" id="inv-p-art" aria-labelledby="inv-t-art" tabindex="0" hidden>
-                    <p class="inv-note">Four years of commissions, and every interface on this page.</p>
-                    <ul class="slots" role="list">
-                        <li class="slot"><span class="i i-paint-bucket" aria-hidden="true"></span><span>Digital illustration</span></li>
-                        <li class="slot"><span class="i i-human" aria-hidden="true"></span><span>Character design</span></li>
-                        <li class="slot"><span class="i i-colors-swatch" aria-hidden="true"></span><span>Branding</span></li>
-                        <li class="slot"><span class="i i-label" aria-hidden="true"></span><span>Logo design</span></li>
-                        <li class="slot"><span class="i i-layout" aria-hidden="true"></span><span>Layout composition</span></li>
-                        <li class="slot"><span class="i i-movie" aria-hidden="true"></span><span>Video editing</span></li>
-                    </ul>
+                <div class="inv-body">
+                    <section class="bag" aria-labelledby="bag-net">
+                        <h3 class="bag-name" id="bag-net"><span class="i i-radio-tower" aria-hidden="true"></span>Network<span class="bag-n" aria-hidden="true">x9</span></h3>
+                        <p class="bag-note">Three CCNA courses, the Junior Cybersecurity Analyst path, and a lot of Packet Tracer.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s12.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">Packet Tracer</span></li>
+                            <li class="slot"><span class="i i-git-branch" aria-hidden="true"></span><span class="slot-name">OSPFv2</span></li>
+                            <li class="slot"><span class="i i-shield" aria-hidden="true"></span><span class="slot-name">IPv4 ACLs</span></li>
+                            <li class="slot"><span class="i i-server" aria-hidden="true"></span><span class="slot-name">VLANs + inter-VLAN routing</span></li>
+                            <li class="slot"><span class="i i-sync" aria-hidden="true"></span><span class="slot-name">Spanning Tree</span></li>
+                            <li class="slot"><span class="i i-arrows-horizontal" aria-hidden="true"></span><span class="slot-name">NAT</span></li>
+                            <li class="slot"><span class="i i-cellular-signal-3" aria-hidden="true"></span><span class="slot-name">Wireless LANs</span></li>
+                            <li class="slot"><span class="i i-bug" aria-hidden="true"></span><span class="slot-name">Threat mitigation</span></li>
+                            <li class="slot"><span class="i i-search" aria-hidden="true"></span><span class="slot-name">Vulnerability assessment</span></li>
+                        </ul>
+                    </section>
+                    <section class="bag" aria-labelledby="bag-cloud">
+                        <h3 class="bag-name" id="bag-cloud"><span class="i i-cloud" aria-hidden="true"></span>Cloud<span class="bag-n" aria-hidden="true">x7</span></h3>
+                        <p class="bag-note">AWS Academy Cloud Foundations, plus the backends behind The Coffee Realm and ONE UP.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><span class="i i-cloud" aria-hidden="true"></span><span class="slot-name">AWS Cloud Foundations</span></li>
+                            <li class="slot"><span class="i i-cloud-upload" aria-hidden="true"></span><span class="slot-name">Cloud deployment models</span></li>
+                            <li class="slot"><span class="i i-layout-columns" aria-hidden="true"></span><span class="slot-name">Virtualization</span></li>
+                            <li class="slot"><span class="i i-server" aria-hidden="true"></span><span class="slot-name">Cloud storage + compute</span></li>
+                            <li class="slot"><span class="i i-monitor" aria-hidden="true"></span><span class="slot-name">Windows Server 2019</span></li>
+                            <li class="slot"><span class="i i-zap" aria-hidden="true"></span><span class="slot-name">Supabase</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm and ONE UP</span><span aria-hidden="true"><span class="lv">1-1</span><span class="lv">1-3</span></span></span></li>
+                            <li class="slot"><span class="i i-upload" aria-hidden="true"></span><span class="slot-name">Vercel</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm</span><span aria-hidden="true"><span class="lv">1-1</span></span></span></li>
+                        </ul>
+                    </section>
+                    <section class="bag" aria-labelledby="bag-code">
+                        <h3 class="bag-name" id="bag-code"><span class="i i-code" aria-hidden="true"></span>Code<span class="bag-n" aria-hidden="true">x8</span></h3>
+                        <p class="bag-note">Languages from coursework, the thesis and client builds.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s4.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">Python</span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s3.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">JavaScript</span><span class="slot-used"><span class="sr-only">, used in JMI2 Waterproofing</span><span aria-hidden="true"><span class="lv">1-2</span></span></span></li>
+                            <li class="slot"><span class="i i-code" aria-hidden="true"></span><span class="slot-name">TypeScript</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm and ONE UP</span><span aria-hidden="true"><span class="lv">1-1</span><span class="lv">1-3</span></span></span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s5.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">PHP</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s8.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">C++</span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s6.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">SQL</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm and the thesis</span><span aria-hidden="true"><span class="lv">1-1</span><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s11.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">Lua</span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s10.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">R</span></li>
+                        </ul>
+                    </section>
+                    <section class="bag" aria-labelledby="bag-web">
+                        <h3 class="bag-name" id="bag-web"><span class="i i-device-laptop" aria-hidden="true"></span>Web and apps<span class="bag-n" aria-hidden="true">x9</span></h3>
+                        <p class="bag-note">From four-page sites to an ordering system with a back office.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s1.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">HTML</span><span class="slot-used"><span class="sr-only">, used in JMI2 Waterproofing and the thesis</span><span aria-hidden="true"><span class="lv">1-2</span><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s2.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">CSS</span><span class="slot-used"><span class="sr-only">, used in JMI2 Waterproofing and the thesis</span><span aria-hidden="true"><span class="lv">1-2</span><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><span class="i i-layout" aria-hidden="true"></span><span class="slot-name">Next.js + React</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm</span><span aria-hidden="true"><span class="lv">1-1</span></span></span></li>
+                            <li class="slot"><span class="i i-device-phone" aria-hidden="true"></span><span class="slot-name">React Native + Expo</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm and ONE UP</span><span aria-hidden="true"><span class="lv">1-1</span><span class="lv">1-3</span></span></span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s6.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">MySQL</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><span class="i i-table" aria-hidden="true"></span><span class="slot-name">Postgres</span><span class="slot-used"><span class="sr-only">, used in The Coffee Realm</span><span aria-hidden="true"><span class="lv">1-1</span></span></span></li>
+                            <li class="slot"><span class="i i-file-flash" aria-hidden="true"></span><span class="slot-name">Firebase</span></li>
+                            <li class="slot"><span class="i i-list-box" aria-hidden="true"></span><span class="slot-name">NoSQL</span></li>
+                            <li class="slot"><span class="i i-sliders" aria-hidden="true"></span><span class="slot-name">Full-stack architecture</span></li>
+                        </ul>
+                    </section>
+                    <section class="bag" aria-labelledby="bag-hw">
+                        <h3 class="bag-name" id="bag-hw"><span class="i i-zap" aria-hidden="true"></span>Hardware<span class="bag-n" aria-hidden="true">x6</span></h3>
+                        <p class="bag-note">Boards and sensors I've wired up, including the thesis rig.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><span class="i i-modem" aria-hidden="true"></span><span class="slot-name">ESP32</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><span class="i i-modem" aria-hidden="true"></span><span class="slot-name">ESP8266</span></li>
+                            <li class="slot"><span class="i i-server" aria-hidden="true"></span><span class="slot-name">Raspberry Pi 5</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><img class="px-art" src="assets/img/skills/s7.png" width="24" height="24" alt="" loading="lazy" decoding="async"><span class="slot-name">Arduino Uno</span></li>
+                            <li class="slot"><span class="i i-scale" aria-hidden="true"></span><span class="slot-name">Load cells</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><span class="i i-card-id" aria-hidden="true"></span><span class="slot-name">RFID</span></li>
+                        </ul>
+                    </section>
+                    <section class="bag" aria-labelledby="bag-ai">
+                        <h3 class="bag-name" id="bag-ai"><span class="i i-lightbulb" aria-hidden="true"></span>AI<span class="bag-n" aria-hidden="true">x4</span></h3>
+                        <p class="bag-note">Computer vision for the thesis, an AI coach for ONE UP.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><span class="i i-human-handsup" aria-hidden="true"></span><span class="slot-name">MediaPipe</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><span class="i i-eye" aria-hidden="true"></span><span class="slot-name">OpenCV</span><span class="slot-used"><span class="sr-only">, used in the thesis</span><span aria-hidden="true"><span class="lv lv-t">T</span></span></span></li>
+                            <li class="slot"><span class="i i-message-text" aria-hidden="true"></span><span class="slot-name">Chatbot development</span></li>
+                            <li class="slot"><span class="i i-lightbulb" aria-hidden="true"></span><span class="slot-name">Claude API</span><span class="slot-used"><span class="sr-only">, used in ONE UP</span><span aria-hidden="true"><span class="lv">1-3</span></span></span></li>
+                        </ul>
+                    </section>
+                    <section class="bag" aria-labelledby="bag-art">
+                        <h3 class="bag-name" id="bag-art"><span class="i i-paint-bucket" aria-hidden="true"></span>Design<span class="bag-n" aria-hidden="true">x6</span></h3>
+                        <p class="bag-note">Four years of commissions, and every interface on this page.</p>
+                        <ul class="slots" role="list">
+                            <li class="slot"><span class="i i-paint-bucket" aria-hidden="true"></span><span class="slot-name">Digital illustration</span></li>
+                            <li class="slot"><span class="i i-human" aria-hidden="true"></span><span class="slot-name">Character design</span></li>
+                            <li class="slot"><span class="i i-colors-swatch" aria-hidden="true"></span><span class="slot-name">Branding</span></li>
+                            <li class="slot"><span class="i i-label" aria-hidden="true"></span><span class="slot-name">Logo design</span></li>
+                            <li class="slot"><span class="i i-layout" aria-hidden="true"></span><span class="slot-name">Layout composition</span></li>
+                            <li class="slot"><span class="i i-movie" aria-hidden="true"></span><span class="slot-name">Video editing</span></li>
+                        </ul>
+                    </section>
+                    <section class="bag bag-key" aria-labelledby="bag-key">
+                        <h3 class="bag-name" id="bag-key"><span class="i i-flag" aria-hidden="true"></span>Where it was used</h3>
+                        <ul class="key-list" role="list">
+                            <li><span class="lv" aria-hidden="true">1-1</span><a href="#level-coffee">The Coffee Realm</a></li>
+                            <li><span class="lv" aria-hidden="true">1-2</span><a href="#level-jmi2">JMI2 Waterproofing</a></li>
+                            <li><span class="lv" aria-hidden="true">1-3</span><a href="#level-oneup">ONE UP</a></li>
+                            <li><span class="lv lv-t" aria-hidden="true">T</span><a href="#quest-thesis">Thesis: gym equipment monitor</a></li>
+                        </ul>
+                    </section>
                 </div>
             </div>
         </div>
@@ -674,48 +1024,49 @@
         <div class="wrap">
             <header class="sec-head">
                 <h2 class="sec-title" id="certs-title">Achievements</h2>
-                <p class="sec-lede">8 unlocked. Select one to open its certificate.</p>
+                <p class="sec-lede">Certificates: 8 unlocked, 6 with a file you can open.</p>
+                <p class="sec-note">The three CCNA entries are Cisco Networking Academy course completions. The AWS badge can be <a href="https://www.credly.com/go/bT1y6PFj" target="_blank" rel="noopener">checked on Credly</a>.</p>
             </header>
             <ul class="ach-list" role="list">
                 <li>
-                    <button class="ach" type="button" data-gallery="certs" data-index="0">
+                    <a class="ach" href="assets/img/certs/aws-cloud-foundations.webp" data-gallery="certs" data-index="0">
                         <span class="ach-icon ach-aws" aria-hidden="true"><span class="i i-cloud"></span></span>
                         <span class="ach-text">
                             <span class="ach-name">AWS Academy Graduate: Cloud Foundations</span>
                             <span class="ach-meta"><span>AWS Academy</span><span class="sr-only">, </span><span class="dot" aria-hidden="true"></span><span>May 27, 2026</span></span>
                         </span>
                         <span class="i i-chevron-right ach-go" aria-hidden="true"></span>
-                    </button>
+                    </a>
                 </li>
                 <li>
-                    <button class="ach" type="button" data-gallery="certs" data-index="1">
+                    <a class="ach" href="assets/img/certs/cyber-junior-analyst.webp" data-gallery="certs" data-index="1">
                         <span class="ach-icon ach-cisco" aria-hidden="true"><span class="i i-shield"></span></span>
                         <span class="ach-text">
                             <span class="ach-name">Junior Cybersecurity Analyst Career Path</span>
                             <span class="ach-meta"><span>Cisco Networking Academy</span><span class="sr-only">, </span><span class="dot" aria-hidden="true"></span><span>Feb 26, 2026</span></span>
                         </span>
                         <span class="i i-chevron-right ach-go" aria-hidden="true"></span>
-                    </button>
+                    </a>
                 </li>
                 <li>
-                    <button class="ach" type="button" data-gallery="certs" data-index="2">
+                    <a class="ach" href="assets/img/certs/ccna-ensa.webp" data-gallery="certs" data-index="2">
                         <span class="ach-icon ach-cisco" aria-hidden="true"><span class="i i-radio-tower"></span></span>
                         <span class="ach-text">
                             <span class="ach-name">CCNA: Enterprise Networking, Security, and Automation</span>
                             <span class="ach-meta"><span>Cisco Networking Academy</span><span class="sr-only">, </span><span class="dot" aria-hidden="true"></span><span>Jul 21, 2025</span></span>
                         </span>
                         <span class="i i-chevron-right ach-go" aria-hidden="true"></span>
-                    </button>
+                    </a>
                 </li>
                 <li>
-                    <button class="ach" type="button" data-gallery="certs" data-index="3">
+                    <a class="ach" href="assets/img/certs/ccna-srwe.webp" data-gallery="certs" data-index="3">
                         <span class="ach-icon ach-cisco" aria-hidden="true"><span class="i i-git-branch"></span></span>
                         <span class="ach-text">
                             <span class="ach-name">CCNA: Switching, Routing, and Wireless Essentials</span>
                             <span class="ach-meta"><span>Cisco Networking Academy</span><span class="sr-only">, </span><span class="dot" aria-hidden="true"></span><span>Jul 21, 2025</span></span>
                         </span>
                         <span class="i i-chevron-right ach-go" aria-hidden="true"></span>
-                    </button>
+                    </a>
                 </li>
                 <li>
                     <div class="ach ach-static">
@@ -728,14 +1079,14 @@
                     </div>
                 </li>
                 <li>
-                    <button class="ach" type="button" data-gallery="certs" data-index="4">
+                    <a class="ach" href="assets/img/certs/ccna-itn.webp" data-gallery="certs" data-index="4">
                         <span class="ach-icon ach-cisco" aria-hidden="true"><span class="i i-cellular-signal-3"></span></span>
                         <span class="ach-text">
                             <span class="ach-name">CCNA: Introduction to Networks</span>
                             <span class="ach-meta"><span>Cisco Networking Academy</span><span class="sr-only">, </span><span class="dot" aria-hidden="true"></span><span>Feb 5, 2025</span></span>
                         </span>
                         <span class="i i-chevron-right ach-go" aria-hidden="true"></span>
-                    </button>
+                    </a>
                 </li>
                 <li>
                     <div class="ach ach-static">
@@ -748,154 +1099,154 @@
                     </div>
                 </li>
                 <li>
-                    <button class="ach" type="button" data-gallery="certs" data-index="5">
+                    <a class="ach" href="assets/img/certs/nexus-winserver.webp" data-gallery="certs" data-index="5">
                         <span class="ach-icon ach-nexus" aria-hidden="true"><span class="i i-monitor"></span></span>
                         <span class="ach-text">
                             <span class="ach-name">Windows Server 2019: System Administration and Automation</span>
                             <span class="ach-meta"><span>Nexus Cloud IT Solutions</span><span class="sr-only">, </span><span class="dot" aria-hidden="true"></span><span>Aug 3, 2024</span></span>
                         </span>
                         <span class="i i-chevron-right ach-go" aria-hidden="true"></span>
-                    </button>
+                    </a>
                 </li>
             </ul>
         </div>
     </section>
 
-    <!-- ============ SELECT A SERVICE ============ -->
-    <section class="band band-yellow shop" id="services-section" aria-labelledby="shop-title">
-        <div class="wrap">
-            <header class="sec-head">
-                <h2 class="sec-title" id="shop-title">Select a service</h2>
-                <p class="sec-lede">Freelance work I take on. Pick one and send me the details.</p>
-            </header>
-            <div class="shop-grid" data-tabs>
-                <div class="shop-list" role="tablist" aria-label="Services" aria-orientation="vertical">
-                    <button class="shop-opt" role="tab" id="srv-t1" aria-controls="srv-p1" aria-selected="true" type="button">
-                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-code shop-ico" aria-hidden="true"></span><span>Web development</span>
-                    </button>
-                    <button class="shop-opt" role="tab" id="srv-t2" aria-controls="srv-p2" aria-selected="false" tabindex="-1" type="button">
-                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-colors-swatch shop-ico" aria-hidden="true"></span><span>Graphic design</span>
-                    </button>
-                    <button class="shop-opt" role="tab" id="srv-t3" aria-controls="srv-p3" aria-selected="false" tabindex="-1" type="button">
-                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-movie shop-ico" aria-hidden="true"></span><span>Video editing</span>
-                    </button>
-                    <button class="shop-opt" role="tab" id="srv-t4" aria-controls="srv-p4" aria-selected="false" tabindex="-1" type="button">
-                        <span class="shop-cursor i i-play" aria-hidden="true"></span><span class="i i-speed-fast shop-ico" aria-hidden="true"></span><span>Social media ads</span>
-                    </button>
-                </div>
-
-                <div class="shop-panels win">
-                    <div class="shop-panel" role="tabpanel" id="srv-p1" aria-labelledby="srv-t1">
-                        <span class="photo shop-shot"><img src="assets/img/services/web.webp" width="900" height="675" alt="Screenshots of The Coffee Realm and JMI2 Waterproofing websites" loading="lazy"></span>
-                        <div class="shop-info">
-                            <h3 class="shop-name">Web development</h3>
-                            <p>Responsive websites and web apps, from a four-page business site to an ordering system with a back office.</p>
-                            <p class="shop-recent"><span>Examples</span> The Coffee Realm, JMI2 Waterproofing, 8Box Solutions</p>
-                            <a class="btn btn-primary" href="mailto:mnikkolonzaga@gmail.com?subject=Project%20inquiry%3A%20Web%20development"><span class="i i-mail" aria-hidden="true"></span><span>Email me</span></a>
-                        </div>
-                    </div>
-                    <div class="shop-panel" role="tabpanel" id="srv-p2" aria-labelledby="srv-t2" hidden>
-                        <span class="photo shop-shot"><img src="assets/img/services/design.webp" width="900" height="675" alt="Four posters: Cash for Kicks, a 4.4 mega sale, Comeback Kings and Be one of us" loading="lazy"></span>
-                        <div class="shop-info">
-                            <h3 class="shop-name">Graphic design</h3>
-                            <p>Logos, brand kits, social posts, posters and apparel graphics, plus original character illustration.</p>
-                            <p class="shop-recent"><span>Examples</span> Pong Soles, Ano Toys, apparel drops</p>
-                            <a class="btn btn-primary" href="mailto:mnikkolonzaga@gmail.com?subject=Project%20inquiry%3A%20Graphic%20design"><span class="i i-mail" aria-hidden="true"></span><span>Email me</span></a>
-                        </div>
-                    </div>
-                    <div class="shop-panel" role="tabpanel" id="srv-p3" aria-labelledby="srv-t3" hidden>
-                        <span class="photo shop-shot"><img src="assets/img/services/video.webp" width="900" height="675" alt="Three frames from short-form video edits" loading="lazy"></span>
-                        <div class="shop-info">
-                            <h3 class="shop-name">Video editing</h3>
-                            <p>Short-form edits, YouTube videos and animated pieces, cut for pace and sound.</p>
-                            <p class="shop-recent"><span>Examples</span> Short-form reels, a long-form Minecraft video, animated shorts</p>
-                            <a class="btn btn-primary" href="mailto:mnikkolonzaga@gmail.com?subject=Project%20inquiry%3A%20Video%20editing"><span class="i i-mail" aria-hidden="true"></span><span>Email me</span></a>
-                        </div>
-                    </div>
-                    <div class="shop-panel" role="tabpanel" id="srv-p4" aria-labelledby="srv-t4" hidden>
-                        <span class="photo shop-shot"><img src="assets/img/services/ads.webp" width="900" height="675" alt="Three frames from pet care video ads" loading="lazy"></span>
-                        <div class="shop-info">
-                            <h3 class="shop-name">Social media ads</h3>
-                            <p>Video and image ads for social campaigns, each built around one clear offer.</p>
-                            <p class="shop-recent"><span>Examples</span> BrightEyes+ video ads, Pong Soles buy-and-sell posts</p>
-                            <a class="btn btn-primary" href="mailto:mnikkolonzaga@gmail.com?subject=Project%20inquiry%3A%20Social%20media%20ads"><span class="i i-mail" aria-hidden="true"></span><span>Email me</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ============ CONTINUE? (CONTACT) ============ -->
     <section class="band band-night contact" id="contact" aria-labelledby="contact-title">
-        <div class="wrap contact-grid">
-            <div class="contact-main">
+        <div class="wrap">
+            <div class="contact-head">
                 <h2 class="continue" id="contact-title">Continue?</h2>
                 <span class="countdown" id="countdown" aria-hidden="true">9</span>
-                <p class="contact-sub">Player 2, press start. I'm open to entry-level roles and freelance projects.</p>
+            </div>
 
-                <ul class="menu-list" role="list">
-                    <li class="menu-item menu-email">
-                        <a href="mailto:mnikkolonzaga@gmail.com" class="menu-link">
-                            <span class="menu-cursor i i-play" aria-hidden="true"></span>
-                            <span class="i i-mail" aria-hidden="true"></span>
-                            <span class="menu-k">Email</span>
-                            <span class="menu-v">mnikkolonzaga@<wbr>gmail.com</span>
-                        </a>
-                        <button class="tool-btn tool-btn-sm copy-btn" type="button" data-copy="mnikkolonzaga@gmail.com">
-                            <span class="i i-copy" aria-hidden="true"></span><span class="sr-only">Copy email address</span>
-                        </button>
-                    </li>
-                    <li class="menu-item">
-                        <a href="tel:+639512329712" class="menu-link">
-                            <span class="menu-cursor i i-play" aria-hidden="true"></span>
-                            <span class="i i-device-phone" aria-hidden="true"></span>
-                            <span class="menu-k">Phone</span>
-                            <span class="menu-v">0951 232 9712</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="https://www.linkedin.com/in/lonzaga-marknikko-borja-01728131a/" class="menu-link" target="_blank" rel="noopener">
-                            <span class="menu-cursor i i-play" aria-hidden="true"></span>
-                            <span class="i i-briefcase" aria-hidden="true"></span>
-                            <span class="menu-k">LinkedIn</span>
-                            <span class="menu-v">Mark Nikko Lonzaga</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="https://www.instagram.com/mnlb204/" class="menu-link" target="_blank" rel="noopener">
-                            <span class="menu-cursor i i-play" aria-hidden="true"></span>
-                            <span class="i i-image" aria-hidden="true"></span>
-                            <span class="menu-k">Instagram</span>
-                            <span class="menu-v">@mnlb204</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="https://www.facebook.com/mark.nikko.borja.lonzaga" class="menu-link" target="_blank" rel="noopener">
-                            <span class="menu-cursor i i-play" aria-hidden="true"></span>
-                            <span class="i i-users" aria-hidden="true"></span>
-                            <span class="menu-k">Facebook</span>
-                            <span class="menu-v">mark.nikko.borja.lonzaga</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="contact-actions">
-                    <a class="btn btn-primary btn-lg" href="resume.html">
-                        <span class="i i-script-text" aria-hidden="true"></span><span>View resume</span>
-                    </a>
-                    <a class="btn btn-ghost btn-lg" href="Resume/Mark-Nikko-Lonzaga-Resume.pdf" download>
-                        <span class="i i-download" aria-hidden="true"></span><span>Download PDF</span>
-                    </a>
+            <div class="talk contact-talk">
+                <div class="talk-face">
+                    <img class="px-art" src="assets/img/me-pixel.png" width="72" height="79" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="talk-box">
+                    <p class="talk-text">Player 2, press start. Need a website, graphics or a video ad? Send me a brief. Hiring? My resume is one tap away.</p>
+                    <ul class="talk-menu" role="list">
+                        <li><a href="#brief"><span class="i i-play" aria-hidden="true"></span>Yes, start a project</a></li>
+                        <li><a href="resume.html"><span class="i i-play" aria-hidden="true"></span>No, just the resume</a></li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="contact-side" aria-hidden="true">
-                <div class="bubble">Thanks for playing!</div>
-                <div class="contact-portrait">
-                    <img class="px-art" src="assets/img/me-pixel.png" width="72" height="79" alt="" loading="lazy" decoding="async">
-                </div>
-                <div class="coins">
-                    <span class="coin"></span><span class="coin"></span><span class="coin"></span>
+            <div class="contact-grid">
+                <form class="brief win" id="brief" aria-label="Project brief" action="mailto:mnikkolonzaga@gmail.com" method="post" enctype="text/plain" novalidate>
+                    <div class="win-bar">
+                        <span class="win-file"><span class="i i-script-text" aria-hidden="true"></span>Project brief</span>
+                        <span class="win-status">Sent from your own app</span>
+                    </div>
+                    <div class="brief-body">
+                        <div class="brief-to">
+                            <img src="assets/img/me-photo.webp" width="646" height="710" alt="Photo of Mark Nikko Lonzaga" loading="lazy">
+                            <p><span class="brief-to-k">You are writing to</span><strong>Mark Nikko Lonzaga</strong></p>
+                        </div>
+                        <h3 class="brief-title">Start a project</h3>
+                        <p class="brief-ref" id="brief-ref" hidden>
+                            <span><span class="brief-ref-k">Like this one</span> <span id="brief-ref-text"></span></span>
+                            <button class="tool-btn tool-btn-sm" type="button" id="brief-ref-clear"><span class="i i-close" aria-hidden="true"></span><span class="sr-only">Remove the reference</span></button>
+                        </p>
+                        <fieldset class="brief-set">
+                            <legend>What do you need?</legend>
+                            <div class="picks">
+                                <label class="pick"><input type="checkbox" name="need" value="Website"><span>Website</span></label>
+                                <label class="pick"><input type="checkbox" name="need" value="App"><span>App</span></label>
+                                <label class="pick"><input type="checkbox" name="need" value="Graphic design"><span>Graphic design</span></label>
+                                <label class="pick"><input type="checkbox" name="need" value="Video editing"><span>Video editing</span></label>
+                                <label class="pick"><input type="checkbox" name="need" value="Social media ads"><span>Social media ads</span></label>
+                                <label class="pick"><input type="checkbox" name="need" value="Not sure yet"><span>Not sure yet</span></label>
+                            </div>
+                        </fieldset>
+                        <fieldset class="brief-set">
+                            <legend>When do you need it?</legend>
+                            <div class="picks">
+                                <label class="pick"><input type="radio" name="when" value="This week"><span>This week</span></label>
+                                <label class="pick"><input type="radio" name="when" value="This month"><span>This month</span></label>
+                                <label class="pick"><input type="radio" name="when" value="No rush"><span>No rush</span></label>
+                            </div>
+                        </fieldset>
+                        <div class="fields">
+                            <label class="field" for="brief-name">
+                                <span class="field-k">Your name</span>
+                                <input id="brief-name" name="name" type="text" autocomplete="name" maxlength="80">
+                            </label>
+                            <label class="field" for="brief-budget">
+                                <span class="field-k">Budget in pesos, if you have one</span>
+                                <input id="brief-budget" name="budget" type="text" inputmode="text" autocomplete="off" maxlength="60">
+                            </label>
+                            <label class="field field-wide" for="brief-details">
+                                <span class="field-k">Tell me about it</span>
+                                <textarea id="brief-details" name="details" rows="4" maxlength="1200" aria-describedby="brief-note"></textarea>
+                            </label>
+                        </div>
+                        <div class="brief-actions">
+                            <button class="btn btn-primary" type="submit"><span class="i i-mail" aria-hidden="true"></span><span>Email it</span></button>
+                            <button class="btn btn-ghost brief-sms" type="button" id="brief-sms"><span class="i i-device-phone" aria-hidden="true"></span><span>Text it</span></button>
+                            <button class="btn btn-ghost" type="button" id="brief-copy"><span class="i i-copy" aria-hidden="true"></span><span>Copy it</span></button>
+                            <button class="btn btn-ghost" type="button" id="brief-share" hidden><span class="i i-upload" aria-hidden="true"></span><span>Share it</span></button>
+                        </div>
+                        <p class="brief-note" id="brief-note" role="status">This opens your own email or messages app with the brief filled in. Nothing is sent to this site; your draft stays in this browser.</p>
+                    </div>
+                </form>
+
+                <div class="direct">
+                    <h3 class="shelf-title">Or reach me directly</h3>
+                    <ul class="menu-list" role="list">
+                        <li class="menu-item menu-email">
+                            <a href="mailto:mnikkolonzaga@gmail.com" class="menu-link" data-quest="hello">
+                                <span class="menu-cursor i i-play" aria-hidden="true"></span>
+                                <span class="i i-mail" aria-hidden="true"></span>
+                                <span class="menu-k">Email</span>
+                                <span class="menu-v">mnikkolonzaga@<wbr>gmail.com</span>
+                            </a>
+                            <button class="tool-btn tool-btn-sm copy-btn" type="button" data-copy="mnikkolonzaga@gmail.com">
+                                <span class="i i-copy" aria-hidden="true"></span><span class="sr-only">Copy email address</span>
+                            </button>
+                        </li>
+                        <li class="menu-item">
+                            <a href="tel:+639512329712" class="menu-link" data-quest="hello">
+                                <span class="menu-cursor i i-play" aria-hidden="true"></span>
+                                <span class="i i-device-phone" aria-hidden="true"></span>
+                                <span class="menu-k">Phone</span>
+                                <span class="menu-v">0951 232 9712</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="https://www.linkedin.com/in/lonzaga-marknikko-borja-01728131a/" class="menu-link" target="_blank" rel="noopener">
+                                <span class="menu-cursor i i-play" aria-hidden="true"></span>
+                                <span class="i i-briefcase" aria-hidden="true"></span>
+                                <span class="menu-k">LinkedIn</span>
+                                <span class="menu-v">Mark Nikko Lonzaga</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="https://www.instagram.com/mnlb204/" class="menu-link" target="_blank" rel="noopener">
+                                <span class="menu-cursor i i-play" aria-hidden="true"></span>
+                                <span class="i i-image" aria-hidden="true"></span>
+                                <span class="menu-k">Instagram</span>
+                                <span class="menu-v">@mnlb204</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="https://www.facebook.com/mark.nikko.borja.lonzaga" class="menu-link" target="_blank" rel="noopener">
+                                <span class="menu-cursor i i-play" aria-hidden="true"></span>
+                                <span class="i i-users" aria-hidden="true"></span>
+                                <span class="menu-k">Facebook</span>
+                                <span class="menu-v">mark.nikko.borja.lonzaga</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="contact-actions">
+                        <a class="btn btn-ghost" href="assets/mark-nikko-lonzaga.vcf" download data-quest="hello">
+                            <span class="i i-card-id" aria-hidden="true"></span><span>Save my contact</span>
+                        </a>
+                        <a class="btn btn-ghost" href="resume.html">
+                            <span class="i i-script-text" aria-hidden="true"></span><span>Resume</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -905,7 +1256,9 @@
 
 <footer class="site-foot">
     <div class="wrap foot-row">
+        <p class="foot-thanks">Thanks for playing!</p>
         <p>&copy; 2026 Engr. Mark Nikko Lonzaga. Made with pixels in Quezon City.</p>
+        <p class="foot-credits">Built in plain HTML, CSS and JavaScript, with no framework and no build step. <a href="https://github.com/mnikko213/LONZ-PORTFOLIO" target="_blank" rel="noopener">View the source</a></p>
         <p class="foot-credits">Icons: pixelarticons (MIT). Type: Jersey 10, Archivo, Silkscreen (OFL).</p>
         <a class="foot-top" href="#home"><span class="i i-arrow-up" aria-hidden="true"></span>Title screen</a>
     </div>
@@ -916,9 +1269,7 @@
     <div class="win-bar">
         <span class="win-file" id="viewer-title">Viewer</span>
         <span class="viewer-count" id="viewer-count" aria-hidden="true"></span>
-        <button class="tool-btn tool-btn-sm viewer-close" type="button" data-close>
-            <span class="i i-close" aria-hidden="true"></span><span class="sr-only">Close viewer</span>
-        </button>
+        <button class="back-btn" type="button" data-close><span class="keycap" aria-hidden="true">B</span>Back</button>
     </div>
     <div class="viewer-body">
         <button class="tool-btn viewer-nav viewer-prev" type="button" data-step="-1">
@@ -941,8 +1292,90 @@
     </div>
 </dialog>
 
+<!-- Pause menu: stage map, side quests, options -->
+<dialog class="pause win" id="pause" aria-labelledby="pause-title">
+    <div class="win-bar">
+        <h2 class="win-file pause-title" id="pause-title"><span class="i i-pause" aria-hidden="true"></span>Paused</h2>
+        <button class="back-btn" type="button" data-close-pause><span class="keycap" aria-hidden="true">B</span>Back</button>
+    </div>
+    <div class="pause-body">
+        <nav class="pause-part" aria-labelledby="map-title">
+            <h3 class="pause-sub" id="map-title">Stages</h3>
+            <ol class="map" id="map">
+                <li><a href="#home" data-stage="home"><span class="map-n" aria-hidden="true">1</span><span class="map-name">Title screen</span><span class="map-plain">Home</span></a></li>
+                <li><a href="#work" data-stage="work"><span class="map-n" aria-hidden="true">2</span><span class="map-name">Level select</span><span class="map-plain">Client work</span></a></li>
+                <li><a href="#archive" data-stage="archive"><span class="map-n" aria-hidden="true">3</span><span class="map-name">Arcade</span><span class="map-plain">Videos and design</span></a></li>
+                <li><a href="#services-section" data-stage="services-section"><span class="map-n" aria-hidden="true">4</span><span class="map-name">Select a service</span><span class="map-plain">Services</span></a></li>
+                <li><a href="#about" data-stage="about"><span class="map-n" aria-hidden="true">5</span><span class="map-name">Player profile</span><span class="map-plain">About</span></a></li>
+                <li><a href="#experience" data-stage="experience"><span class="map-n" aria-hidden="true">6</span><span class="map-name">Quest log</span><span class="map-plain">Experience</span></a></li>
+                <li><a href="#skills" data-stage="skills"><span class="map-n" aria-hidden="true">7</span><span class="map-name">Inventory</span><span class="map-plain">Skills</span></a></li>
+                <li><a href="#certifications" data-stage="certifications"><span class="map-n" aria-hidden="true">8</span><span class="map-name">Achievements</span><span class="map-plain">Certificates</span></a></li>
+                <li><a href="#contact" data-stage="contact"><span class="map-n" aria-hidden="true">9</span><span class="map-name">Continue?</span><span class="map-plain">Contact</span></a></li>
+            </ol>
+        </nav>
+
+        <section class="pause-part" id="side-quests" aria-labelledby="quest-title">
+            <h3 class="pause-sub" id="quest-title">Side quests <span class="pause-sub-n" id="quest-progress">0 of 8</span></h3>
+            <ul class="q-list" id="quest-list" role="list">
+                <li class="q" data-quest="start"><span class="q-box" aria-hidden="true"></span><span class="q-name">Press start</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="level"><span class="q-box" aria-hidden="true"></span><span class="q-name">Open a level</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="cart"><span class="q-box" aria-hidden="true"></span><span class="q-name">Play a cartridge</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="poster"><span class="q-box" aria-hidden="true"></span><span class="q-name">Look at a poster</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="shop"><span class="q-box" aria-hidden="true"></span><span class="q-name">Browse the shop</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="cert"><span class="q-box" aria-hidden="true"></span><span class="q-name">Check a certificate</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="photo"><span class="q-box" aria-hidden="true"></span><span class="q-name">Flip the portrait</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q" data-quest="hello"><span class="q-box" aria-hidden="true"></span><span class="q-name">Say hello</span><span class="q-state sr-only">Not done yet</span></li>
+                <li class="q q-secret" data-quest="cheat" data-name="Enter the cheat code"><span class="q-box" aria-hidden="true"></span><span class="q-name">???</span><span class="q-state sr-only">Secret, not found yet</span></li>
+            </ul>
+            <p class="pause-reward" id="quest-reward">Collect 5 coins to unlock the bonus game cartridge on the Arcade shelf.</p>
+            <button class="pause-reset" id="save-reset" type="button">Reset my coins</button>
+        </section>
+
+        <section class="pause-part pause-options" aria-labelledby="options-title">
+            <h3 class="pause-sub" id="options-title">Options <span class="pause-sub-n">Saved on this device only</span></h3>
+            <ul class="options-list" role="list">
+                <li>
+                    <button class="opt" id="theme-toggle" type="button" role="switch" aria-checked="true">
+                        <span class="i i-moon" aria-hidden="true"></span><span class="opt-k">Night palette</span><span class="opt-v" aria-hidden="true">On</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="opt" id="sfx-toggle" type="button" role="switch" aria-checked="false">
+                        <span class="i i-volume-x" aria-hidden="true"></span><span class="opt-k">Sound effects</span><span class="opt-v" aria-hidden="true">Off</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="opt" id="motion-toggle" type="button" role="switch" aria-checked="true">
+                        <span class="i i-play" aria-hidden="true"></span><span class="opt-k">Animations</span><span class="opt-v" aria-hidden="true">On</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="opt" id="debug-toggle" type="button" role="switch" aria-checked="false">
+                        <span class="i i-bug" aria-hidden="true"></span><span class="opt-k">Debug stats</span><span class="opt-v" aria-hidden="true">Off</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </div>
+</dialog>
+
+<!-- Debug stats: numbers measured live in the visitor's own browser -->
+<aside class="debug" id="debug" aria-label="Debug stats, measured live in your browser" hidden>
+    <p class="debug-title">Debug</p>
+    <dl class="debug-rows">
+        <div><dt>Requests</dt><dd id="dbg-req">0</dd></div>
+        <div><dt>Page weight</dt><dd id="dbg-kb">0 KB</dd></div>
+        <div><dt>Other sites</dt><dd id="dbg-3p">0</dd></div>
+        <div><dt>Largest paint</dt><dd id="dbg-lcp">n/a</dd></div>
+        <div><dt>Page elements</dt><dd id="dbg-dom">0</dd></div>
+        <div><dt>Frames / sec</dt><dd id="dbg-fps">0</dd></div>
+    </dl>
+    <p class="debug-note">Measured live in your browser</p>
+</aside>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/script.js" defer></script>
+<script src="js/arcade.js" defer></script>
 </body>
 </html>

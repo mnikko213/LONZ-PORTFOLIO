@@ -1,0 +1,104 @@
+# Sync Google Drive
+#
+# What it does: it looks at the Google Drive folders listed in drive.config.json.
+# New pictures and videos are made small, copied into assets/drive/ and added to
+# data/drive.json, which the website reads. Files removed from Drive (or listed
+# under "hidden") leave the website too.
+#
+# What you edit: only drive.config.json. Nothing in this file.
+# To run it right now: Actions tab > "Sync Google Drive" > "Run workflow".
+#
+# It needs one secret, DRIVE_API_KEY (README, "Connect Google Drive"). Until that
+# secret exists every run only says it is waiting, which is not an error.
+# If a run fails, nothing on the website was changed; open the run to read why.
+
+name: Sync Google Drive
+
+on:
+  schedule:
+    # Asked for at :17 and :47 of every hour. GitHub starts scheduled jobs when it has
+    # room, which can be hours later, so "Run workflow" is the way to publish at once.
+    - cron: "17,47 * * * *"
+  workflow_dispatch:           # adds the "Run workflow" button
+
+permissions:
+  contents: write              # the job saves the imported files to this repository
+  pages: write                 # and asks GitHub Pages to publish them
+
+concurrency:
+  group: drive-sync            # never two syncs at once; a new one waits for the running one
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Import new Drive files
+    runs-on: ubuntu-24.04      # a fixed image, so Node and ffmpeg do not change under the job
+    timeout-minutes: 30
+    env:
+      # "Run workflow" also tries again the files that kept failing.
+      SYNC_FLAGS: ${{ github.event_name == 'workflow_dispatch' && '--retry' || '' }}
+
+    steps:
+      - name: Get the website files
+        uses: actions/checkout@v7
+
+      # Step 1: only look. Prints "changes=true" when Drive and the website differ.
+      - name: Check the Drive folders
+        id: plan
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+        run: node tools/drive-sync.mjs --plan $SYNC_FLAGS >> "$GITHUB_OUTPUT"
+
+      # Everything below runs only when step 1 found something to do.
+      - name: Install ffmpeg (it shrinks the pictures and videos)
+        if: steps.plan.outputs.changes == 'true'
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          ffmpeg -version | head -n 1
+
+      - name: Import the changes
+        if: steps.plan.outputs.changes == 'true'
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+        run: node tools/drive-sync.mjs $SYNC_FLAGS
+
+      - name: Save the result to the repository
+        id: save
+        if: steps.plan.outputs.changes == 'true'
+        env:
+          SUMMARY: ${{ steps.plan.outputs.summary }}
+        run: |
+          mkdir -p assets/drive
+          git add -A -- data/drive.json assets/drive
+          if git diff --cached --quiet; then
+            echo "Nothing new to save."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Sync Google Drive: $SUMMARY"
+          # If someone pushed while this ran, put this commit on top of theirs, then push.
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME"; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error title=Drive sync::The synced files could not be pushed. The next run starts over and tries again."
+          exit 1
+
+      # A push made by this job does not always make GitHub Pages publish by itself, so ask for it.
+      - name: Publish the website
+        if: steps.save.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" --silent; then
+            echo "GitHub Pages is publishing the new files. They are live in a minute or two."
+          else
+            echo "::warning title=Drive sync::The files are saved, but the request to publish was refused. If they are not on the website in ten minutes, see README: When new files do not show up."
+          fi

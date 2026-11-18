@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>Link preview card (1200 x 630)</title>
+    <!--
+        The picture that chat apps and social sites show when the portfolio link is shared.
+        It is drawn with the site's own stylesheet, so it always matches the title screen.
+        To rebuild assets/img/og-card.png, open this page in a 1200 x 630 window and take a screenshot
+        (see "Link preview image" in README.md).
+    -->
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        html, body { width: 1200px; height: 630px; margin: 0; overflow: hidden; scrollbar-gutter: auto; }
+        .card {
+            position: relative;
+            display: grid;
+            grid-template-columns: 590px 1fr;
+            align-items: center;
+            width: 1200px;
+            height: 630px;
+            padding: 0 0 0 66px;
+            background-color: var(--night);
+            background-image:
+                linear-gradient(rgba(155, 140, 255, 0.07) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(155, 140, 255, 0.07) 2px, transparent 2px);
+            background-size: 40px 40px;
+            overflow: hidden;
+        }
+        .card::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 62%;
+            height: 60%;
+            background-image: radial-gradient(var(--purple-deep) 2px, transparent 2.5px);
+            background-size: 10px 10px;
+            -webkit-mask-image: linear-gradient(to top left, #000 25%, transparent 70%);
+            mask-image: linear-gradient(to top left, #000 25%, transparent 70%);
+        }
+        .card .hero-title { margin: 0 0 22px; font-size: 130.67px; line-height: 0.8; }
+        .card .ht-line { white-space: nowrap; }
+        .card .hero-sub { max-width: 500px; margin: 0 0 30px; font-size: 27px; line-height: 1.38; color: var(--cream-dim); }
+        .card .hero-sub::first-line { color: var(--cream); }
+        .start {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 0;
+            color: var(--yellow);
+            font: 400 22px/1 var(--f-hud);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .start::before {
+            content: "";
+            width: 15px;
+            height: 25px;
+            background: var(--yellow);
+            clip-path: polygon(0 0, 33.4% 0, 33.4% 20%, 66.7% 20%, 66.7% 40%, 100% 40%, 100% 60%, 66.7% 60%, 66.7% 80%, 33.4% 80%, 33.4% 100%, 0 100%);
+        }
+        .card .hero-rig { position: relative; z-index: 1; width: 512px; justify-self: center; margin-left: 10px; }
+        .card .star, .card .rig-burst { animation: none; }
+        .card .star { position: absolute; z-index: 1; }
+        .card .star.a { left: 600px; top: 60px; }
+        .card .star.b { left: 1120px; top: 560px; }
+        .card .star.c { left: 36px; top: 96px; width: 15px; height: 15px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img class="px-art star a" src="../assets/img/sprites/sparkle.png" width="7" height="7" alt="">
+        <img class="px-art star b" src="../assets/img/sprites/sparkle.png" width="7" height="7" alt="">
+        <img class="px-art star c" src="../assets/img/sprites/sparkle-sm.png" width="5" height="5" alt="">
+        <div class="hero-copy">
+            <p class="hero-title">
+                <span class="ht-rank">Engr.</span>
+                <span class="ht-line ht-1">Mark Nikko</span>
+                <span class="ht-line ht-2">Lonzaga</span>
+            </p>
+            <p class="hero-sub">Websites, apps, graphics and video ads, made in Quezon City.</p>
+            <p class="start">Press start</p>
+        </div>
+        <div class="hero-rig">
+            <div class="rig">
+                <img class="px-art rig-burst" src="../assets/img/sprites/burst.png" width="96" height="96" alt="">
+                <div class="rig-screen">
+                    <span class="reel-slide is-on"><img src="../assets/img/reel/coffee.webp" width="720" height="450" alt=""></span>
+                </div>
+                <img class="px-art rig-crt" src="../assets/img/sprites/crt.png" width="128" height="112" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

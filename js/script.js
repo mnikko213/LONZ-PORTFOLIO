@@ -1,10 +1,12 @@
-/* LONZ PORTFOLIO: retro game edition. Vanilla JS, no dependencies. */
+/* LONZ PORTFOLIO: retro game edition. Vanilla JS, no dependencies.
+   This file runs the page; js/arcade.js (console, shelf, poster wall) builds on window.LONZ. */
 (function () {
     'use strict';
 
     var $ = function (sel, root) { return (root || document).querySelector(sel); };
     var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var root = document.documentElement;
 
     function store(key, value) {
         try {
@@ -14,29 +16,46 @@
         return null;
     }
 
+    var LONZ = window.LONZ = { $: $, $$: $$, store: store };
+
+    // an Options row is a switch: aria-checked plus an On/Off label
+    function setSwitch(btn, on) {
+        if (!btn) return;
+        btn.setAttribute('aria-checked', String(on));
+        var v = $('.opt-v', btn);
+        if (v) v.textContent = on ? 'On' : 'Off';
+    }
+
     /* ---------------------------------------------------------------
-       0. Motion switch: the HUD pause button (or the OS reduced-motion
-          setting) stops every looping animation, video and timer.
+       0. Motion switch: Options > Animations (or the OS reduced-motion
+          setting) stops every looping animation, video preview and timer.
        --------------------------------------------------------------- */
-    var motion = {
+    var motion = LONZ.motion = {
         still: reduceMotion.matches || store('lonz-motion') === 'off',
         fns: [],
         on: function (fn) { this.fns.push(fn); },
         set: function (still) {
             this.still = still;
-            document.documentElement.classList.toggle('motion-off', still);
+            root.classList.toggle('motion-off', still);
             this.fns.forEach(function (fn) { fn(still); });
         }
     };
-    document.documentElement.classList.toggle('motion-off', motion.still);
-    var motionBtn = document.getElementById('motion-toggle');
+    root.classList.toggle('motion-off', motion.still);
+    var motionBtn = $('#motion-toggle');
+    function renderMotion() {
+        setSwitch(motionBtn, !motion.still);
+        var icon = motionBtn && $('.i', motionBtn);
+        if (!icon) return;
+        icon.classList.toggle('i-play', !motion.still);
+        icon.classList.toggle('i-pause', motion.still);
+    }
     if (motionBtn) {
-        motionBtn.setAttribute('aria-pressed', String(motion.still));
+        renderMotion();
         motionBtn.addEventListener('click', function () {
             var still = !motion.still;
             store('lonz-motion', still ? 'off' : 'on');
             motion.set(still);
-            motionBtn.setAttribute('aria-pressed', String(still));
+            renderMotion();
             toast(still ? 'Animations paused' : 'Animations on');
         });
     }
@@ -44,7 +63,7 @@
     /* ---------------------------------------------------------------
        1. Sound effects (off by default, tiny square-wave blips)
        --------------------------------------------------------------- */
-    var sfx = {
+    var sfx = LONZ.sfx = {
         on: store('lonz-sfx') === 'on',
         ctx: null,
         play: function (kind) {
@@ -52,12 +71,18 @@
             try {
                 if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
                 var ctx = this.ctx;
+                // a context made before the first tap starts suspended; wake it so the sound is heard
+                if (ctx.state === 'suspended' && ctx.resume) { var woke = ctx.resume(); if (woke && woke.catch) woke.catch(function () {}); }
                 var notes = {
                     select: [[660, 0.05]],
                     confirm: [[523, 0.06], [784, 0.08]],
                     start: [[392, 0.07], [523, 0.07], [784, 0.12]],
                     coin: [[988, 0.06], [1319, 0.18]],
-                    back: [[392, 0.06], [262, 0.08]]
+                    back: [[392, 0.06], [262, 0.08]],
+                    insert: [[196, 0.05], [147, 0.08]],
+                    boot: [[784, 0.08], [1175, 0.22]],
+                    eject: [[330, 0.05], [220, 0.08]],
+                    error: [[196, 0.12], [185, 0.2]]
                 }[kind] || [[660, 0.05]];
                 var t = ctx.currentTime;
                 notes.forEach(function (n) {
@@ -77,44 +102,47 @@
     };
 
     var sfxBtn = $('#sfx-toggle');
+    var titleSound = $('#title-sound');
     function renderSfx() {
-        if (!sfxBtn) return;
-        sfxBtn.setAttribute('aria-pressed', String(sfx.on));
-        var icon = $('.i', sfxBtn);
-        icon.classList.toggle('i-volume-x', !sfx.on);
-        icon.classList.toggle('i-volume-2', sfx.on);
+        setSwitch(sfxBtn, sfx.on);
+        var icon = sfxBtn && $('.i', sfxBtn);
+        if (icon) {
+            icon.classList.toggle('i-volume-x', !sfx.on);
+            icon.classList.toggle('i-volume-2', sfx.on);
+        }
+        if (titleSound) {
+            titleSound.setAttribute('aria-pressed', String(sfx.on));
+            $('#title-sound-v').textContent = sfx.on ? 'on' : 'off';
+        }
     }
-    if (sfxBtn) {
+    function toggleSfx() {
+        sfx.on = !sfx.on;
+        store('lonz-sfx', sfx.on ? 'on' : 'off');
         renderSfx();
-        sfxBtn.addEventListener('click', function () {
-            sfx.on = !sfx.on;
-            store('lonz-sfx', sfx.on ? 'on' : 'off');
-            renderSfx();
-            sfx.play('confirm');
-            toast(sfx.on ? 'Sound on' : 'Sound off');
-        });
+        sfx.play('confirm');
+        toast(sfx.on ? 'Sound on' : 'Sound off');
     }
+    renderSfx();
+    if (sfxBtn) sfxBtn.addEventListener('click', toggleSfx);
+    if (titleSound) titleSound.addEventListener('click', toggleSfx);
 
     document.addEventListener('click', function (e) {
-        var el = e.target.closest('[data-sfx], .btn, .roster-btn, .inv-tab, .shop-opt, .cart, button.ach, .menu-link');
-        if (!el || el === sfxBtn) return;
+        var el = e.target.closest('[data-sfx], .btn, .roster-btn, .shop-opt, .ach[data-gallery], .menu-link, .stage, .talk-menu a, .map a, .filter button, .poster');
+        if (!el) return;
         sfx.play(el.getAttribute('data-sfx') || 'select');
     });
 
     /* ---------------------------------------------------------------
-       2. Day / night theme
+       2. Night / day palette
        --------------------------------------------------------------- */
-    var root = document.documentElement;
     var themeBtn = $('#theme-toggle');
-    var themeMeta = $('meta[name="theme-color"]');
     function renderTheme() {
         var night = root.getAttribute('data-theme') === 'night';
-        if (!themeBtn) return;
-        themeBtn.setAttribute('aria-pressed', String(night));
-        var icon = $('.i', themeBtn);
-        icon.classList.toggle('i-moon', !night);
-        icon.classList.toggle('i-sun', night);
-        if (themeMeta) themeMeta.setAttribute('content', '#16123a');
+        setSwitch(themeBtn, night);
+        var icon = themeBtn && $('.i', themeBtn);
+        if (!icon) return;
+        icon.classList.toggle('i-moon', night);
+        icon.classList.toggle('i-sun', !night);
     }
     if (themeBtn) {
         renderTheme();
@@ -139,60 +167,261 @@
         clearTimeout(toastTimer);
         toastTimer = setTimeout(function () { toastEl.classList.remove('is-on'); }, ms || 1800);
     }
+    LONZ.toast = toast;
+
+    function copyText(text, done, fail) {
+        var legacy = function () {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            ta.remove();
+            if (ok) done(); else fail();
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, legacy);
+        } else {
+            legacy();
+        }
+    }
 
     /* ---------------------------------------------------------------
-       4. HUD: mobile menu + current section
+       4. HUD: the pause menu (stage map, side quests, options), the stage
+          readout and the current nav word
        --------------------------------------------------------------- */
-    var hud = $('#hud');
     var menuBtn = $('#menu-btn');
-    function closeMenu() {
-        if (!hud || !hud.classList.contains('nav-open')) return;
-        hud.classList.remove('nav-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
+    var coinBtn = $('#quest-btn');
+    var pause = $('#pause');
+    var canPause = !!(pause && typeof pause.showModal === 'function');
+    var pauseOpener = null;
+
+    function openPause(target) {
+        if (!canPause || pause.open) return;
+        pauseOpener = document.activeElement;
+        renderQuests();
+        pause.showModal();
+        sfx.play('select');
+        if (target) {
+            target.scrollIntoView({ block: 'nearest' });
+        } else {
+            var here = $('.map a[aria-current]', pause) || $('.map a', pause);
+            if (here) here.focus();
+        }
     }
-    if (menuBtn) {
-        menuBtn.addEventListener('click', function () {
-            var open = !hud.classList.contains('nav-open');
-            hud.classList.toggle('nav-open', open);
-            menuBtn.setAttribute('aria-expanded', String(open));
-            if (open) {
-                var first = $('.nav-list a', hud);
-                if (first) first.focus();
-            }
+    if (canPause) {
+        if (menuBtn) menuBtn.addEventListener('click', function () { openPause(null); });
+        if (coinBtn) coinBtn.addEventListener('click', function () { openPause($('#side-quests')); });
+        pause.addEventListener('click', function (e) {
+            // the backdrop, B Back, or choosing a stage all close the menu
+            var stage = e.target.closest('.map a');
+            if (stage) pauseOpener = null;
+            if (e.target === pause || stage || e.target.closest('[data-close-pause]')) pause.close();
         });
-        $$('.nav-list a').forEach(function (a) { a.addEventListener('click', closeMenu); });
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && hud.classList.contains('nav-open')) {
-                closeMenu();
-                menuBtn.focus();
-            }
+        pause.addEventListener('keydown', function (e) {
+            if (e.key.toLowerCase() === 'b' && !e.ctrlKey && !e.metaKey && !e.altKey) pause.close();
         });
-        document.addEventListener('click', function (e) {
-            if (hud.classList.contains('nav-open') && !hud.contains(e.target)) closeMenu();
+        pause.addEventListener('close', function () {
+            sfx.play('back');
+            if (pauseOpener && document.body.contains(pauseOpener)) pauseOpener.focus();
         });
+    } else {
+        if (menuBtn) menuBtn.hidden = true;
+        if (coinBtn) coinBtn.hidden = true;
     }
 
+    // stages: every top-level section, in page order
     var navLinks = $$('.nav-list a');
-    if ('IntersectionObserver' in window && navLinks.length) {
-        var byId = {};
-        navLinks.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    var mapLinks = $$('.map a');
+    var stageN = $('#hud-stage-n');
+    var stageName = $('#hud-stage-name');
+    var seen = {};
+    try { JSON.parse(store('lonz-seen') || '[]').forEach(function (id) { seen[id] = true; }); } catch (e) { seen = {}; }
+    function renderStage(id) {
+        var index = -1;
+        mapLinks.forEach(function (a, i) {
+            var on = a.getAttribute('data-stage') === id;
+            if (on) { index = i; a.setAttribute('aria-current', 'location'); } else a.removeAttribute('aria-current');
+            a.classList.toggle('is-seen', !!seen[a.getAttribute('data-stage')]);
+        });
+        if (index > -1 && stageN) {
+            stageN.textContent = (index + 1) + '/' + mapLinks.length;
+            stageName.textContent = $('.map-plain', mapLinks[index]).textContent;
+        }
+        navLinks.forEach(function (a) {
+            var on = a.getAttribute('href') === '#' + id || (id === 'certifications' && a.getAttribute('href') === '#skills');
+            a.classList.toggle('is-current', on);
+            if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+        });
+    }
+    if ('IntersectionObserver' in window && mapLinks.length) {
         var spy = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
-                var id = entry.target.id === 'archive' ? 'work' : entry.target.id;
-                navLinks.forEach(function (a) {
-                    var on = a === byId[id];
-                    a.classList.toggle('is-current', on);
-                    if (on) a.setAttribute('aria-current', 'location');
-                    else a.removeAttribute('aria-current');
-                });
+                var id = entry.target.id === 'intro' ? 'home' : entry.target.id;
+                if (!seen[id]) {
+                    seen[id] = true;
+                    store('lonz-seen', JSON.stringify(Object.keys(seen)));
+                    if (id !== 'home') sfx.play('select');
+                }
+                renderStage(id);
             });
         }, { rootMargin: '-45% 0px -50% 0px' });
-        $$('main > section[id]').forEach(function (s) { spy.observe(s); });
+        $$('main > section[id]').forEach(function (sec) { spy.observe(sec); });
+    }
+
+    // title menu: up and down move between the choices
+    var titleMenu = $('#title-menu');
+    if (titleMenu) {
+        titleMenu.addEventListener('keydown', function (e) {
+            if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+            var rows = $$('a, button', titleMenu);
+            var i = rows.indexOf(document.activeElement);
+            if (i < 0) return;
+            e.preventDefault();
+            rows[(i + (e.key === 'ArrowDown' ? 1 : rows.length - 1)) % rows.length].focus();
+            sfx.play('select');
+        });
     }
 
     /* ---------------------------------------------------------------
-       5. Reveal: windows "open" as they scroll in. Content is visible
+       5. Level progress: the bar under the HUD fills as the page scrolls
+          and the runner jogs along it towards the flag.
+       --------------------------------------------------------------- */
+    var xpBar = $('.xp-bar');
+    if (xpBar) {
+        var xpFill = $('.xp-fill', xpBar);
+        var runner = $('.xp-runner', xpBar);
+        var ticking = false;
+        var lastY = window.scrollY;
+        var idle = null;
+        var paint = function () {
+            ticking = false;
+            var y = window.scrollY;
+            var max = root.scrollHeight - window.innerHeight;
+            var p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+            var x = Math.round(p * Math.max(0, xpBar.clientWidth - 24 - 30));
+            var back = y < lastY;
+            xpFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+            runner.style.transform = 'translateX(' + x + 'px)' + (back ? ' scaleX(-1)' : '');
+            if (!motion.still && y !== lastY) {
+                runner.style.backgroundPositionX = -(Math.floor(y / 36) % 4) * 24 + 'px';
+                clearTimeout(idle);
+                idle = setTimeout(function () {
+                    runner.style.backgroundPositionX = '-96px';
+                    runner.style.transform = 'translateX(' + x + 'px)';
+                }, 180);
+            }
+            lastY = y;
+        };
+        var queue = function () {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(paint);
+        };
+        window.addEventListener('scroll', queue, { passive: true });
+        window.addEventListener('resize', queue);
+        queue();
+    }
+
+    /* ---------------------------------------------------------------
+       6. Side quests: visitors collect a coin for each thing they try.
+          Purely for fun; nothing on the page depends on it except the
+          bonus game cartridge in the Arcade.
+       --------------------------------------------------------------- */
+    var QUESTS = {
+        start: 'Pressed start',
+        level: 'Opened a level',
+        cart: 'Played a cartridge',
+        poster: 'Looked at a poster',
+        photo: 'Flipped the portrait',
+        cert: 'Checked a certificate',
+        shop: 'Browsed the shop',
+        hello: 'Said hello',
+        cheat: 'Entered the cheat code'
+    };
+    var UNLOCK = 5;
+    var questDone = {};
+    try {
+        JSON.parse(store('lonz-quests') || '[]').forEach(function (id) { if (QUESTS[id]) questDone[id] = true; });
+    } catch (e) { questDone = {}; }
+
+    var coinCount = $('#coin-count');
+    var coinLabel = $('#coin-label');
+    var questLog = $('#side-quests');
+    function coins() { return Object.keys(questDone).length; }
+    function renderQuests() {
+        var n = coins();
+        if (coinCount) coinCount.textContent = String(n);
+        if (coinLabel) coinLabel.textContent = n + (n === 1 ? ' coin' : ' coins') + '. Open the side quests';
+        if (!questLog) return;
+        var open = 0;
+        $$('.q', questLog).forEach(function (li) {
+            var id = li.getAttribute('data-quest');
+            var is = !!questDone[id];
+            var secret = li.hasAttribute('data-secret') || li.classList.contains('q-secret');
+            li.classList.toggle('is-done', is);
+            if (secret) $('.q-name', li).textContent = is ? li.getAttribute('data-name') : '???';
+            $('.q-state', li).textContent = is ? 'Done' : (secret ? 'Secret, not found yet' : 'Not done yet');
+            if (!secret && is) open += 1;
+        });
+        var total = $$('.q:not(.q-secret)', questLog).length;
+        var progress = $('#quest-progress');
+        if (progress) progress.textContent = open + ' of ' + total + (questDone.cheat ? ' + secret' : '');
+        var reward = $('#quest-reward');
+        if (reward) {
+            reward.textContent = n >= UNLOCK
+                ? 'Bonus game unlocked. Look for the LONZ RUN cartridge on the Arcade shelf.'
+                : 'Collect ' + (UNLOCK - n) + ' more ' + (UNLOCK - n === 1 ? 'coin' : 'coins') + ' to unlock the bonus game cartridge on the Arcade shelf.';
+        }
+    }
+    LONZ.coins = coins;
+    LONZ.unlockAt = UNLOCK;
+    LONZ.quest = function (id) {
+        if (!QUESTS[id] || questDone[id]) return false;
+        questDone[id] = true;
+        store('lonz-quests', JSON.stringify(Object.keys(questDone)));
+        renderQuests();
+        var n = coins();
+        toast(n === UNLOCK ? '+1 coin. Bonus game unlocked!' : '+1 coin: ' + QUESTS[id], n === UNLOCK ? 3200 : 2200);
+        sfx.play('coin');
+        if (coinBtn) {
+            coinBtn.classList.remove('is-gain');
+            void coinBtn.offsetWidth;
+            coinBtn.classList.add('is-gain');
+        }
+        document.dispatchEvent(new CustomEvent('lonz:coins', { detail: n }));
+        return true;
+    };
+    renderQuests();
+
+    document.addEventListener('click', function (e) {
+        var el = e.target.closest('[data-quest]');
+        if (el && !el.closest('.q-list')) LONZ.quest(el.getAttribute('data-quest'));
+        if (e.target.closest('.level a[target="_blank"]')) LONZ.quest('level');
+    });
+
+    var saveReset = $('#save-reset');
+    if (saveReset) {
+        saveReset.addEventListener('click', function () {
+            questDone = {};
+            store('lonz-quests', '[]');
+            renderQuests();
+            document.dispatchEvent(new CustomEvent('lonz:coins', { detail: 0 }));
+            toast('Coins reset');
+        });
+    }
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.shop-opt, .shop-actions a')) LONZ.quest('shop');
+    });
+    renderStage('home');
+
+    /* ---------------------------------------------------------------
+       7. Reveal: windows "open" as they scroll in. Content is visible
           by default; only sections still below the fold get armed.
        --------------------------------------------------------------- */
     if ('IntersectionObserver' in window && !motion.still) {
@@ -214,7 +443,49 @@
     }
 
     /* ---------------------------------------------------------------
-       6. CRT reel on the title screen
+       8. Intro dialog: the line types itself out once, like an RPG text
+          box. The full text is always in the page; a click or a key
+          skips the typing.
+       --------------------------------------------------------------- */
+    var talk = $('#talk-text');
+    if (talk && 'IntersectionObserver' in window && !motion.still) {
+        var fullLine = talk.textContent;
+        var typed = null;
+        var typeTimer = null;
+        var typedAt = 0;
+        var finishTyping = function () {
+            clearInterval(typeTimer);
+            if (typed) typed.remove();
+            typed = null;
+            talk.classList.remove('is-typing');
+        };
+        var startTyping = function () {
+            typed = document.createElement('span');
+            typed.className = 'talk-typed';
+            typed.setAttribute('aria-hidden', 'true');
+            talk.classList.add('is-typing');
+            talk.appendChild(typed);
+            typeTimer = setInterval(function () {
+                typedAt += 2;
+                typed.textContent = fullLine.slice(0, typedAt);
+                if (typedAt >= fullLine.length) finishTyping();
+            }, 24);
+        };
+        var talkObs = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            talkObs.disconnect();
+            startTyping();
+        }, { threshold: 0.6 });
+        talkObs.observe(talk);
+        var talkBox = talk.closest('.talk-box');
+        talkBox.addEventListener('click', finishTyping);
+        talkBox.addEventListener('focusin', finishTyping);
+        document.addEventListener('keydown', function () { if (typed) finishTyping(); });
+        motion.on(function (still) { if (still) finishTyping(); });
+    }
+
+    /* ---------------------------------------------------------------
+       9. CRT reel on the title screen
        --------------------------------------------------------------- */
     var reel = $('#reel');
     if (reel) {
@@ -291,9 +562,13 @@
     }
 
     /* ---------------------------------------------------------------
-       7. Tabs: character select, inventory, services
-          (WAI-ARIA tabs with arrow keys, Home and End)
+       10. Tabs: character select, inventory, services
+           (WAI-ARIA tabs with arrow keys, Home and End)
        --------------------------------------------------------------- */
+    $$('[data-panel-hidden]').forEach(function (panel) {
+        panel.hidden = true;
+        panel.removeAttribute('data-panel-hidden');
+    });
     $$('[data-tabs]').forEach(function (group) {
         var tabs = $$('[role="tab"]', group);
         var vertical = $('[role="tablist"]', group).getAttribute('aria-orientation') === 'vertical';
@@ -336,7 +611,7 @@
     });
 
     /* ---------------------------------------------------------------
-       8. Portrait: pixels or photo
+       11. Portrait: pixels or photo
        --------------------------------------------------------------- */
     var pBtn = $('#portrait-toggle');
     var portrait = $('#portrait');
@@ -344,61 +619,27 @@
         pBtn.addEventListener('click', function () {
             var photo = !portrait.classList.contains('is-photo');
             portrait.classList.toggle('is-photo', photo);
+            // only the picture on show is exposed to assistive tech
+            $('.portrait-px', portrait).setAttribute('aria-hidden', String(photo));
+            $('.portrait-photo', portrait).setAttribute('aria-hidden', String(!photo));
+            pBtn.setAttribute('aria-pressed', String(photo));
             $('.btn-label', pBtn).textContent = photo ? 'Show pixels' : 'Show photo';
+            LONZ.quest('photo');
         });
     }
 
     /* ---------------------------------------------------------------
-       9. Cartridge previews play only while on screen
-       --------------------------------------------------------------- */
-    // Posters load when the shelf comes near (on every device; on phones the poster is the preview).
-    var carts = $$('.cart-video');
-    var setPoster = function (v) { if (v.dataset.poster) { v.poster = v.dataset.poster; v.removeAttribute('data-poster'); } };
-    if ('IntersectionObserver' in window) {
-        var posterObs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) { setPoster(entry.target); posterObs.unobserve(entry.target); }
-            });
-        }, { rootMargin: '800px 0px' });
-        carts.forEach(function (v) { posterObs.observe(v); });
-    } else {
-        carts.forEach(setPoster);
-    }
-    // Previews play only on devices with a mouse (saves phone data), and never while motion is paused.
-    var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (carts.length && 'IntersectionObserver' in window && canHover) {
-        var seen = new Set();
-        var playCart = function (v) {
-            if (motion.still) return;
-            v.preload = 'auto';
-            var p = v.play();
-            if (p && p.catch) p.catch(function () {});
-        };
-        var cartObs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                var v = entry.target;
-                if (entry.isIntersecting) { seen.add(v); playCart(v); }
-                else { seen.delete(v); v.pause(); }
-            });
-        }, { threshold: 0.25 });
-        carts.forEach(function (v) { cartObs.observe(v); });
-        motion.on(function (still) {
-            carts.forEach(function (v) { if (still) v.pause(); else if (seen.has(v)) playCart(v); });
-        });
-    }
-
-    /* ---------------------------------------------------------------
-       10. Galleries + viewer dialog
+       12. Galleries + viewer dialog
+           (js/arcade.js adds the "wall" gallery for the poster wall)
        --------------------------------------------------------------- */
     var IMG = 'assets/img/';
-    var VID = 'assets/video/full/';
     function img(src, alt, caption, thumb) { return { type: 'image', src: src, alt: alt, caption: caption || alt, thumb: thumb || src }; }
-    function vid(name, caption) { return { type: 'video', src: VID + name + '.mp4', poster: VID + name + '.webp', caption: caption, thumb: VID + name + '.webp' }; }
 
-    var GALLERIES = {
+    var GALLERIES = LONZ.galleries = {
         oneup: {
-            title: 'one-up.apk',
+            title: 'Level 1-3: ONE UP',
             label: 'ONE UP screenshots',
+            quest: 'level',
             items: [
                 img(IMG + 'work/oneup/home.webp', 'ONE UP home screen with level, weekly streak, recovery map and Fitness Score', 'Home: level, weekly streak, recovery map and Fitness Score. Screens use a demo account.'),
                 img(IMG + 'work/oneup/workout.webp', 'ONE UP active workout screen with a next-weight tip, set table and rest timer', 'Workout: next-weight tips, set logging and a rest timer that keeps running in the background.'),
@@ -410,8 +651,9 @@
             ]
         },
         coffee: {
-            title: 'coffee-realm.pos',
+            title: 'Level 1-1: The Coffee Realm',
             label: 'The Coffee Realm pages and photos',
+            quest: 'level',
             link: { href: 'https://www.thecoffeerealm.online', label: 'Visit the site' },
             items: [
                 img(IMG + 'work/coffee/site-home.webp', 'The Coffee Realm home page: Homemade. Freshly baked. Brewed daily.', 'Home page with Order Online and Browse Menu.', IMG + 'work/coffee/site-home-sm.webp'),
@@ -423,8 +665,9 @@
             ]
         },
         jmi2: {
-            title: 'jmi2.html',
+            title: 'Level 1-2: JMI2 Waterproofing',
             label: 'JMI2 Waterproofing pages',
+            quest: 'level',
             items: [
                 img(IMG + 'work/jmi2/home.webp', 'JMI2 Waterproofing home page with a drone shot of a finished roof deck', 'Home: drone-video hero and a Request a Proposal call to action.', IMG + 'work/jmi2/home-sm.webp'),
                 img(IMG + 'work/jmi2/services.webp', 'JMI2 services page: Comprehensive Waterproofing Solutions', 'Services page with an editorial layout and a video hero.', IMG + 'work/jmi2/services-sm.webp'),
@@ -433,8 +676,9 @@
             ]
         },
         art: {
-            title: 'character-select',
+            title: 'Bonus stage: illustrations',
             label: 'Illustrations',
+            quest: 'poster',
             items: [
                 img(IMG + 'art/pic4.webp', 'Digital illustration of a red-haired character in a black choker, lettered MICHEAL', 'Micheal'),
                 img(IMG + 'art/pic5.webp', 'Digital illustration of a silver-haired character in a black coat, lettered DEMON', 'Demon'),
@@ -443,79 +687,22 @@
                 img(IMG + 'art/pic3.webp', 'Digital illustration of a red-haired character in a grey hoodie', 'Hoodie')
             ]
         },
-        graphics: {
-            title: 'graphics.cart',
-            label: 'Graphic design work',
-            link: { href: 'https://drive.google.com/drive/folders/1bbLJtDv6jUpr_zYZG6JoOniDPYJIz0H6', label: 'Full folder' },
-            items: [
-                ['pong-buying-pairs', 'Pong Soles post: Buying Pairs, with a brown high-top sneaker'],
-                ['pong-cash-for-kicks', 'Pong Soles post: Cash for Kicks, with a red and black sneaker'],
-                ['pong-we-buy', 'Pong Soles post: Sell your sneakers, we buy'],
-                ['pong-sell-your-heat', 'Pong Soles post: Sell your heat, on yellow'],
-                ['pong-got-heat', 'Pong Soles post: Got heat? We buy'],
-                ['pong-kicks-to-cash', 'Pong Soles post: Kicks to cash, on orange'],
-                ['pong-sell-us', 'Pong Soles post: Sell us your soles, pink sneaker'],
-                ['pong-sapatos', 'Pong Soles post: Sapatos mo, bilhin ko'],
-                ['ano-toys-sale', 'Ano Toys 4.4 mega sale poster'],
-                ['apparel-haddie', 'Apparel promo with two models in streetwear'],
-                ['apparel-one-of-us', 'Apparel graphic: Be one of us'],
-                ['comeback-kings', 'Comeback Kings esports poster'],
-                ['gaia-garden', 'Gaia Garden school event poster with vegetables'],
-                ['last-crows', 'Last Crows story-format poster'],
-                ['social-keyboards', 'Social media grid for gaming keyboards and headsets'],
-                ['social-audio', 'Social media grid for audio gear'],
-                ['social-glowup', 'Social media grid for a skincare glow-up challenge']
-            ].map(function (g) { return img(IMG + 'gallery/' + g[0] + '.webp', g[1], g[1], IMG + 'gallery/' + g[0] + '-sm.webp'); })
-        },
-        video: {
-            title: 'video-edits.cart',
-            label: 'Video edits',
-            items: [
-                vid('edit-reel', 'Short-form edit with motion graphics and captions.'),
-                vid('edit-reel-2', 'Short-form edit, illustrated explainer style.'),
-                vid('animated', 'Animated short with a cartoon character.'),
-                vid('mshati-ad', 'Talking-head ad edit.'),
-                vid('sample-2025', 'Before and after edit sample, 2025.'),
-                vid('minecraft-longform', 'Long-form YouTube edit: 23 Minecraft 1.20 build hacks.')
-            ]
-        },
-        ads: {
-            title: 'ads.cart',
-            label: 'Social media ads',
-            items: [
-                vid('brighteyes-1', 'BrightEyes+ video ad, version 1.'),
-                vid('brighteyes-2', 'BrightEyes+ video ad, version 2.'),
-                vid('brighteyes-3', 'BrightEyes+ video ad, version 3.'),
-                vid('brighteyes-4', 'BrightEyes+ video ad, version 4.'),
-                vid('ads-reel', 'Pet care video ad.'),
-                vid('ads-reel-2', 'Pet food video ad.')
-            ]
-        },
-        web: {
-            title: 'web-builds.cart',
-            label: 'Web builds',
-            link: { href: 'https://drive.google.com/drive/folders/1UVKbv_6SSz9y1sMvlrBEamdFpCxJaiSG', label: 'Full folder' },
-            items: [
-                vid('web-reel', 'Web build reel.'),
-                img(IMG + 'gallery/8box-1.webp', '8Box Solutions website, sign-in and dashboard screens', '8Box Solutions website.', IMG + 'gallery/8box-1-sm.webp'),
-                img(IMG + 'gallery/8box-2.webp', '8Box Solutions website, product and service pages', '8Box Solutions website.', IMG + 'gallery/8box-2-sm.webp'),
-                img(IMG + 'gallery/8box-3.webp', '8Box Solutions website, booking screens', '8Box Solutions website.', IMG + 'gallery/8box-3-sm.webp')
-            ]
-        },
         certs: {
-            title: 'achievements',
+            title: 'Achievements',
             label: 'Certificates',
+            quest: 'cert',
             items: [
                 img(IMG + 'certs/aws-cloud-foundations.webp', 'AWS Academy Graduate, Cloud Foundations training badge certificate for Mark Nikko Lonzaga, 20 hours, issued May 27, 2026', 'AWS Academy Graduate: Cloud Foundations. May 27, 2026.'),
                 img(IMG + 'certs/cyber-junior-analyst.webp', 'Cisco Networking Academy certificate for Mark Nikko Lonzaga, completed Feb 26, 2026', 'Junior Cybersecurity Analyst Career Path, Cisco Networking Academy. Feb 26, 2026.'),
-                img(IMG + 'certs/ccna-ensa.webp', 'Cisco certificate: CCNA Enterprise Networking, Security, and Automation, completed Jul 21, 2025', 'CCNA: Enterprise Networking, Security, and Automation. Jul 21, 2025.'),
-                img(IMG + 'certs/ccna-srwe.webp', 'Cisco certificate: CCNA Switching, Routing, and Wireless Essentials, completed Jul 21, 2025', 'CCNA: Switching, Routing, and Wireless Essentials. Jul 21, 2025.'),
-                img(IMG + 'certs/ccna-itn.webp', 'Cisco certificate: CCNA Introduction to Networks, completed Feb 5, 2025', 'CCNA: Introduction to Networks. Feb 5, 2025.'),
+                img(IMG + 'certs/ccna-ensa.webp', 'Cisco Networking Academy course completion certificate: CCNA Enterprise Networking, Security, and Automation, completed Jul 21, 2025', 'CCNA: Enterprise Networking, Security, and Automation. Cisco Networking Academy course, completed Jul 21, 2025.'),
+                img(IMG + 'certs/ccna-srwe.webp', 'Cisco Networking Academy course completion certificate: CCNA Switching, Routing, and Wireless Essentials, completed Jul 21, 2025', 'CCNA: Switching, Routing, and Wireless Essentials. Cisco Networking Academy course, completed Jul 21, 2025.'),
+                img(IMG + 'certs/ccna-itn.webp', 'Cisco Networking Academy course completion certificate: CCNA Introduction to Networks, completed Feb 5, 2025', 'CCNA: Introduction to Networks. Cisco Networking Academy course, completed Feb 5, 2025.'),
                 img(IMG + 'certs/nexus-winserver.webp', 'Nexus Cloud IT Solutions certificate of achievement: Windows Server 2019 System Administration and Automation, Aug 3, 2024', 'Windows Server 2019: System Administration and Automation, Nexus Cloud IT Solutions. Aug 3, 2024.')
-            ],
-            link: { href: 'https://www.credly.com/go/bT1y6PFj', label: 'Verify AWS badge' }
+            ]
         }
     };
+    // the verify link belongs to the one certificate it verifies, not to the whole gallery
+    GALLERIES.certs.items[0].link = { href: 'https://www.credly.com/go/bT1y6PFj', label: 'Verify AWS badge' };
 
     var viewer = $('#viewer');
     if (viewer && typeof viewer.showModal !== 'function') {
@@ -545,25 +732,21 @@
         var render = function () {
             var item = current.items[pos];
             vMedia.textContent = '';
-            var el;
-            if (item.type === 'video') {
-                el = document.createElement('video');
-                el.src = item.src;
-                el.poster = item.poster;
-                el.controls = true;
-                el.playsInline = true;
-                el.preload = 'metadata';
-                el.setAttribute('aria-label', item.caption);
-            } else {
-                el = document.createElement('img');
-                el.src = item.src;
-                el.alt = item.alt;
-                el.decoding = 'async';
-            }
+            var el = document.createElement('img');
+            el.src = item.src;
+            el.alt = item.alt;
+            el.decoding = 'async';
             vMedia.appendChild(el);
             vCaption.textContent = item.caption;
             vCount.textContent = (pos + 1) + ' / ' + current.items.length;
-            if (vStatus) vStatus.textContent = (item.type === 'video' ? 'Video ' : 'Image ') + (pos + 1) + ' of ' + current.items.length + ': ' + item.caption;
+            if (vStatus) vStatus.textContent = 'Image ' + (pos + 1) + ' of ' + current.items.length + ': ' + item.caption;
+            // a link on the item wins over the gallery's own
+            var link = item.link || current.link;
+            vLink.hidden = !link;
+            if (link) {
+                vLink.href = link.href;
+                vLinkLabel.textContent = link.label;
+            }
             $$('.viewer-thumb', vThumbs).forEach(function (t, i) {
                 if (i === pos) {
                     t.setAttribute('aria-current', 'true');
@@ -573,8 +756,8 @@
                 }
             });
             // warm the next image
-            var next = current.items[(pos + 1) % current.items.length];
-            if (next.type === 'image') { var pre = new Image(); pre.src = next.src; }
+            var pre = new Image();
+            pre.src = current.items[(pos + 1) % current.items.length].src;
         };
 
         var step = function (d) {
@@ -585,7 +768,7 @@
 
         var open = function (key, index, trigger) {
             current = GALLERIES[key];
-            if (!current) return;
+            if (!current || !current.items.length) return;
             pos = Math.max(0, Math.min(index || 0, current.items.length - 1));
             opener = trigger || null;
             vTitle.textContent = current.title;
@@ -594,28 +777,23 @@
             current.items.forEach(function (item, i) {
                 var b = document.createElement('button');
                 b.type = 'button';
-                b.className = 'viewer-thumb' + (item.type === 'video' ? ' viewer-play' : '');
+                b.className = 'viewer-thumb';
                 b.setAttribute('aria-label', 'Show item ' + (i + 1) + ': ' + item.caption);
                 var t = document.createElement('img');
-                t.src = item.thumb;
-                t.alt = '';
                 t.loading = 'lazy';
+                t.alt = '';
+                t.src = item.thumb;
                 b.appendChild(t);
                 b.addEventListener('click', function () { pos = i; render(); });
                 vThumbs.appendChild(b);
             });
-            if (current.link) {
-                vLink.hidden = false;
-                vLink.href = current.link.href;
-                vLinkLabel.textContent = current.link.label;
-            } else {
-                vLink.hidden = true;
-            }
             viewer.showModal();
             document.body.style.overflow = 'hidden';
             render();
             $('[data-close]', viewer).focus();
+            if (current.quest) LONZ.quest(current.quest);
         };
+        LONZ.openViewer = open;
 
         var close = function () {
             if (viewer.open) viewer.close();
@@ -635,15 +813,15 @@
             b.addEventListener('click', function () { step(Number(b.getAttribute('data-step'))); });
         });
         viewer.addEventListener('keydown', function (e) {
-            if (e.target.tagName === 'VIDEO') return;
             if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
             if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+            if (e.key.toLowerCase() === 'b' && !e.ctrlKey && !e.metaKey && !e.altKey) close();
         });
-        // swipe on touch screens (not while scrubbing a video or pinching)
+        // swipe on touch screens (not while pinching)
         var touchX = null;
         var touchY = null;
         vMedia.addEventListener('touchstart', function (e) {
-            if (e.target.tagName === 'VIDEO' || e.touches.length > 1) { touchX = null; return; }
+            if (e.touches.length > 1) { touchX = null; return; }
             touchX = e.touches[0].clientX;
             touchY = e.touches[0].clientY;
         }, { passive: true });
@@ -683,35 +861,168 @@
     }
 
     /* ---------------------------------------------------------------
-       11. Copy email
+       13. Copy email
        --------------------------------------------------------------- */
     $$('[data-copy]').forEach(function (b) {
         b.addEventListener('click', function () {
             var text = b.getAttribute('data-copy');
-            var done = function () { toast('Email copied'); sfx.play('coin'); };
-            var legacy = function () {
-                var ta = document.createElement('textarea');
-                ta.value = text;
-                ta.setAttribute('readonly', '');
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.select();
-                var ok = false;
-                try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
-                ta.remove();
-                if (ok) done(); else toast('Copy failed: ' + text, 5000);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(done, legacy);
-            } else {
-                legacy();
-            }
+            copyText(text, function () {
+                toast('Email copied');
+                sfx.play('coin');
+                LONZ.quest('hello');
+            }, function () { toast('Copy failed: ' + text, 5000); });
         });
     });
 
     /* ---------------------------------------------------------------
-       12. CONTINUE? countdown (decorative, runs only while visible)
+       14. Project brief: the form writes a message for the visitor's own
+           email or messages app. Nothing is sent to this site;
+           the draft is kept in this browser only.
+       --------------------------------------------------------------- */
+    var brief = $('#brief');
+    if (brief) {
+        var EMAIL = 'mnikkolonzaga@gmail.com';
+        var PHONE = '+639512329712';
+        var note = $('#brief-note');
+        var noteStart = note.textContent;
+        var details = brief.elements.details;
+        var refRow = $('#brief-ref');
+        var refText = $('#brief-ref-text');
+        var reference = '';
+
+        var setReference = function (text) {
+            reference = text || '';
+            refText.textContent = reference;
+            refRow.hidden = !reference;
+        };
+        var tick = function (value) {
+            var box = $('input[name="need"][value="' + value + '"]', brief);
+            if (box) box.checked = true;
+        };
+        var compose = function () {
+            var needs = $$('input[name="need"]:checked', brief).map(function (i) { return i.value; });
+            var when = $('input[name="when"]:checked', brief);
+            var name = brief.elements.name.value.trim();
+            var budget = brief.elements.budget.value.trim();
+            var text = details.value.trim();
+            var lines = ['Hi Mark,', ''];
+            if (needs.length) lines.push('I need: ' + needs.join(', '));
+            if (reference) lines.push('Like this one: ' + reference);
+            if (when) lines.push('Needed: ' + when.value);
+            if (budget) lines.push('Budget: ' + budget);
+            if (text) lines.push('', text);
+            if (name) lines.push('', 'Thanks,', name);
+            return {
+                ok: needs.length > 0 || text.length > 0,
+                subject: 'Project brief' + (needs.length ? ': ' + needs.join(', ') : ''),
+                body: lines.join('\n')
+            };
+        };
+        var say = function (msg, error) {
+            note.textContent = msg;
+            note.classList.toggle('is-error', !!error);
+            if (error) details.setAttribute('aria-invalid', 'true');
+            else details.removeAttribute('aria-invalid');
+        };
+        var ready = function () {
+            var b = compose();
+            if (!b.ok) {
+                say('Pick what you need or add a few words first.', true);
+                details.focus();
+                sfx.play('error');
+                return null;
+            }
+            return b;
+        };
+        var drafted = function (via) {
+            say('Brief drafted. It is sent when you press send in your ' + via + '. If nothing opened, use Copy it and send it to ' + EMAIL + '.');
+            sfx.play('confirm');
+            LONZ.quest('hello');
+            store('lonz-brief', '');
+        };
+
+        // the draft survives a reload, in this browser only
+        var save = function () {
+            store('lonz-brief', JSON.stringify({
+                need: $$('input[name="need"]:checked', brief).map(function (i) { return i.value; }),
+                when: ($('input[name="when"]:checked', brief) || {}).value || '',
+                name: brief.elements.name.value,
+                budget: brief.elements.budget.value,
+                details: details.value,
+                ref: reference
+            }));
+        };
+        try {
+            var draft = JSON.parse(store('lonz-brief') || 'null');
+            if (draft) {
+                (draft.need || []).forEach(tick);
+                var w = $('input[name="when"][value="' + draft.when + '"]', brief);
+                if (w) w.checked = true;
+                brief.elements.name.value = draft.name || '';
+                brief.elements.budget.value = draft.budget || '';
+                details.value = draft.details || '';
+                setReference(draft.ref || '');
+                if (compose().ok) say('Your draft from last time is still here. ' + noteStart);
+            }
+        } catch (e) { /* a broken draft is simply ignored */ }
+
+        brief.addEventListener('input', function () {
+            if (note.classList.contains('is-error')) say(noteStart);
+            save();
+        });
+        brief.addEventListener('change', save);
+        brief.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var b = ready();
+            if (!b) return;
+            drafted('email app');
+            window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(b.subject) + '&body=' + encodeURIComponent(b.body);
+        });
+        $('#brief-sms').addEventListener('click', function () {
+            var b = ready();
+            if (!b) return;
+            drafted('messages app');
+            window.location.href = 'sms:' + PHONE + '?&body=' + encodeURIComponent(b.body);
+        });
+        $('#brief-copy').addEventListener('click', function () {
+            var b = ready();
+            if (!b) return;
+            copyText('To: ' + EMAIL + '\nSubject: ' + b.subject + '\n\n' + b.body, function () {
+                say('Brief copied. Paste it into an email to ' + EMAIL + ' or a text to 0951 232 9712.');
+                toast('Brief copied');
+                LONZ.quest('hello');
+            }, function () { say('Copy did not work in this browser. Use Email it instead.', true); });
+        });
+        var shareBtn = $('#brief-share');
+        if (navigator.share) {
+            shareBtn.hidden = false;
+            shareBtn.addEventListener('click', function () {
+                var b = ready();
+                if (!b) return;
+                navigator.share({ title: b.subject, text: b.body }).then(function () {
+                    say('Shared. Send it to ' + EMAIL + ' or 0951 232 9712 in the app you picked.');
+                    LONZ.quest('hello');
+                }, function (err) {
+                    // closing the share sheet is not an error; anything else is said out loud
+                    if (!err || err.name !== 'AbortError') say('Sharing did not work here. Use Copy it or Email it instead.', true);
+                });
+            });
+        }
+        $('#brief-ref-clear').addEventListener('click', function () { setReference(''); save(); });
+
+        // "Start a project" on a service, or "Want one like this?" on the console, fills in the brief
+        LONZ.brief = function (need, ref) {
+            if (need) tick(need);
+            if (ref) setReference(ref);
+            save();
+        };
+        $$('[data-need]').forEach(function (link) {
+            link.addEventListener('click', function () { LONZ.brief(link.getAttribute('data-need'), ''); });
+        });
+    }
+
+    /* ---------------------------------------------------------------
+       15. CONTINUE? countdown: 9 to 0 once, only while visible
        --------------------------------------------------------------- */
     var countdown = $('#countdown');
     if (countdown && 'IntersectionObserver' in window) {
@@ -720,10 +1031,11 @@
         var cdVisible = false;
         var cdRun = function () {
             clearInterval(cdTimer);
-            if (!cdVisible || motion.still) return;
+            if (!cdVisible || motion.still || n <= 0) return;
             cdTimer = setInterval(function () {
-                n = n <= 0 ? 9 : n - 1;
+                n -= 1;
                 countdown.textContent = String(n);
+                if (n <= 0) clearInterval(cdTimer);
             }, 1000);
         };
         new IntersectionObserver(function (entries) {
@@ -734,13 +1046,89 @@
     }
 
     /* ---------------------------------------------------------------
-       13. Cheat code: up up down down left right left right B A
+       16. Debug stats: an Options switch (and the cheat code) shows a
+           frame-counter style readout. Every number is measured live
+           in the visitor's own browser; nothing is hard-coded.
+       --------------------------------------------------------------- */
+    var debugEl = $('#debug');
+    var debugBtn = $('#debug-toggle');
+    if (debugEl && window.performance && performance.getEntriesByType) {
+        var debug = { on: false, timer: null, lcp: 0, frames: 0, fps: 0, raf: 0, mark: 0 };
+        try {
+            new PerformanceObserver(function (list) {
+                var seenPaints = list.getEntries();
+                if (seenPaints.length) debug.lcp = seenPaints[seenPaints.length - 1].startTime;
+            }).observe({ type: 'largest-contentful-paint', buffered: true });
+        } catch (e) { /* not every browser reports it; the row then reads n/a */ }
+        var put = function (id, text) {
+            var cell = $(id);
+            if (cell) cell.textContent = text;
+        };
+        var paintDebug = function () {
+            var res = performance.getEntriesByType('resource');
+            var nav = performance.getEntriesByType('navigation')[0];
+            var bytes = nav ? (nav.encodedBodySize || 0) : 0;
+            var other = 0;
+            res.forEach(function (r) {
+                bytes += r.encodedBodySize || r.transferSize || 0;
+                if (/^https?:/.test(r.name) && r.name.indexOf(window.location.origin + '/') !== 0) other += 1;
+            });
+            put('#dbg-req', String(res.length + (nav ? 1 : 0)));
+            put('#dbg-kb', bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB' : Math.round(bytes / 1024) + ' KB');
+            put('#dbg-3p', String(other));
+            put('#dbg-lcp', debug.lcp ? (debug.lcp / 1000).toFixed(2) + ' s' : 'n/a');
+            put('#dbg-dom', String(document.getElementsByTagName('*').length));
+            put('#dbg-fps', debug.fps ? String(debug.fps) : 'n/a');
+        };
+        var countFrame = function (now) {
+            if (!debug.on) return;
+            debug.frames += 1;
+            if (now - debug.mark >= 1000) {
+                debug.fps = Math.round(debug.frames * 1000 / (now - debug.mark));
+                debug.frames = 0;
+                debug.mark = now;
+            }
+            debug.raf = window.requestAnimationFrame(countFrame);
+        };
+        var setDebug = function (on, quiet) {
+            debug.on = on;
+            debugEl.hidden = !on;
+            setSwitch(debugBtn, on);
+            store('lonz-debug', on ? 'on' : 'off');
+            clearInterval(debug.timer);
+            window.cancelAnimationFrame(debug.raf);
+            if (on) {
+                debug.frames = 0;
+                debug.fps = 0;
+                debug.mark = performance.now();
+                debug.raf = window.requestAnimationFrame(countFrame);
+                paintDebug();
+                debug.timer = setInterval(paintDebug, 1000);
+            }
+            if (!quiet) toast(on ? 'Debug stats on' : 'Debug stats off');
+        };
+        // returns the new state, so the cheat code can say what it did
+        LONZ.debug = function (quiet) {
+            setDebug(!debug.on, quiet);
+            return debug.on;
+        };
+        if (debugBtn) debugBtn.addEventListener('click', function () { setDebug(!debug.on); });
+        if (store('lonz-debug') === 'on') setDebug(true, true);
+    } else if (debugBtn) {
+        debugBtn.closest('li').hidden = true;
+    }
+
+    /* ---------------------------------------------------------------
+       17. Cheat code: up up down down left right left right B A
+           switches the debug stats on or off (and hides a coin).
        --------------------------------------------------------------- */
     var code = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     var at = 0;
     document.addEventListener('keydown', function (e) {
         var tag = (e.target.tagName || '').toLowerCase();
         if (tag === 'input' || tag === 'textarea' || !e.key) return;
+        // inside the console the same keys change cartridges and volume, so the code is not read there
+        if (e.target.closest && e.target.closest('#gb')) { at = 0; return; }
         if (/^(Shift|Control|Alt|Meta|CapsLock)$/.test(e.key)) return;
         var key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
         if (key === code[at]) at += 1;
@@ -748,8 +1136,11 @@
         else at = 0;
         if (at < code.length) return;
         at = 0;
-        toast('Cheat on: +30 lives');
-        sfx.play('coin');
+        var shown = LONZ.debug ? LONZ.debug(true) : false;
+        if (!LONZ.quest('cheat')) {
+            toast(shown ? 'Cheat on: debug stats' : 'Cheat off: debug stats hidden');
+            sfx.play('coin');
+        }
         if (motion.still) return;
         for (var i = 0; i < 24; i++) {
             var c = document.createElement('span');

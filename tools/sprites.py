@@ -29,6 +29,13 @@ C = {
     "y": "#ffd23f",  # yellow
     "Y": "#d99a00",  # yellow deep
     "r": "#ff5c7a",  # cheek pink
+    "f": "#eaa06f",  # skin (the tone of the pixel portrait)
+    "F": "#c06a45",  # skin shade
+    "c": "#f6ecd6",  # cream
+    "C": "#c9c2e8",  # cream dim
+    "v": "#7b61ff",  # purple hi
+    "n": "#16123a",  # night
+    "N": "#231d55",  # night raise
 }
 
 
@@ -194,25 +201,6 @@ SPARKLE_SM = [
     "..y..",
 ]
 
-SMILEY = [
-    ".....kkkkkk.....",
-    "...kkyyyyyykk...",
-    "..kyyyyyyyyyyk..",
-    ".kyyyyyyyyyyyyk.",
-    ".kyyyyyyyyyyyyk.",
-    "kyyyykyyyykyyyyk",
-    "kyyyykyyyykyyyyk",
-    "kyyyykyyyykyyyyk",
-    "kyyyyyyyyyyyyyyk",
-    "kyyryyyyyyyyryyk",
-    "kyyyykyyyykyyyyk",
-    ".kyyyykkkkyyyyk.",
-    ".kyyyyyyyyyyyyk.",
-    "..kyyyyyyyyyyk..",
-    "...kkyyyyyykk...",
-    ".....kkkkkk.....",
-]
-
 # 4-frame spinning coin, 12 x 14 each
 COIN = [
     [
@@ -278,38 +266,221 @@ def sheet(frames, name):
     return cv.save(name)
 
 
-# Game cartridge, 56 x 64. Label window (transparent) at x 8..47, y 18..55 (40 x 38).
-def cartridge(name, body, shade, deep):
-    C["1"], C["2"], C["3"] = body, shade, deep
-    cv = Canvas(56, 64)
-    cv.box(2, 2, 52, 60, "1")
-    # grip ridges across the top
-    for i in range(5):
-        cv.rect(10 + i * 8, 5, 4, 7, "2")
-        cv.rect(10 + i * 8, 11, 4, 1, "3")
-    cv.rect(3, 3, 50, 1, "w")
-    cv.rect(3, 3, 1, 57, "w")
-    cv.rect(51, 4, 2, 57, "2")
-    cv.rect(4, 59, 47, 2, "2")
-    # label frame
-    cv.box(6, 16, 44, 42, "k")
-    cv.clear(8, 18, 40, 38)
-    # arrow notch at the bottom
-    cv.rect(24, 59, 8, 1, "3")
-    cv.rect(26, 60, 4, 1, "3")
-    return cv.save(name)
+# --- LONZ RUN (js/game.js) and the header progress track ------------------
+# The engineer, facing right. Six frames of 12 x 14: 0-3 run cycle, 4 idle, 5 jump.
+# Strides (0, 2) sit one pixel higher than the passing frames (1, 3), which gives
+# the bob. The near leg carries a teal highlight and a cream shoe, the far leg is
+# plain deep teal with a dimmer shoe, so the four run frames really alternate.
+# Every fill reads without the ink outline, because on the night HUD ink disappears.
+RUNNER = [
+    [   # 0 stride: near leg reaches forward, near arm back
+        "....kkkkk...",
+        "...kPppPPk..",
+        "...kPPfffk..",
+        "...kPffkfk..",
+        "....kFfffk..",
+        "..kkooookFk.",
+        ".kfOooooOk..",
+        "..kkooook...",
+        "...kTTTtk...",
+        ".kkkTkTTtk..",
+        "kCTTk.kkTtk.",
+        ".kkk...kTtk.",
+        ".......kccck",
+        "........kkk.",
+    ],
+    [   # 1 passing: near leg planted, far knee forward
+        "............",
+        "....kkkkk...",
+        "...kPppPPk..",
+        "...kPPfffk..",
+        "...kPffkfk..",
+        "....kFfffk..",
+        "...kooook...",
+        "...koOook...",
+        "...koofok...",
+        "...kTTtTk...",
+        "...kTtkTTk..",
+        "...kTtkkCk..",
+        "...kccckk...",
+        "...kkkkk....",
+    ],
+    [   # 2 stride: far leg reaches forward, near arm forward
+        "....kkkkk...",
+        "...kPppPPk..",
+        "...kPPfffk..",
+        "...kPffkfk..",
+        "....kFfffk..",
+        "..kkooookfk.",
+        ".kFOooooOk..",
+        "..kkooook...",
+        "...kTtTTk...",
+        ".kkkTkTTTk..",
+        "kcTTk.kkTTk.",
+        ".kkk...kTTk.",
+        ".......kCCCk",
+        "........kkk.",
+    ],
+    [   # 3 passing: far leg planted, near knee forward
+        "............",
+        "....kkkkk...",
+        "...kPppPPk..",
+        "...kPPfffk..",
+        "...kPffkfk..",
+        "....kFfffk..",
+        "...kooook...",
+        "...kooOok...",
+        "...kofook...",
+        "...kTTTtk...",
+        "...kTTkTtk..",
+        "...kTTkkck..",
+        "...kCCCkk...",
+        "...kkkkk....",
+    ],
+    [   # 4 idle
+        "............",
+        "....kkkkk...",
+        "...kPppPPk..",
+        "...kPPfffk..",
+        "...kPffkfk..",
+        "....kFfffk..",
+        "...kooook...",
+        "...koOook...",
+        "...kofook...",
+        "...kTTTtk...",
+        "...kTTkTtk..",
+        "...kTTkTtk..",
+        "...kCCkccck.",
+        "...kkkkkkk..",
+    ],
+    [   # 5 jump: near arm up, legs tucked
+        "....kkkkk...",
+        "...kPppPPkk.",
+        "...kPPfffkfk",
+        "...kPffkfkOk",
+        "....kFfffkOk",
+        "..kkooooook.",
+        ".kFOooookk..",
+        "..kkooook...",
+        "...kTTTtk...",
+        ".kkkTkTTtk..",
+        "kCTTk.kkTtk.",
+        ".kkk...kccck",
+        "........kkk.",
+        "............",
+    ],
+]
+
+# The obstacle, a "software bug": a purple beetle facing the runner. Two frames of
+# 12 x 10; the antenna and the feet swap sides between them, which is the wiggle.
+BUG = [
+    [
+        ".v..........",
+        "..v..kkkkk..",
+        "..v.kvvpPpk.",
+        ".kkkvvppPppk",
+        "kppkvpppPppk",
+        "kcpkppppPpPk",
+        "kPPkpppPPPPk",
+        ".kkpkkpkkpk.",
+        "...p..p..p..",
+        "..p..p..p...",
+    ],
+    [
+        "...v........",
+        "...v.kkkkk..",
+        "..v.kvvpPpk.",
+        ".kkkvvppPppk",
+        "kppkvpppPppk",
+        "kcpkppppPpPk",
+        "kPPkpppPPPPk",
+        ".kkpkkpkkpk.",
+        "...p..p..p..",
+        "....p..p..p.",
+    ],
+]
+
+# Goal flag, 10 x 14: yellow pennant on an ink pole. The pole has a pale core so it
+# does not vanish on the night HUD.
+FLAG = [
+    "..k.......",
+    ".kCkkkkkk.",
+    ".kCkyyyyyk",
+    ".kCkyyyyk.",
+    ".kCkyyyk..",
+    ".kCkyyyYk.",
+    ".kCkYYYYYk",
+    ".kCkkkkkk.",
+    ".kCk......",
+    ".kCk......",
+    ".kCk......",
+    ".kCk......",
+    "kCCCk.....",
+    "kkkkk.....",
+]
+
+
+def runner():
+    """runner.png, 72 x 14: six 12 x 14 frames (0-3 run cycle, 4 idle, 5 jump)."""
+    return sheet(RUNNER, "runner.png")
+
+
+def bug():
+    """bug.png, 24 x 10: two 12 x 10 wiggle frames."""
+    return sheet(BUG, "bug.png")
+
+
+def flag():
+    """flag.png, 10 x 14 (the pole is at x 1..3, the pennant flies to the right)."""
+    return from_map(FLAG).save("flag.png")
+
+
+# --- label of the bonus game cartridge (LONZ RUN) --------------------------
+# 44 x 28, shown at 5x on the cartridge: the runner, a bug and a coin over the night skyline.
+PAK_RUN = [
+    "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "nnnnnnnnnnnnnnnnnnnnnncnnnnnnnnnnnnnnnnnnnnn",
+    "nnnncnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnncnnn",
+    "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnyyyknnn",
+    "nnnnnnnnnnnnkkkkknnnnnnnnnnnnncnnnnnywyyyknn",
+    "nnnnnnnnnnnkPppPPkknnnnnnnnnnnnnnnnnyyyyyknn",
+    "nnnnnnnnnnnkPPfffkfknnnnnnnnnnnnnnnnyyyyyknn",
+    "nnnnnnnnnnnkPffkfkOknnnnnnnnnnnnnnnnyyYyyknn",
+    "nnnnnnnnnnnnkFfffkOknnnnnnnnnnnnnnnnkyyyYnnn",
+    "nnnnnnnnnnkkooooooknnnnnnnnnnnnnnnnnnkkknnnn",
+    "nnnnnnnnnkFOooookkNNNNNnnnnnnnnnnnnnnnnnnnnn",
+    "nnnnnnnnnnkkooookNNNNNNnnnnnvnnnnNNNNNNNNNnn",
+    "NNNNNNNnnnnkTTTtkNNNNNNnnnnnnvnnkkkkkNNNNNnn",
+    "NNNNNNNnnkkkTkTTtkNNNNNnnnnnnvnkvvpPpkNNNNnn",
+    "NNNNNNNnkCTTknkkTtkNNNNnnnNNkkkvvppPppkNNNnn",
+    "NNNNNNNnNkkkNnnkccckNNNnnnNkppkvpppPppkNNNnn",
+    "NNNNNNNnNNNNNnnNkkkNNNNnnnNkcpkppppPpPkNNNnn",
+    "NNNNNNNnNNNNNnnNNNNNNNNnnnNkPPkpppPPPPkNNNnn",
+    "NNNNNNNnNNNNNnnNNNNNNNNnnnNNkkpkkpkkpkNNNNnn",
+    "NNNNNNNnNNNNNnnNNNNNNNNnnnNNNNpNnpNNpNNNNNnn",
+    "NNNNNNNnNNNNNnnNNNNNNNNnnnNNNpNNpNNpNNNNNNnn",
+    "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+    "vvvvPPPPvvvvPPPPvvvvPPPPvvvvPPPPvvvvPPPPvvvv",
+    "PPPPppppPPPPppppPPPPppppPPPPppppPPPPppppPPPP",
+    "PPPPppppPPPPppppPPPPppppPPPPppppPPPPppppPPPP",
+    "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+    "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+]
+
+
+def pak_run():
+    """pak-run.png, 44 x 28: the picture on the LONZ RUN cartridge."""
+    return from_map(PAK_RUN).save("pak-run.png")
 
 
 if __name__ == "__main__":
     print("crt", crt())
     print("burst", burst("burst.png", "p", "P"))
-    print("burst-orange", burst("burst-orange.png", "o", "O", size=64, spikes=12))
     print("sparkle", from_map(SPARKLE).save("sparkle.png"))
     print("sparkle-sm", from_map(SPARKLE_SM).save("sparkle-sm.png"))
-    print("smiley", from_map(SMILEY).save("smiley.png"))
     print("coin", sheet(COIN, "coin.png"))
-    print("cart-orange", cartridge("cart-orange.png", "#ff7a2f", "#e0601a", "#a8410a"))
-    print("cart-teal", cartridge("cart-teal.png", "#1fb5a3", "#14968a", "#0b6e64"))
-    print("cart-purple", cartridge("cart-purple.png", "#7b61ff", "#5a3fd1", "#3a2896"))
-    print("cart-yellow", cartridge("cart-yellow.png", "#ffd23f", "#f0b400", "#b88400"))
-    print("cart-pink", cartridge("cart-pink.png", "#ff8fb1", "#f06b95", "#c2456e"))
+    print("runner", runner())
+    print("bug", bug())
+    print("flag", flag())
+    print("pak-run", pak_run())

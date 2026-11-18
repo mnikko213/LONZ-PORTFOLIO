@@ -1,0 +1,85 @@
+{
+  "note": "These Google Drive files already ship with the site as hand-made copies in assets/img/gallery/, so tools/drive-sync.mjs skips them and nothing shows twice. Delete a line to let the sync import that file from Drive instead.",
+  "items": {
+    "1sgTtjnEbeM8V3RLIWj_5hf8D0RWscc6D": {
+      "file": "assets/img/gallery/8box-1.webp",
+      "group": "WEB DESIGNS"
+    },
+    "1y09cME7c95BFrs0viPMMVKEAVrSi-3sn": {
+      "file": "assets/img/gallery/8box-2.webp",
+      "group": "WEB DESIGNS"
+    },
+    "1MGDI1uXsLL_sS2SwU-57_dPiUBbSR6Xz": {
+      "file": "assets/img/gallery/8box-3.webp",
+      "group": "WEB DESIGNS"
+    },
+    "1TGZyjluWO5mq4py-bxJCZGJwhBj2Rt77": {
+      "file": "assets/img/gallery/ano-toys-sale.webp",
+      "group": "Archives"
+    },
+    "1NtfA67gyKjtliaoJ9qzWkAiYrbp1Jnlu": {
+      "file": "assets/img/gallery/apparel-haddie.webp",
+      "group": "Archives"
+    },
+    "1lb4aBV0zVJKr9SiUOg35eD4aaAQXpZj4": {
+      "file": "assets/img/gallery/apparel-one-of-us.webp",
+      "group": "Archives"
+    },
+    "1qQ9uRKPvE8efF0gvKEQfPzeGOWNVnse3": {
+      "file": "assets/img/gallery/comeback-kings.webp",
+      "group": "Archives"
+    },
+    "1-H9TbBN3rcfdtJaeI05vgRAFcCGx13HJ": {
+      "file": "assets/img/gallery/gaia-garden.webp",
+      "group": "Archives"
+    },
+    "18UGDGr4uJlMF2ueb7fFb1J_wq5-Fo6OS": {
+      "file": "assets/img/gallery/last-crows.webp",
+      "group": "Archives"
+    },
+    "1vIyF0uc-Sm0tdOyYogKz04ELbXGli8yg": {
+      "file": "assets/img/gallery/pong-buying-pairs.webp",
+      "group": "Pong Soles"
+    },
+    "1oiyxsowzK61BRb7XQ6Pv6kP4tukeid8D": {
+      "file": "assets/img/gallery/pong-cash-for-kicks.webp",
+      "group": "Pong Soles"
+    },
+    "18OkGqS9wGRtd-SkZ4JdLPTS3Fx2xsYEI": {
+      "file": "assets/img/gallery/pong-got-heat.webp",
+      "group": "Pong Soles"
+    },
+    "1vPiwaOGnI6qugLCxYRwfAyY8JhPkzNxd": {
+      "file": "assets/img/gallery/pong-kicks-to-cash.webp",
+      "group": "Pong Soles"
+    },
+    "1ljG5pNuRlYmhfcDCYfvueErpTo5Sm_aJ": {
+      "file": "assets/img/gallery/pong-sapatos.webp",
+      "group": "Pong Soles"
+    },
+    "1rY-nNgHxU8njAHG05JFxitmr8Stn1nx5": {
+      "file": "assets/img/gallery/pong-sell-us.webp",
+      "group": "Pong Soles"
+    },
+    "1cmK4KiCB9Xi1ZNnWgnTVcO8IiJr7kr-I": {
+      "file": "assets/img/gallery/pong-sell-your-heat.webp",
+      "group": "Pong Soles"
+    },
+    "1xJO8VDSlRjBWKWlusieVuoijfr958_OZ": {
+      "file": "assets/img/gallery/pong-we-buy.webp",
+      "group": "Pong Soles"
+    },
+    "11dobqMxR0-Pl7oMF37fbaJkgNbrvYKcz": {
+      "file": "assets/img/gallery/social-audio.webp",
+      "group": "Archives"
+    },
+    "16hVVo0EJ8gnjTsfgLWYOzBpdbk7m0Ovv": {
+      "file": "assets/img/gallery/social-glowup.webp",
+      "group": "Archives"
+    },
+    "14irVo8oC44jwk-zDBqGNk3md8CstZAn3": {
+      "file": "assets/img/gallery/social-keyboards.webp",
+      "group": "Archives"
+    }
+  }
+}
